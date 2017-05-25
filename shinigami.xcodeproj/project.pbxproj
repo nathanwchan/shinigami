@@ -7,14 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		020ACD712F1F5773DA28C2D3 /* Pods_shinigami.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A8BC89F844F4219F316174 /* Pods_shinigami.framework */; };
 		D81002371ED49EDD00B4E34F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81002361ED49EDD00B4E34F /* AppDelegate.swift */; };
 		D81002391ED49EDD00B4E34F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81002381ED49EDD00B4E34F /* ViewController.swift */; };
 		D810023C1ED49EDD00B4E34F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D810023A1ED49EDD00B4E34F /* Main.storyboard */; };
 		D810023E1ED49EDD00B4E34F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D810023D1ED49EDD00B4E34F /* Assets.xcassets */; };
 		D81002411ED49EDD00B4E34F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D810023F1ED49EDD00B4E34F /* LaunchScreen.storyboard */; };
+		D81002491ED745F900B4E34F /* twitter_eyes_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D81002481ED745F900B4E34F /* twitter_eyes_logo.png */; };
+		D810024C1ED7684900B4E34F /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D810024B1ED7684900B4E34F /* HomeController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9484142F295752EAB6DAF202 /* Pods-shinigami.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shinigami.release.xcconfig"; path = "Pods/Target Support Files/Pods-shinigami/Pods-shinigami.release.xcconfig"; sourceTree = "<group>"; };
+		B5A8BC89F844F4219F316174 /* Pods_shinigami.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_shinigami.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDB3DC8364A643D0084D242F /* Pods-shinigami.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shinigami.debug.xcconfig"; path = "Pods/Target Support Files/Pods-shinigami/Pods-shinigami.debug.xcconfig"; sourceTree = "<group>"; };
 		D81002331ED49EDD00B4E34F /* shinigami.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shinigami.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D81002361ED49EDD00B4E34F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D81002381ED49EDD00B4E34F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +28,8 @@
 		D810023D1ED49EDD00B4E34F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D81002401ED49EDD00B4E34F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D81002421ED49EDD00B4E34F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D81002481ED745F900B4E34F /* twitter_eyes_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = twitter_eyes_logo.png; path = ../../../../Downloads/twitter_eyes_logo.png; sourceTree = "<group>"; };
+		D810024B1ED7684900B4E34F /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +37,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				020ACD712F1F5773DA28C2D3 /* Pods_shinigami.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		22E7BD31597FD3C9E98AF532 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B5A8BC89F844F4219F316174 /* Pods_shinigami.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D810022A1ED49EDD00B4E34F = {
 			isa = PBXGroup;
 			children = (
 				D81002351ED49EDD00B4E34F /* shinigami */,
 				D81002341ED49EDD00B4E34F /* Products */,
+				FF30EF43B7A66863B7BC529A /* Pods */,
+				22E7BD31597FD3C9E98AF532 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +73,41 @@
 		D81002351ED49EDD00B4E34F /* shinigami */ = {
 			isa = PBXGroup;
 			children = (
+				D810024D1ED7685200B4E34F /* controllers */,
 				D81002361ED49EDD00B4E34F /* AppDelegate.swift */,
-				D81002381ED49EDD00B4E34F /* ViewController.swift */,
 				D810023A1ED49EDD00B4E34F /* Main.storyboard */,
 				D810023D1ED49EDD00B4E34F /* Assets.xcassets */,
 				D810023F1ED49EDD00B4E34F /* LaunchScreen.storyboard */,
+				D810024A1ED746BE00B4E34F /* images */,
 				D81002421ED49EDD00B4E34F /* Info.plist */,
 			);
 			path = shinigami;
+			sourceTree = "<group>";
+		};
+		D810024A1ED746BE00B4E34F /* images */ = {
+			isa = PBXGroup;
+			children = (
+				D81002481ED745F900B4E34F /* twitter_eyes_logo.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
+		D810024D1ED7685200B4E34F /* controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D81002381ED49EDD00B4E34F /* ViewController.swift */,
+				D810024B1ED7684900B4E34F /* HomeController.swift */,
+			);
+			name = controllers;
+			sourceTree = "<group>";
+		};
+		FF30EF43B7A66863B7BC529A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CDB3DC8364A643D0084D242F /* Pods-shinigami.debug.xcconfig */,
+				9484142F295752EAB6DAF202 /* Pods-shinigami.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +117,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D81002451ED49EDD00B4E34F /* Build configuration list for PBXNativeTarget "shinigami" */;
 			buildPhases = (
+				4A0ACDFC62EF563EC165C638 /* [CP] Check Pods Manifest.lock */,
 				D810022F1ED49EDD00B4E34F /* Sources */,
 				D81002301ED49EDD00B4E34F /* Frameworks */,
 				D81002311ED49EDD00B4E34F /* Resources */,
+				8522C064B994A0CB8E7C55D0 /* [CP] Embed Pods Frameworks */,
+				F065FF51D47F4E4D29927945 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -125,11 +174,60 @@
 			files = (
 				D81002411ED49EDD00B4E34F /* LaunchScreen.storyboard in Resources */,
 				D810023E1ED49EDD00B4E34F /* Assets.xcassets in Resources */,
+				D81002491ED745F900B4E34F /* twitter_eyes_logo.png in Resources */,
 				D810023C1ED49EDD00B4E34F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4A0ACDFC62EF563EC165C638 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8522C064B994A0CB8E7C55D0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-shinigami/Pods-shinigami-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F065FF51D47F4E4D29927945 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-shinigami/Pods-shinigami-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D810022F1ED49EDD00B4E34F /* Sources */ = {
@@ -138,6 +236,7 @@
 			files = (
 				D81002391ED49EDD00B4E34F /* ViewController.swift in Sources */,
 				D81002371ED49EDD00B4E34F /* AppDelegate.swift in Sources */,
+				D810024C1ED7684900B4E34F /* HomeController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +357,7 @@
 		};
 		D81002461ED49EDD00B4E34F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CDB3DC8364A643D0084D242F /* Pods-shinigami.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = shinigami/Info.plist;
@@ -270,6 +370,7 @@
 		};
 		D81002471ED49EDD00B4E34F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9484142F295752EAB6DAF202 /* Pods-shinigami.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = shinigami/Info.plist;
@@ -299,6 +400,7 @@
 				D81002471ED49EDD00B4E34F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

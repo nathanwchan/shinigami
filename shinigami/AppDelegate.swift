@@ -7,16 +7,30 @@
 //
 
 import UIKit
+import TwitterKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        Twitter.sharedInstance().start(
+            withConsumerKey:"DhXJZBzIJtTV2sYkeUfGPkubT",
+            consumerSecret:"RZ6AQQWVCAkZBvIfHIBVUeN2BR0MbEnNVQeHDHZFjwK5hWpk74")
+        
         return true
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        if Twitter.sharedInstance().application(app, open:url, options: options) {
+            return true
+        }
+        
+        // If you handle other (non Twitter Kit) URLs elsewhere in your app, return true. Otherwise
+        return false
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -40,7 +54,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
 }
 
