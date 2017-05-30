@@ -20,74 +20,42 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cfK-cd-Lfa">
+                                <rect key="frame" x="69" y="95" width="236" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yoz-3K-DbB">
+                                <rect key="frame" x="69" y="157" width="236" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="7IW-az-b6t" appends="YES" id="LYi-n5-Z8Z"/>
+                                </connections>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" id="9R1-w2-x80"/>
+                    <connections>
+                        <outlet property="testLabel" destination="Yoz-3K-DbB" id="yG5-wm-sjq"/>
+                        <outlet property="testTextField" destination="cfK-cd-Lfa" id="6jO-5S-hI9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-        </scene>
-        <!--Home Controller-->
-        <scene sceneID="KKS-6J-2I1">
-            <objects>
-                <viewController id="P7P-jh-lDV" customClass="HomeController" customModule="shinigami" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="sPl-ld-jK7"/>
-                        <viewControllerLayoutGuide type="bottom" id="y0y-X7-Rvd"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="FPm-iK-TaC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="55q-Fq-z1E" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1032" y="92"/>
-        </scene>
-        <!--Root View Controller-->
-        <scene sceneID="tIP-kc-GTC">
-            <objects>
-                <tableViewController id="8WU-i4-Hb6" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="5Gk-PH-ZGs">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="hi1-t4-BSH">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hi1-t4-BSH" id="EEC-OW-yrN">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="8WU-i4-Hb6" id="lmG-Wv-ldC"/>
-                            <outlet property="delegate" destination="8WU-i4-Hb6" id="vny-r1-AGW"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="3FD-yM-pyL"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jNo-3Z-mWO" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="836" y="540"/>
-        </scene>
-        <!--Home Controller-->
-        <scene sceneID="uYy-gB-fTv">
-            <objects>
-                <navigationController id="nkI-8P-fGT" customClass="HomeController" customModule="shinigami" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="IS7-ub-qbG">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
+                <tapGestureRecognizer id="7IW-az-b6t">
                     <connections>
-                        <segue destination="8WU-i4-Hb6" kind="relationship" relationship="rootViewController" id="asZ-qg-F09"/>
+                        <action selector="labelTapGesture:" destination="BYZ-38-t0r" id="iaC-lU-0cU"/>
                     </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aWq-Q8-rNZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-118" y="540"/>
+            <point key="canvasLocation" x="925.60000000000002" y="-187.55622188905548"/>
         </scene>
     </scenes>
 </document>
