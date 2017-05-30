@@ -1,5 +1,5 @@
 //
-//  HomeSearchViewController.swift
+//  MainNavigationController.swift
 //  shinigami
 //
 //  Created by Nathan Chan on 5/30/17.
@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import TwitterKit
 
-class HomeSearchViewController: UIViewController {
+class MainNavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,19 +21,6 @@ class HomeSearchViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func clickedLogout(_ sender: Any) {
-        let store = Twitter.sharedInstance().sessionStore
-        
-        if let userID = store.session()?.userID {
-            store.logOutUserID(userID)
-            print("logged out user with id \(userID)")
-        }
-        
-        DispatchQueue.main.async {
-            self.navigationController?.viewControllers = []
-            self.performSegue(withIdentifier: "LogoutSegue", sender: nil)
-        }
-    }
 
     /*
     // MARK: - Navigation

@@ -58,7 +58,7 @@
             </objects>
             <point key="canvasLocation" x="1678" y="-379"/>
         </scene>
-        <!--Home Search View Controller-->
+        <!--Twitter Eyes-->
         <scene sceneID="Qd2-0w-uAe">
             <objects>
                 <viewController storyboardIdentifier="HomeSearchViewController" id="mwC-ev-1kG" customClass="HomeSearchViewController" customModule="shinigami" customModuleProvider="target" sceneMemberID="viewController">
@@ -80,7 +80,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="SoT-F3-qQJ"/>
+                    <navigationItem key="navigationItem" title="Twitter Eyes" id="SoT-F3-qQJ">
+                        <barButtonItem key="rightBarButtonItem" title="Logout" id="jKA-Oi-Fxw">
+                            <connections>
+                                <action selector="clickedLogout:" destination="mwC-ev-1kG" id="zoh-u2-dvX"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="LogoutSegue" animates="NO" id="iH7-gT-Wpy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uoa-cP-av2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -89,6 +98,7 @@
         <!--Navigation Controller-->
         <scene sceneID="xCa-OE-LmN">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r1I-qD-ru8" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="T6d-Ka-S7P" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ViB-Us-koP">
@@ -100,7 +110,6 @@
                         <segue destination="mwC-ev-1kG" kind="relationship" relationship="rootViewController" id="uL4-HS-8Bf"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="r1I-qD-ru8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1702" y="411"/>
         </scene>
