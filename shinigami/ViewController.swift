@@ -32,63 +32,54 @@ class ViewController: UIViewController, UITextFieldDelegate {
         testLabel.text = "nate tapped that"
     }
     
+    private func loginSuccess() {
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "LoginSuccessSegue", sender: nil)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        /* logout last session
         let store = Twitter.sharedInstance().sessionStore
-        /* logout everyone
         if let userID = store.session()?.userID {
             let sessions = store.existingUserSessions()
             store.logOutUserID(userID)
             print("logged out \(userID)")
         }*/
         
-        if store.session() == nil {
+        let client = TWTRAPIClient.withCurrentUser()
+        print("****** current userID: \(client.userID ?? "none")")
+        
+        if client.userID != nil {
+            print("****** user already logged in with id \(client.userID!)")
+            loginSuccess()
+        } else {
+            /*
+            // for directly popping up login page
             Twitter.sharedInstance().logIn {(session, error) in
                 if let s = session {
-                    print("logged in user with id \(s.userID)")
+                    print("****** logged in user with id \(s.userID)")
+                    self.loginSuccess()
                 } else {
-                    print("login error \(error.debugDescription)")
+                    print("****** login error \(error.debugDescription)")
                 }
             }
-        }
-        let client = TWTRAPIClient.withCurrentUser()
-        print("current userID: \(client.userID ?? "none")")
-        
-        /*let statusesShowEndpoint = "https://api.twitter.com/1.1/statuses/show.json"
-        let params = ["id": "20"]
-        var clientError : NSError?
-        
-        let request = client.urlRequest(withMethod: "GET", url: statusesShowEndpoint, parameters: params, error: &clientError)
-        
-        client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
-            if connectionError != nil {
-                print("Error: \(String(describing: connectionError))")
-                return
-            }
+            */
             
-            do {
-                let json = try JSONSerialization.jsonObject(with: data!, options: [])
-                //print("json: \(json)")
-            } catch let jsonError as NSError {
-                print("json error: \(jsonError.localizedDescription)")
-            }
-        }*/
+            let logInButton = TWTRLogInButton(logInCompletion: { session, error in
+                if (session != nil) {
+                    print("****** logged in with id \(session?.userID ?? "none") and username \(session?.userName ?? "unknown")");
+                    self.loginSuccess()
+                } else {
+                    print("******  login error: \(error?.localizedDescription ?? "unknown")");
+                }
+            })
+            logInButton.center = self.view.center
+            self.view.addSubview(logInButton)
+        }
         
-        // Do any additional setup after loading the view, typically from a nib.
-        let logInButton = TWTRLogInButton(logInCompletion: { session, error in
-            if (session != nil) {
-                print("signed in as \(session?.userName ?? "unknown")");
-                /*
-                 let nextViewController =  yBoard.instantiateViewControllerWithIdentifier("nextView") as NextViewController
-                self.presentViewController(nextViewController, animated:true, completion:nil)
-                */
-            } else {
-                print("error: \(error?.localizedDescription ?? "unknown")");
-            }
-        })
-        logInButton.center = self.view.center
-        self.view.addSubview(logInButton)
         
         testTextField.delegate = self
     }

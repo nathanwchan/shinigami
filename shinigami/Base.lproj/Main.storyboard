@@ -46,6 +46,7 @@
                     <connections>
                         <outlet property="testLabel" destination="Yoz-3K-DbB" id="yG5-wm-sjq"/>
                         <outlet property="testTextField" destination="cfK-cd-Lfa" id="6jO-5S-hI9"/>
+                        <segue destination="T6d-Ka-S7P" kind="show" identifier="LoginSuccessSegue" id="J35-8n-Fbf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -55,7 +56,53 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="925.60000000000002" y="-187.55622188905548"/>
+            <point key="canvasLocation" x="1678" y="-379"/>
+        </scene>
+        <!--Home Search View Controller-->
+        <scene sceneID="Qd2-0w-uAe">
+            <objects>
+                <viewController storyboardIdentifier="HomeSearchViewController" id="mwC-ev-1kG" customClass="HomeSearchViewController" customModule="shinigami" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="D77-Cl-gRt"/>
+                        <viewControllerLayoutGuide type="bottom" id="BT9-MO-2JC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="b65-NO-fLP">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hi there" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yQQ-MS-WgD">
+                                <rect key="frame" x="122" y="279" width="130" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="SoT-F3-qQJ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uoa-cP-av2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2617" y="411"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="xCa-OE-LmN">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="T6d-Ka-S7P" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ViB-Us-koP">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="mwC-ev-1kG" kind="relationship" relationship="rootViewController" id="uL4-HS-8Bf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r1I-qD-ru8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1702" y="411"/>
         </scene>
     </scenes>
 </document>

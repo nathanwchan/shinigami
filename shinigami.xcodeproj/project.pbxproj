@@ -14,7 +14,7 @@
 		D810023E1ED49EDD00B4E34F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D810023D1ED49EDD00B4E34F /* Assets.xcassets */; };
 		D81002411ED49EDD00B4E34F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D810023F1ED49EDD00B4E34F /* LaunchScreen.storyboard */; };
 		D81002491ED745F900B4E34F /* twitter_eyes_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D81002481ED745F900B4E34F /* twitter_eyes_logo.png */; };
-		D810024C1ED7684900B4E34F /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D810024B1ED7684900B4E34F /* HomeController.swift */; };
+		D810024F1EDDF51100B4E34F /* HomeSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D810024E1EDDF51100B4E34F /* HomeSearchViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +29,7 @@
 		D81002401ED49EDD00B4E34F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D81002421ED49EDD00B4E34F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D81002481ED745F900B4E34F /* twitter_eyes_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = twitter_eyes_logo.png; path = ../../../../Downloads/twitter_eyes_logo.png; sourceTree = "<group>"; };
-		D810024B1ED7684900B4E34F /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		D810024E1EDDF51100B4E34F /* HomeSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeSearchViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				D81002381ED49EDD00B4E34F /* ViewController.swift */,
-				D810024B1ED7684900B4E34F /* HomeController.swift */,
+				D810024E1EDDF51100B4E34F /* HomeSearchViewController.swift */,
 			);
 			name = controllers;
 			sourceTree = "<group>";
@@ -236,7 +236,7 @@
 			files = (
 				D81002391ED49EDD00B4E34F /* ViewController.swift in Sources */,
 				D81002371ED49EDD00B4E34F /* AppDelegate.swift in Sources */,
-				D810024C1ED7684900B4E34F /* HomeController.swift in Sources */,
+				D810024F1EDDF51100B4E34F /* HomeSearchViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
