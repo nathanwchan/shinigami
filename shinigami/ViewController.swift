@@ -9,28 +9,7 @@
 import UIKit
 import TwitterKit
 
-class ViewController: UIViewController, UITextFieldDelegate {
-
-    @IBOutlet weak var testTextField: UITextField!
-    @IBOutlet weak var testLabel: UILabel!
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        //testLabel.text = textField.text
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        testLabel.text = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
-        return true
-    }
-    
-    @IBAction func labelTapGesture(_ sender: UITapGestureRecognizer) {
-        testLabel.text = "nate tapped that"
-    }
+class ViewController: UIViewController {
     
     private func loginSuccess() {
         DispatchQueue.main.async {
@@ -41,19 +20,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /* logout last session
         let store = Twitter.sharedInstance().sessionStore
+
         if let userID = store.session()?.userID {
-            let sessions = store.existingUserSessions()
-            store.logOutUserID(userID)
-            print("logged out \(userID)")
-        }*/
-        
-        let client = TWTRAPIClient.withCurrentUser()
-        print("****** current userID: \(client.userID ?? "none")")
-        
-        if client.userID != nil {
-            print("****** user already logged in with id \(client.userID!)")
+            print("****** user already logged in with id \(userID)")
             loginSuccess()
         } else {
             /*
@@ -79,9 +49,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
             logInButton.center = self.view.center
             self.view.addSubview(logInButton)
         }
-        
-        
-        testTextField.delegate = self
     }
 }
 
