@@ -41,6 +41,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D81002571EDF6BB000B4E34F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -73,6 +80,7 @@
 		D81002351ED49EDD00B4E34F /* shinigami */ = {
 			isa = PBXGroup;
 			children = (
+				D81002521EDF598900B4E34F /* models */,
 				D810024D1ED7685200B4E34F /* controllers */,
 				D81002361ED49EDD00B4E34F /* AppDelegate.swift */,
 				D810023A1ED49EDD00B4E34F /* Main.storyboard */,
@@ -101,6 +109,13 @@
 			name = controllers;
 			sourceTree = "<group>";
 		};
+		D81002521EDF598900B4E34F /* models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = models;
+			sourceTree = "<group>";
+		};
 		FF30EF43B7A66863B7BC529A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +126,16 @@
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D81002581EDF6BB000B4E34F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		D81002321ED49EDD00B4E34F /* shinigami */ = {
@@ -147,6 +172,10 @@
 						CreatedOnToolsVersion = 8.3.2;
 						ProvisioningStyle = Automatic;
 					};
+					D810025A1EDF6BB000B4E34F = {
+						CreatedOnToolsVersion = 8.3.2;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = D810022E1ED49EDD00B4E34F /* Build configuration list for PBXProject "shinigami" */;
@@ -176,6 +205,13 @@
 				D810023E1ED49EDD00B4E34F /* Assets.xcassets in Resources */,
 				D81002491ED745F900B4E34F /* twitter_eyes_logo.png in Resources */,
 				D810023C1ED49EDD00B4E34F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D81002591EDF6BB000B4E34F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,6 +273,13 @@
 				D81002391ED49EDD00B4E34F /* ViewController.swift in Sources */,
 				D81002371ED49EDD00B4E34F /* AppDelegate.swift in Sources */,
 				D810024F1EDDF51100B4E34F /* HomeSearchViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D81002561EDF6BB000B4E34F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
