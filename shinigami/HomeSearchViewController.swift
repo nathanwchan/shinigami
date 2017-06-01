@@ -15,7 +15,7 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     @IBOutlet weak var usersTableView: UITableView!
     @IBOutlet weak var usersTableScrollView: UIScrollView!
     
-    private var users: [AnyObject] = []
+    private var users: [TWTRUserCustom] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +46,8 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
                 }
                 
                 do {
-                    self.users = try JSONSerialization.jsonObject(with: data) as! [AnyObject]
+                    let jsonData = try JSONSerialization.jsonObject(with: data) as! [AnyObject]
+                    self.users = jsonData.map { TWTRUserCustom.init(json: $0 as! [String: Any])! }
                     self.usersTableView.reloadData()
                 } catch let jsonError as NSError {
                     // intentionally don't reset self.users values so we can continue displaying last retrieved results in case of error
@@ -61,8 +62,12 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let userCell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath)
-        userCell.textLabel?.text = String(describing: self.users[indexPath.row]["screen_name"]!!)
+        guard let userCell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as? UserTableViewCell else {
+            fatalError("The dequeued cell is not an instance of UserTableViewCell.")
+        }
+        userCell.userProfileImageView.image(fromUrl: self.users[indexPath.row].profileImageUrl)
+        userCell.userNameLabel.text = self.users[indexPath.row].name
+        userCell.userScreenNameLabel.text = "@\(self.users[indexPath.row].screenName)"
         return userCell
     }
     

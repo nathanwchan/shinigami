@@ -15,6 +15,9 @@
 		D81002411ED49EDD00B4E34F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D810023F1ED49EDD00B4E34F /* LaunchScreen.storyboard */; };
 		D81002491ED745F900B4E34F /* twitter_eyes_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D81002481ED745F900B4E34F /* twitter_eyes_logo.png */; };
 		D810024F1EDDF51100B4E34F /* HomeSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D810024E1EDDF51100B4E34F /* HomeSearchViewController.swift */; };
+		D810026E1EDF97B500B4E34F /* TWTRUserCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = D810026D1EDF97B500B4E34F /* TWTRUserCustom.swift */; };
+		D81002701EDFC1C500B4E34F /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D810026F1EDFC1C500B4E34F /* UserTableViewCell.swift */; };
+		D81002721EDFC4DE00B4E34F /* UIImageView+downloadedFrom.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81002711EDFC4DE00B4E34F /* UIImageView+downloadedFrom.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		D81002421ED49EDD00B4E34F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D81002481ED745F900B4E34F /* twitter_eyes_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = twitter_eyes_logo.png; path = ../../../../Downloads/twitter_eyes_logo.png; sourceTree = "<group>"; };
 		D810024E1EDDF51100B4E34F /* HomeSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeSearchViewController.swift; sourceTree = "<group>"; };
+		D810026D1EDF97B500B4E34F /* TWTRUserCustom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWTRUserCustom.swift; sourceTree = "<group>"; };
+		D810026F1EDFC1C500B4E34F /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
+		D81002711EDFC4DE00B4E34F /* UIImageView+downloadedFrom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+downloadedFrom.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,13 +44,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				020ACD712F1F5773DA28C2D3 /* Pods_shinigami.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D81002571EDF6BB000B4E34F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +104,8 @@
 			children = (
 				D81002381ED49EDD00B4E34F /* ViewController.swift */,
 				D810024E1EDDF51100B4E34F /* HomeSearchViewController.swift */,
+				D810026F1EDFC1C500B4E34F /* UserTableViewCell.swift */,
+				D81002711EDFC4DE00B4E34F /* UIImageView+downloadedFrom.swift */,
 			);
 			name = controllers;
 			sourceTree = "<group>";
@@ -112,6 +113,7 @@
 		D81002521EDF598900B4E34F /* models */ = {
 			isa = PBXGroup;
 			children = (
+				D810026D1EDF97B500B4E34F /* TWTRUserCustom.swift */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -126,16 +128,6 @@
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
-
-/* Begin PBXHeadersBuildPhase section */
-		D81002581EDF6BB000B4E34F /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		D81002321ED49EDD00B4E34F /* shinigami */ = {
@@ -172,10 +164,6 @@
 						CreatedOnToolsVersion = 8.3.2;
 						ProvisioningStyle = Automatic;
 					};
-					D810025A1EDF6BB000B4E34F = {
-						CreatedOnToolsVersion = 8.3.2;
-						ProvisioningStyle = Automatic;
-					};
 				};
 			};
 			buildConfigurationList = D810022E1ED49EDD00B4E34F /* Build configuration list for PBXProject "shinigami" */;
@@ -205,13 +193,6 @@
 				D810023E1ED49EDD00B4E34F /* Assets.xcassets in Resources */,
 				D81002491ED745F900B4E34F /* twitter_eyes_logo.png in Resources */,
 				D810023C1ED49EDD00B4E34F /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D81002591EDF6BB000B4E34F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,14 +253,10 @@
 			files = (
 				D81002391ED49EDD00B4E34F /* ViewController.swift in Sources */,
 				D81002371ED49EDD00B4E34F /* AppDelegate.swift in Sources */,
+				D810026E1EDF97B500B4E34F /* TWTRUserCustom.swift in Sources */,
 				D810024F1EDDF51100B4E34F /* HomeSearchViewController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D81002561EDF6BB000B4E34F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				D81002721EDFC4DE00B4E34F /* UIImageView+downloadedFrom.swift in Sources */,
+				D81002701EDFC1C500B4E34F /* UserTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
