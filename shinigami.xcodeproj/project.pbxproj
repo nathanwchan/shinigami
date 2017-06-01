@@ -18,6 +18,7 @@
 		D810026E1EDF97B500B4E34F /* TWTRUserCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = D810026D1EDF97B500B4E34F /* TWTRUserCustom.swift */; };
 		D81002701EDFC1C500B4E34F /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D810026F1EDFC1C500B4E34F /* UserTableViewCell.swift */; };
 		D81002721EDFC4DE00B4E34F /* UIImageView+downloadedFrom.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81002711EDFC4DE00B4E34F /* UIImageView+downloadedFrom.swift */; };
+		D81002781EE07DF300B4E34F /* twitter-verified-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D81002771EE07DF300B4E34F /* twitter-verified-icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		D810026D1EDF97B500B4E34F /* TWTRUserCustom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWTRUserCustom.swift; sourceTree = "<group>"; };
 		D810026F1EDFC1C500B4E34F /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		D81002711EDFC4DE00B4E34F /* UIImageView+downloadedFrom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+downloadedFrom.swift"; sourceTree = "<group>"; };
+		D81002771EE07DF300B4E34F /* twitter-verified-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitter-verified-icon.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 		D810024A1ED746BE00B4E34F /* images */ = {
 			isa = PBXGroup;
 			children = (
+				D81002771EE07DF300B4E34F /* twitter-verified-icon.png */,
 				D81002481ED745F900B4E34F /* twitter_eyes_logo.png */,
 			);
 			name = images;
@@ -191,6 +194,7 @@
 			files = (
 				D81002411ED49EDD00B4E34F /* LaunchScreen.storyboard in Resources */,
 				D810023E1ED49EDD00B4E34F /* Assets.xcassets in Resources */,
+				D81002781EE07DF300B4E34F /* twitter-verified-icon.png in Resources */,
 				D81002491ED745F900B4E34F /* twitter_eyes_logo.png in Resources */,
 				D810023C1ED49EDD00B4E34F /* Main.storyboard in Resources */,
 			);

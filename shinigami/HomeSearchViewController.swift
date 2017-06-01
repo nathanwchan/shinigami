@@ -25,6 +25,8 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         self.searchTextField.delegate = self
         self.usersTableView.dataSource = self
         self.usersTableScrollView.delegate = self
+        
+        self.usersTableView.tableFooterView = UIView(frame: CGRect.zero)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -65,9 +67,13 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         guard let userCell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as? UserTableViewCell else {
             fatalError("The dequeued cell is not an instance of UserTableViewCell.")
         }
-        userCell.userProfileImageView.image(fromUrl: self.users[indexPath.row].profileImageUrl)
-        userCell.userNameLabel.text = self.users[indexPath.row].name
-        userCell.userScreenNameLabel.text = "@\(self.users[indexPath.row].screenName)"
+        let user = self.users[indexPath.row]
+        userCell.userProfileImageView.image(fromUrl: user.profileImageUrl)
+        userCell.userProfileImageView.layer.cornerRadius = 5
+        userCell.userProfileImageView.clipsToBounds = true
+        userCell.userNameLabel.text = user.name
+        userCell.userScreenNameLabel.text = "@\(user.screenName)"
+        userCell.userIsVerifiedImageView.isHidden = !user.isVerified
         return userCell
     }
     
