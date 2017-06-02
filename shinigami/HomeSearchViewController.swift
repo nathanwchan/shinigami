@@ -68,7 +68,7 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
             fatalError("The dequeued cell is not an instance of UserTableViewCell.")
         }
         let user = self.users[indexPath.row]
-        userCell.userProfileImageView.image(fromUrl: user.profileImageUrl)
+        userCell.userProfileImageView.image(fromUrl: user.profileImageNormalSizeUrl)
         userCell.userProfileImageView.layer.cornerRadius = 5
         userCell.userProfileImageView.clipsToBounds = true
         userCell.userNameLabel.text = user.name
@@ -79,6 +79,10 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.users.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -97,6 +101,32 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         DispatchQueue.main.async {
             self.navigationController?.viewControllers = []
             self.performSegue(withIdentifier: "LogoutSegue", sender: nil)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        super.prepare(for: segue, sender: sender)
+        
+        switch(segue.identifier ?? "") {
+            case "ShowProfileSegue":
+                guard let profileViewController = segue.destination as? ProfileViewController else {
+                    fatalError("Unexpected destination: \(segue.destination)")
+                }
+                
+                guard let selectedUserCell = sender as? UserTableViewCell else {
+                    fatalError("Unexpected sender: \(sender.debugDescription)")
+                }
+                
+                guard let indexPath = usersTableView.indexPath(for: selectedUserCell) else {
+                    fatalError("The selected cell is not being displayed by the table")
+                }
+                
+                profileViewController.user = self.users[indexPath.row]
+            case "LogoutSegue":
+                break
+            default:
+                fatalError("Unexpected Segue Identifier; \(segue.identifier ?? "unknown")")
         }
     }
 }

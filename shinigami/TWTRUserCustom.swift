@@ -17,7 +17,8 @@ class TWTRUserCustom {
     let followersCount: Int // unused
     let followingCount: Int // friends_count
     let isVerified: Bool
-    let profileImageUrl: String
+    let profileImageNormalSizeUrl: String
+    let profileImageOriginalSizeUrl: String
     let following: Bool // is the logged-in user following this user?
     
     init?(json: [String: Any]) {
@@ -30,7 +31,7 @@ class TWTRUserCustom {
             let followersCount = json["followers_count"] as? Int,
             let followingCount = json["friends_count"] as? Int,
             let isVerified = json["verified"] as? Bool,
-            let profileImageUrl = json["profile_image_url_https"] as? String,
+            let profileImageNormalSizeUrl = json["profile_image_url_https"] as? String,
             let following = json["following"] as? Bool
         else {
             return nil
@@ -44,7 +45,8 @@ class TWTRUserCustom {
         self.followersCount = followersCount
         self.followingCount = followingCount
         self.isVerified = isVerified
-        self.profileImageUrl = profileImageUrl
+        self.profileImageNormalSizeUrl = profileImageNormalSizeUrl
+        self.profileImageOriginalSizeUrl = profileImageNormalSizeUrl.replacingOccurrences(of: "_normal", with: "")
         self.following = following
     }
 }

@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  LoginViewController.swift
 //  shinigami
 //
 //  Created by Nathan Chan on 5/23/17.g
@@ -9,7 +9,7 @@
 import UIKit
 import TwitterKit
 
-class ViewController: UIViewController {
+class LoginViewController: UIViewController {
     
     private func loginSuccess() {
         DispatchQueue.main.async {

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		020ACD712F1F5773DA28C2D3 /* Pods_shinigami.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A8BC89F844F4219F316174 /* Pods_shinigami.framework */; };
 		D81002371ED49EDD00B4E34F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81002361ED49EDD00B4E34F /* AppDelegate.swift */; };
-		D81002391ED49EDD00B4E34F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81002381ED49EDD00B4E34F /* ViewController.swift */; };
+		D81002391ED49EDD00B4E34F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81002381ED49EDD00B4E34F /* LoginViewController.swift */; };
 		D810023C1ED49EDD00B4E34F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D810023A1ED49EDD00B4E34F /* Main.storyboard */; };
 		D810023E1ED49EDD00B4E34F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D810023D1ED49EDD00B4E34F /* Assets.xcassets */; };
 		D81002411ED49EDD00B4E34F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D810023F1ED49EDD00B4E34F /* LaunchScreen.storyboard */; };
@@ -19,6 +19,8 @@
 		D81002701EDFC1C500B4E34F /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D810026F1EDFC1C500B4E34F /* UserTableViewCell.swift */; };
 		D81002721EDFC4DE00B4E34F /* UIImageView+downloadedFrom.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81002711EDFC4DE00B4E34F /* UIImageView+downloadedFrom.swift */; };
 		D81002781EE07DF300B4E34F /* twitter-verified-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D81002771EE07DF300B4E34F /* twitter-verified-icon.png */; };
+		D810027C1EE083E800B4E34F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D810027B1EE083E800B4E34F /* ProfileViewController.swift */; };
+		D810027F1EE09C1000B4E34F /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D810027E1EE09C1000B4E34F /* ProfileTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +29,7 @@
 		CDB3DC8364A643D0084D242F /* Pods-shinigami.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shinigami.debug.xcconfig"; path = "Pods/Target Support Files/Pods-shinigami/Pods-shinigami.debug.xcconfig"; sourceTree = "<group>"; };
 		D81002331ED49EDD00B4E34F /* shinigami.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shinigami.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D81002361ED49EDD00B4E34F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D81002381ED49EDD00B4E34F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D81002381ED49EDD00B4E34F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D810023B1ED49EDD00B4E34F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D810023D1ED49EDD00B4E34F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D81002401ED49EDD00B4E34F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -38,6 +40,8 @@
 		D810026F1EDFC1C500B4E34F /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		D81002711EDFC4DE00B4E34F /* UIImageView+downloadedFrom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+downloadedFrom.swift"; sourceTree = "<group>"; };
 		D81002771EE07DF300B4E34F /* twitter-verified-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitter-verified-icon.png"; sourceTree = "<group>"; };
+		D810027B1EE083E800B4E34F /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		D810027E1EE09C1000B4E34F /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,13 +85,14 @@
 		D81002351ED49EDD00B4E34F /* shinigami */ = {
 			isa = PBXGroup;
 			children = (
+				D810024A1ED746BE00B4E34F /* images */,
 				D81002521EDF598900B4E34F /* models */,
 				D810024D1ED7685200B4E34F /* controllers */,
-				D81002361ED49EDD00B4E34F /* AppDelegate.swift */,
+				D810027D1EE09A9300B4E34F /* extensions */,
 				D810023A1ED49EDD00B4E34F /* Main.storyboard */,
+				D81002361ED49EDD00B4E34F /* AppDelegate.swift */,
 				D810023D1ED49EDD00B4E34F /* Assets.xcassets */,
 				D810023F1ED49EDD00B4E34F /* LaunchScreen.storyboard */,
-				D810024A1ED746BE00B4E34F /* images */,
 				D81002421ED49EDD00B4E34F /* Info.plist */,
 			);
 			path = shinigami;
@@ -105,10 +110,11 @@
 		D810024D1ED7685200B4E34F /* controllers */ = {
 			isa = PBXGroup;
 			children = (
-				D81002381ED49EDD00B4E34F /* ViewController.swift */,
+				D81002381ED49EDD00B4E34F /* LoginViewController.swift */,
 				D810024E1EDDF51100B4E34F /* HomeSearchViewController.swift */,
 				D810026F1EDFC1C500B4E34F /* UserTableViewCell.swift */,
-				D81002711EDFC4DE00B4E34F /* UIImageView+downloadedFrom.swift */,
+				D810027E1EE09C1000B4E34F /* ProfileTableViewCell.swift */,
+				D810027B1EE083E800B4E34F /* ProfileViewController.swift */,
 			);
 			name = controllers;
 			sourceTree = "<group>";
@@ -119,6 +125,14 @@
 				D810026D1EDF97B500B4E34F /* TWTRUserCustom.swift */,
 			);
 			name = models;
+			sourceTree = "<group>";
+		};
+		D810027D1EE09A9300B4E34F /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D81002711EDFC4DE00B4E34F /* UIImageView+downloadedFrom.swift */,
+			);
+			name = extensions;
 			sourceTree = "<group>";
 		};
 		FF30EF43B7A66863B7BC529A /* Pods */ = {
@@ -255,11 +269,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D81002391ED49EDD00B4E34F /* ViewController.swift in Sources */,
+				D81002391ED49EDD00B4E34F /* LoginViewController.swift in Sources */,
+				D810027F1EE09C1000B4E34F /* ProfileTableViewCell.swift in Sources */,
 				D81002371ED49EDD00B4E34F /* AppDelegate.swift in Sources */,
 				D810026E1EDF97B500B4E34F /* TWTRUserCustom.swift in Sources */,
 				D810024F1EDDF51100B4E34F /* HomeSearchViewController.swift in Sources */,
 				D81002721EDFC4DE00B4E34F /* UIImageView+downloadedFrom.swift in Sources */,
+				D810027C1EE083E800B4E34F /* ProfileViewController.swift in Sources */,
 				D81002701EDFC1C500B4E34F /* UserTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
