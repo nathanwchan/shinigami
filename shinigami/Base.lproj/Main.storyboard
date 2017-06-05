@@ -241,7 +241,7 @@
                                             <outlet property="whatNameSeesLabel" destination="5bo-dF-gg3" id="29x-i0-lQJ"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="l8C-UN-Wdx">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="tweetCell" id="l8C-UN-Wdx" customClass="TWTRTweetTableViewCell">
                                         <rect key="frame" x="0.0" y="145" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l8C-UN-Wdx" id="3aC-KL-meq">
@@ -310,6 +310,6 @@
         <image name="twitter-verified-icon.png" width="15" height="15"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="jBL-E0-8xR"/>
+        <segue reference="Fx4-Zw-XYd"/>
     </inferredMetricsTieBreakers>
 </document>

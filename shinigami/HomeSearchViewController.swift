@@ -41,7 +41,7 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
             
             let request = client.urlRequest(withMethod: "GET", url: usersSearchEndpoint, parameters: nil, error: &clientError)
             
-            client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
+            client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
                 guard let data = data else {
                     print("Error: \(connectionError.debugDescription)")
                     return
