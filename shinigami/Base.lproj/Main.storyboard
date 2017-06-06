@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -164,48 +164,48 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="profileCell" rowHeight="117" id="Xbe-Dv-Hqn" customClass="ProfileTableViewCell" customModule="shinigami" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="117"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="profileCell" rowHeight="100" id="Xbe-Dv-Hqn" customClass="ProfileTableViewCell" customModule="shinigami" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xbe-Dv-Hqn" id="Iti-1h-tpG">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="117"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="Xbe-Dv-Hqn" id="Iti-1h-tpG">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Nmo-vE-sm9">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nmo-vE-sm9">
                                                     <rect key="frame" x="12" y="8" width="100" height="100"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="100" id="Wo0-6t-b3D"/>
                                                         <constraint firstAttribute="width" constant="100" id="kj2-a0-1Eg"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nathan Chan" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u1K-aS-zeA">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Nathan Chan" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u1K-aS-zeA">
                                                     <rect key="frame" x="122" y="8" width="106" height="21"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@nathanwchan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="alY-8f-wjV">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="@nathanwchan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="alY-8f-wjV">
                                                     <rect key="frame" x="122" y="31" width="102.5" height="17.5"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem Ipsum is simply dummLorem Ipsum is simply dummLorem Ipsum is simply dumm" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="st4-Qy-oOS">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Lorem Ipsum is simply dummLorem Ipsum is simply dummLorem Ipsum is simply dumm" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="st4-Qy-oOS">
                                                     <rect key="frame" x="122" y="52" width="243" height="33.5"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="twitter-verified-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="xgV-CY-C11">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="twitter-verified-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="xgV-CY-C11">
                                                     <rect key="frame" x="235" y="11" width="15" height="15"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="57 following" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V2i-Qp-jGD">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="57 following" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V2i-Qp-jGD">
                                                     <rect key="frame" x="284" y="10" width="81" height="17.5"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What Nathan Chan sees..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5bo-dF-gg3">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="What Nathan Chan sees..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5bo-dF-gg3">
                                                     <rect key="frame" x="122" y="89" width="187" height="19"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                                     <nil key="textColor"/>
@@ -220,7 +220,7 @@
                                                 <constraint firstItem="u1K-aS-zeA" firstAttribute="leading" secondItem="Nmo-vE-sm9" secondAttribute="trailing" constant="10" id="JLf-Nr-1nI"/>
                                                 <constraint firstItem="V2i-Qp-jGD" firstAttribute="top" secondItem="Iti-1h-tpG" secondAttribute="top" constant="10" id="LPc-XG-Dyh"/>
                                                 <constraint firstItem="u1K-aS-zeA" firstAttribute="top" secondItem="Iti-1h-tpG" secondAttribute="topMargin" id="MEa-KC-e0v"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="Nmo-vE-sm9" secondAttribute="bottom" id="PQW-xd-SzP"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Nmo-vE-sm9" secondAttribute="bottom" id="RoQ-jD-afp"/>
                                                 <constraint firstAttribute="trailing" secondItem="V2i-Qp-jGD" secondAttribute="trailing" constant="10" id="Rrv-lM-XFA"/>
                                                 <constraint firstItem="alY-8f-wjV" firstAttribute="top" secondItem="u1K-aS-zeA" secondAttribute="bottom" constant="2" id="cVu-oM-8Up"/>
                                                 <constraint firstItem="xgV-CY-C11" firstAttribute="leading" secondItem="u1K-aS-zeA" secondAttribute="trailing" constant="7" id="fH5-s5-B4w"/>
@@ -242,11 +242,36 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="tweetCell" id="l8C-UN-Wdx" customClass="TWTRTweetTableViewCell">
-                                        <rect key="frame" x="0.0" y="145" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="128" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l8C-UN-Wdx" id="3aC-KL-meq">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="sorryCell" rowHeight="113" id="zVD-QP-gZ1">
+                                        <rect key="frame" x="0.0" y="172" width="375" height="113"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zVD-QP-gZ1" id="MmU-PA-fFa">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="112.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f7s-cU-6WT">
+                                                    <rect key="frame" x="8" y="20" width="359" height="72.5"/>
+                                                    <string key="text">Sorry, something went wrong :(
+(you probably hit Twitter API rate limits)
+Try again in about 15 minutes.</string>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="f7s-cU-6WT" secondAttribute="bottom" constant="20" id="31y-rL-6hB" userLabel="bottom = Sorry, something went wrong :( (you probably hit Twitter API rate limits) Try again in about 15 minutes..bottom"/>
+                                                <constraint firstAttribute="trailing" secondItem="f7s-cU-6WT" secondAttribute="trailing" constant="8" id="PT7-AG-Q2O"/>
+                                                <constraint firstItem="f7s-cU-6WT" firstAttribute="leading" secondItem="MmU-PA-fFa" secondAttribute="leading" constant="8" id="dpa-o0-llD"/>
+                                                <constraint firstItem="f7s-cU-6WT" firstAttribute="top" secondItem="MmU-PA-fFa" secondAttribute="top" constant="20" id="qKI-xg-bnO"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
@@ -272,7 +297,6 @@
         <!--Navigation Controller-->
         <scene sceneID="xCa-OE-LmN">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="r1I-qD-ru8" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="T6d-Ka-S7P" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ViB-Us-koP">
@@ -284,6 +308,7 @@
                         <segue destination="mwC-ev-1kG" kind="relationship" relationship="rootViewController" id="uL4-HS-8Bf"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r1I-qD-ru8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1702" y="411"/>
         </scene>

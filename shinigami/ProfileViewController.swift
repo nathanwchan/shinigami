@@ -13,6 +13,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 
     var user: TWTRUserCustom?
     private var tweets: [TWTRTweet] = []
+    private var showSorryCell: Bool = false
+    private func errorOccured() {
+        self.showSorryCell = true
+        self.profileTableView.reloadData()
+    }
     
     @IBOutlet weak var profileTableView: UITableView!
     
@@ -49,6 +54,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
             guard let data = data else {
                 print("Error: \(connectionError.debugDescription)")
+                self.errorOccured()
                 return
             }
             
@@ -62,6 +68,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
                     guard let data = data else {
                         print("Error: \(connectionError.debugDescription)")
+                        self.errorOccured()
                         return
                     }
                     
@@ -70,26 +77,51 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                         let followingIdsList = (jsonData["ids"]! as! [Int]).map { String(describing: $0) }
                         
                         let addMembersToListEndpoint = "https://api.twitter.com/1.1/lists/members/create_all.json"
-                        let params = [
-                            "list_id": listID,
-                            "user_id": followingIdsList.joined(separator: ",")
-                        ]
                         // NOTE: this has a user_id list limit of 100 https://dev.twitter.com/rest/reference/post/lists/members/create_all
-                        let request = client.urlRequest(withMethod: "POST", url: addMembersToListEndpoint, parameters: params, error: &clientError)
-                        
-                        client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
-                            if data == nil {
-                                print("Error: \(connectionError.debugDescription)")
-                                return
-                            }
-                            // successfully added members to list
+                        let addMembersDispatchGroup = DispatchGroup()
+                        let maxMembersCount = 100
+                        let requestsCount = 1 // TEMPORARY: (followingIdsList.count / maxMembersCount) + 1
+                        for i in 0..<requestsCount {
+                            addMembersDispatchGroup.enter()
+                            let startIndex = maxMembersCount*i
+                            let endIndex = min(maxMembersCount*(i+1), followingIdsList.count)
+                            print("startIndex \(startIndex) endIndex \(endIndex) totalCount \(followingIdsList.count)")
+                            let params = [
+                                "list_id": listID,
+                                "user_id": followingIdsList[startIndex..<endIndex].joined(separator: ",")
+                            ]
+                            let request = client.urlRequest(withMethod: "POST", url: addMembersToListEndpoint, parameters: params, error: &clientError)
+                            
+                            client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
+                                guard let data = data else {
+                                    print("Error: \(connectionError.debugDescription)")
+                                    self.errorOccured()
+                                    return
+                                }
                                 
+                                do {
+                                    let jsonData = try JSONSerialization.jsonObject(with: data) as AnyObject
+                                    if jsonData["member_count"]!! as! Int == 0 {
+                                        print("Error: response to lists/members/create_all.json returned successfully, but no members were added")
+                                        self.errorOccured()
+                                        return
+                                    }
+                                } catch let jsonError as NSError {
+                                    print("json error: \(jsonError.localizedDescription)")
+                                }
+                                
+                                addMembersDispatchGroup.leave()
+                            }
+                        }
+                        
+                        addMembersDispatchGroup.notify(queue: .main) {
                             let getListTweetsEndpoint = "https://api.twitter.com/1.1/lists/statuses.json?list_id=\(listID)"
                             let request = client.urlRequest(withMethod: "GET", url: getListTweetsEndpoint, parameters: nil, error: &clientError)
                             
                             client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
                                 guard let data = data else {
                                     print("Error: \(connectionError.debugDescription)")
+                                    self.errorOccured()
                                     return
                                 }
                                 
@@ -112,7 +144,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 print("json error: \(jsonError.localizedDescription)")
             }
         }
-
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -134,6 +165,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             profileCell.whatNameSeesLabel.text = "What \(user.name) sees..."
             profileCell.followingLabel.text = "\(user.followingCount) following"
             return profileCell
+        } else if self.showSorryCell {
+            let sorryCell = tableView.dequeueReusableCell(withIdentifier: "sorryCell", for: indexPath) as UITableViewCell
+            return sorryCell
         } else {
             guard let tweetCell = tableView.dequeueReusableCell(withIdentifier: "tweetCell", for: indexPath) as? TWTRTweetTableViewCell else {
                 fatalError("The dequeued cell is not an instance of TWTRTweetTableViewCell.")
@@ -147,7 +181,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tweets.count + 1
+        return tweets.count + 1 + (self.showSorryCell ? 1 : 0)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
