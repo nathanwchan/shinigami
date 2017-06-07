@@ -4,4 +4,5 @@ target 'shinigami' do
   use_frameworks!
 
   pod 'TwitterKit', '~> 3.0'
+  pod 'SwiftyJSON'
 end

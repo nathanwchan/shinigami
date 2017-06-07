@@ -1,15 +1,18 @@
 PODS:
+  - SwiftyJSON (3.1.4)
   - TwitterCore (3.0.0)
   - TwitterKit (3.0.0):
     - TwitterCore (>= 3.0.0)
 
 DEPENDENCIES:
-  - TwitterKit
+  - SwiftyJSON
+  - TwitterKit (~> 3.0)
 
 SPEC CHECKSUMS:
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   TwitterCore: 8ce250be1eb34633a0e6acc89520d4165ec52c10
   TwitterKit: 3f07a582e1e29ac5771e383a5cab74aaa0a5ea6c
 
-PODFILE CHECKSUM: f87bed06c452f2fef6474a7885e0601f1f66b3c3
+PODFILE CHECKSUM: d92779a4244979a9a2889d3e8807b4918afc8d31
 
 COCOAPODS: 1.2.1
