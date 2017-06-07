@@ -121,7 +121,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                         }
                         
                         let jsonData = JSON(data: data)
-                        self.tweets = TWTRTweet.tweets(withJSONArray: jsonData.arrayValue) as! [TWTRTweet]
+                        self.tweets = TWTRTweet.tweets(withJSONArray: jsonData.arrayObject) as! [TWTRTweet]
                         self.profileTableView.reloadData()
                     }
                 }
