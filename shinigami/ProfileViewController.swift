@@ -84,7 +84,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     addMembersDispatchGroup.enter()
                     let startIndex = maxMembersCount*i
                     let endIndex = min(maxMembersCount*(i+1), followingIdsList.count)
-                    print("startIndex \(startIndex) endIndex \(endIndex) totalCount \(followingIdsList.count)")
                     let params = [
                         "list_id": listID,
                         "user_id": followingIdsList[startIndex..<endIndex].joined(separator: ",")
@@ -146,7 +145,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             profileCell.isVerifiedImageView.isHidden = !user.isVerified
             profileCell.descriptionLabel.text = user.description
             profileCell.whatNameSeesLabel.text = "What \(user.name) sees..."
-            profileCell.followingLabel.text = "\(user.followingCount) following"
+            profileCell.followingLabel.text = abbreviateNumber(num: user.followingCount)
             return profileCell
         } else if self.showSorryCell {
             let sorryCell = tableView.dequeueReusableCell(withIdentifier: "sorryCell", for: indexPath) as UITableViewCell

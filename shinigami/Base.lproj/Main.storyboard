@@ -79,10 +79,26 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="twitter-verified-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="7Aa-E7-gJU">
                                                     <rect key="frame" x="122" y="11" width="15" height="15"/>
                                                 </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="57" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wp3-7y-PSe">
+                                                    <rect key="frame" x="349" y="10" width="16" height="16.5"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FOLLOWING" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UYu-tH-TdA">
+                                                    <rect key="frame" x="281" y="13" width="65" height="13"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="T21-l9-4JY" firstAttribute="top" secondItem="JrB-JE-oFG" secondAttribute="topMargin" id="JdM-rU-ikq"/>
                                                 <constraint firstItem="7Aa-E7-gJU" firstAttribute="leading" secondItem="3Iy-v2-dwa" secondAttribute="trailing" constant="7" id="MKM-Jx-rr6"/>
+                                                <constraint firstItem="Wp3-7y-PSe" firstAttribute="top" secondItem="JrB-JE-oFG" secondAttribute="top" constant="10" id="TBi-eb-uO2"/>
+                                                <constraint firstAttribute="trailing" secondItem="Wp3-7y-PSe" secondAttribute="trailing" constant="10" id="at5-rM-G2p"/>
+                                                <constraint firstItem="Wp3-7y-PSe" firstAttribute="leading" secondItem="UYu-tH-TdA" secondAttribute="trailing" constant="3" id="dRo-ip-oXd"/>
+                                                <constraint firstItem="UYu-tH-TdA" firstAttribute="top" secondItem="JrB-JE-oFG" secondAttribute="top" constant="13" id="fzS-1K-7vr"/>
                                                 <constraint firstItem="8mV-c0-F9Y" firstAttribute="top" secondItem="3Iy-v2-dwa" secondAttribute="bottom" constant="1" id="lDn-uB-xQy"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="8mV-c0-F9Y" secondAttribute="bottom" constant="6" id="nKf-QJ-LNh"/>
                                                 <constraint firstItem="3Iy-v2-dwa" firstAttribute="leading" secondItem="T21-l9-4JY" secondAttribute="trailing" constant="10" id="oov-Cl-zcg"/>
@@ -93,6 +109,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="followingCountLabel" destination="Wp3-7y-PSe" id="jqb-cD-gNj"/>
                                             <outlet property="userIsVerifiedImageView" destination="7Aa-E7-gJU" id="Vjn-je-3DY"/>
                                             <outlet property="userNameLabel" destination="3Iy-v2-dwa" id="eWC-dp-yty"/>
                                             <outlet property="userProfileImageView" destination="T21-l9-4JY" id="LZC-JN-01f"/>
@@ -199,8 +216,8 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="twitter-verified-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="xgV-CY-C11">
                                                     <rect key="frame" x="235" y="11" width="15" height="15"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="57 following" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V2i-Qp-jGD">
-                                                    <rect key="frame" x="284" y="10" width="81" height="17.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="57" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V2i-Qp-jGD">
+                                                    <rect key="frame" x="348" y="10" width="17" height="17.5"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -209,6 +226,12 @@
                                                     <rect key="frame" x="122" y="89" width="187" height="19"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                                     <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="FOLLOWING" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5CM-Od-lYq">
+                                                    <rect key="frame" x="274.5" y="8" width="70.5" height="21"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -220,6 +243,7 @@
                                                 <constraint firstItem="u1K-aS-zeA" firstAttribute="leading" secondItem="Nmo-vE-sm9" secondAttribute="trailing" constant="10" id="JLf-Nr-1nI"/>
                                                 <constraint firstItem="V2i-Qp-jGD" firstAttribute="top" secondItem="Iti-1h-tpG" secondAttribute="top" constant="10" id="LPc-XG-Dyh"/>
                                                 <constraint firstItem="u1K-aS-zeA" firstAttribute="top" secondItem="Iti-1h-tpG" secondAttribute="topMargin" id="MEa-KC-e0v"/>
+                                                <constraint firstItem="5CM-Od-lYq" firstAttribute="top" secondItem="Iti-1h-tpG" secondAttribute="top" constant="13" id="Ng9-bL-WfQ"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Nmo-vE-sm9" secondAttribute="bottom" id="RoQ-jD-afp"/>
                                                 <constraint firstAttribute="trailing" secondItem="V2i-Qp-jGD" secondAttribute="trailing" constant="10" id="Rrv-lM-XFA"/>
                                                 <constraint firstItem="alY-8f-wjV" firstAttribute="top" secondItem="u1K-aS-zeA" secondAttribute="bottom" constant="2" id="cVu-oM-8Up"/>
@@ -227,6 +251,7 @@
                                                 <constraint firstItem="Nmo-vE-sm9" firstAttribute="leading" secondItem="Iti-1h-tpG" secondAttribute="leadingMargin" constant="4" id="jLu-5L-2PJ"/>
                                                 <constraint firstItem="Nmo-vE-sm9" firstAttribute="top" secondItem="Iti-1h-tpG" secondAttribute="topMargin" id="t13-tx-qgz"/>
                                                 <constraint firstItem="alY-8f-wjV" firstAttribute="leading" secondItem="Nmo-vE-sm9" secondAttribute="trailing" constant="10" id="tv1-I5-JrW"/>
+                                                <constraint firstItem="V2i-Qp-jGD" firstAttribute="leading" secondItem="5CM-Od-lYq" secondAttribute="trailing" constant="3" id="ws4-dN-7wM"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="st4-Qy-oOS" secondAttribute="trailing" constant="2" id="xQB-WY-lR6"/>
                                                 <constraint firstItem="st4-Qy-oOS" firstAttribute="top" secondItem="alY-8f-wjV" secondAttribute="bottom" constant="3" id="zda-5x-DZu"/>
                                             </constraints>
@@ -253,7 +278,7 @@
                                         <rect key="frame" x="0.0" y="172" width="375" height="113"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zVD-QP-gZ1" id="MmU-PA-fFa">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="112.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="113"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f7s-cU-6WT">
@@ -335,6 +360,6 @@ Try again in about 15 minutes.</string>
         <image name="twitter-verified-icon.png" width="15" height="15"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Fx4-Zw-XYd"/>
+        <segue reference="jBL-E0-8xR"/>
     </inferredMetricsTieBreakers>
 </document>

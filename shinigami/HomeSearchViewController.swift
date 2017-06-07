@@ -69,6 +69,7 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         userCell.userProfileImageView.clipsToBounds = true
         userCell.userNameLabel.text = user.name
         userCell.userScreenNameLabel.text = "@\(user.screenName)"
+        userCell.followingCountLabel.text = abbreviateNumber(num: user.followingCount)
         userCell.userIsVerifiedImageView.isHidden = !user.isVerified
         return userCell
     }

@@ -14,6 +14,7 @@ class UserTableViewCell: UITableViewCell {
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var userScreenNameLabel: UILabel!
     @IBOutlet weak var userIsVerifiedImageView: UIImageView!
+    @IBOutlet weak var followingCountLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
