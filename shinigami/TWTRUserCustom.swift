@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class TWTRUserCustom {
     let idStr: String
@@ -21,18 +22,18 @@ class TWTRUserCustom {
     let profileImageOriginalSizeUrl: String
     let following: Bool // is the logged-in user following this user?
     
-    init?(json: [String: Any]) {
+    init?(json: JSON) {
         guard
-            let idStr = json["id_str"] as? String,
-            let name = json["name"] as? String,
-            let screenName = json["screen_name"] as? String,
-            let location = json["location"] as? String,
-            let description = json["description"] as? String,
-            let followersCount = json["followers_count"] as? Int,
-            let followingCount = json["friends_count"] as? Int,
-            let isVerified = json["verified"] as? Bool,
-            let profileImageNormalSizeUrl = json["profile_image_url_https"] as? String,
-            let following = json["following"] as? Bool
+            let idStr = json["id_str"].string,
+            let name = json["name"].string,
+            let screenName = json["screen_name"].string,
+            let location = json["location"].string,
+            let description = json["description"].string,
+            let followersCount = json["followers_count"].int,
+            let followingCount = json["friends_count"].int,
+            let isVerified = json["verified"].bool,
+            let profileImageNormalSizeUrl = json["profile_image_url_https"].string,
+            let following = json["following"].bool
         else {
             return nil
         }

@@ -8,6 +8,7 @@
 
 import UIKit
 import TwitterKit
+import SwiftyJSON
 
 class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -58,90 +59,72 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 return
             }
             
-            do {
-                let jsonData = try JSONSerialization.jsonObject(with: data) as AnyObject
-                let listID = String(describing: jsonData["id_str"]!!)
+            let jsonData = JSON(data: data)
+            let listID = jsonData["id_str"].stringValue
+            
+            let getFollowingIdsEndpoint = "https://api.twitter.com/1.1/friends/ids.json?screen_name=\(user.screenName)"
+            let request = client.urlRequest(withMethod: "GET", url: getFollowingIdsEndpoint, parameters: nil, error: &clientError)
+            
+            client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
+                guard let data = data else {
+                    print("Error: \(connectionError.debugDescription)")
+                    self.errorOccured()
+                    return
+                }
                 
-                let getFollowingIdsEndpoint = "https://api.twitter.com/1.1/friends/ids.json?screen_name=\(user.screenName)"
-                let request = client.urlRequest(withMethod: "GET", url: getFollowingIdsEndpoint, parameters: nil, error: &clientError)
+                let jsonData = JSON(data: data)
+                let followingIdsList = (jsonData["ids"].arrayValue).map { String(describing: $0.intValue) }
                 
-                client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
-                    guard let data = data else {
-                        print("Error: \(connectionError.debugDescription)")
-                        self.errorOccured()
-                        return
-                    }
+                let addMembersToListEndpoint = "https://api.twitter.com/1.1/lists/members/create_all.json"
+                // NOTE: this has a user_id list limit of 100 https://dev.twitter.com/rest/reference/post/lists/members/create_all
+                let addMembersDispatchGroup = DispatchGroup()
+                let maxMembersCount = 100
+                let requestsCount = 1 // TEMPORARY: (followingIdsList.count / maxMembersCount) + 1
+                for i in 0..<requestsCount {
+                    addMembersDispatchGroup.enter()
+                    let startIndex = maxMembersCount*i
+                    let endIndex = min(maxMembersCount*(i+1), followingIdsList.count)
+                    print("startIndex \(startIndex) endIndex \(endIndex) totalCount \(followingIdsList.count)")
+                    let params = [
+                        "list_id": listID,
+                        "user_id": followingIdsList[startIndex..<endIndex].joined(separator: ",")
+                    ]
+                    let request = client.urlRequest(withMethod: "POST", url: addMembersToListEndpoint, parameters: params, error: &clientError)
                     
-                    do {
-                        let jsonData = try JSONSerialization.jsonObject(with: data) as AnyObject
-                        let followingIdsList = (jsonData["ids"]! as! [Int]).map { String(describing: $0) }
-                        
-                        let addMembersToListEndpoint = "https://api.twitter.com/1.1/lists/members/create_all.json"
-                        // NOTE: this has a user_id list limit of 100 https://dev.twitter.com/rest/reference/post/lists/members/create_all
-                        let addMembersDispatchGroup = DispatchGroup()
-                        let maxMembersCount = 100
-                        let requestsCount = 1 // TEMPORARY: (followingIdsList.count / maxMembersCount) + 1
-                        for i in 0..<requestsCount {
-                            addMembersDispatchGroup.enter()
-                            let startIndex = maxMembersCount*i
-                            let endIndex = min(maxMembersCount*(i+1), followingIdsList.count)
-                            print("startIndex \(startIndex) endIndex \(endIndex) totalCount \(followingIdsList.count)")
-                            let params = [
-                                "list_id": listID,
-                                "user_id": followingIdsList[startIndex..<endIndex].joined(separator: ",")
-                            ]
-                            let request = client.urlRequest(withMethod: "POST", url: addMembersToListEndpoint, parameters: params, error: &clientError)
-                            
-                            client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
-                                guard let data = data else {
-                                    print("Error: \(connectionError.debugDescription)")
-                                    self.errorOccured()
-                                    return
-                                }
-                                
-                                do {
-                                    let jsonData = try JSONSerialization.jsonObject(with: data) as AnyObject
-                                    if jsonData["member_count"]!! as! Int == 0 {
-                                        print("Error: response to lists/members/create_all.json returned successfully, but no members were added")
-                                        self.errorOccured()
-                                        return
-                                    }
-                                } catch let jsonError as NSError {
-                                    print("json error: \(jsonError.localizedDescription)")
-                                }
-                                
-                                addMembersDispatchGroup.leave()
-                            }
+                    client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
+                        guard let data = data else {
+                            print("Error: \(connectionError.debugDescription)")
+                            self.errorOccured()
+                            return
                         }
                         
-                        addMembersDispatchGroup.notify(queue: .main) {
-                            let getListTweetsEndpoint = "https://api.twitter.com/1.1/lists/statuses.json?list_id=\(listID)"
-                            let request = client.urlRequest(withMethod: "GET", url: getListTweetsEndpoint, parameters: nil, error: &clientError)
-                            
-                            client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
-                                guard let data = data else {
-                                    print("Error: \(connectionError.debugDescription)")
-                                    self.errorOccured()
-                                    return
-                                }
-                                
-                                do {
-                                    let jsonData = try JSONSerialization.jsonObject(with: data) as! [AnyObject]
-                                    self.tweets = TWTRTweet.tweets(withJSONArray: jsonData) as! [TWTRTweet]
-                                    self.profileTableView.reloadData()
-                                } catch let jsonError as NSError {
-                                    print("json error: \(jsonError.localizedDescription)")
-                                }
-                            }
+                        let jsonData = JSON(data: data)
+                        if jsonData["member_count"].int == 0 {
+                            print("Error: response to lists/members/create_all.json returned successfully, but no members were added")
+                            self.errorOccured()
+                            return
                         }
-                    } catch let jsonError as NSError {
-                        print("json error: \(jsonError.localizedDescription)")
+                        
+                        addMembersDispatchGroup.leave()
                     }
                 }
                 
-            } catch let jsonError as NSError {
-                // intentionally don't reset self.users values so we can continue displaying last retrieved results in case of error
-                print("json error: \(jsonError.localizedDescription)")
+                addMembersDispatchGroup.notify(queue: .main) {
+                    let getListTweetsEndpoint = "https://api.twitter.com/1.1/lists/statuses.json?list_id=\(listID)"
+                    let request = client.urlRequest(withMethod: "GET", url: getListTweetsEndpoint, parameters: nil, error: &clientError)
+                    
+                    client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
+                        guard let data = data else {
+                            print("Error: \(connectionError.debugDescription)")
+                            self.errorOccured()
+                            return
+                        }
+                        
+                        let jsonData = JSON(data: data)
+                        self.tweets = TWTRTweet.tweets(withJSONArray: jsonData.arrayValue) as! [TWTRTweet]
+                        self.profileTableView.reloadData()
+                    }
+                }
             }
         }
     }

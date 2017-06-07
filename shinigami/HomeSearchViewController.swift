@@ -8,6 +8,7 @@
 
 import UIKit
 import TwitterKit
+import SwiftyJSON
 
 class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableViewDataSource, UIScrollViewDelegate {
 
@@ -47,14 +48,9 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
                     return
                 }
                 
-                do {
-                    let jsonData = try JSONSerialization.jsonObject(with: data) as! [AnyObject]
-                    self.users = jsonData.map { TWTRUserCustom.init(json: $0 as! [String: Any])! }
-                    self.usersTableView.reloadData()
-                } catch let jsonError as NSError {
-                    // intentionally don't reset self.users values so we can continue displaying last retrieved results in case of error
-                    print("json error: \(jsonError.localizedDescription)")
-                }
+                let jsonData = JSON(data: data)
+                self.users = jsonData.arrayValue.map { TWTRUserCustom.init(json: $0)! }
+                self.usersTableView.reloadData()
             }
         } else {
             self.users = []
