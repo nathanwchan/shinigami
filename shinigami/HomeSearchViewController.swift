@@ -16,7 +16,10 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     @IBOutlet weak var usersTableView: UITableView!
     @IBOutlet weak var usersTableScrollView: UIScrollView!
     
+    private let client = TWTRAPIClient.withCurrentUser()
+    private var clientError : NSError?
     private var users: [TWTRUserCustom] = []
+    private var urlEncodedCurrentText: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,25 +35,29 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
-        
-        let client = TWTRAPIClient.withCurrentUser()
-        
-        let urlEncodedCurrentText = (currentText?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))!
-        if !urlEncodedCurrentText.isEmpty {
-            let usersSearchEndpoint = "https://api.twitter.com/1.1/users/search.json?q=\(urlEncodedCurrentText)"
-            var clientError : NSError?
+        self.urlEncodedCurrentText = (currentText?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))!
+        if !self.urlEncodedCurrentText.isEmpty {
+            let usersSearchEndpoint = "https://api.twitter.com/1.1/users/search.json?q=\(self.urlEncodedCurrentText)"
+            let request = self.client.urlRequest(withMethod: "GET", url: usersSearchEndpoint, parameters: nil, error: &self.clientError)
             
-            let request = client.urlRequest(withMethod: "GET", url: usersSearchEndpoint, parameters: nil, error: &clientError)
-            
-            client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
+            self.client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
                 guard let data = data else {
                     print("Error: \(connectionError.debugDescription)")
                     return
                 }
+                guard let url = response?.url,
+                      let queryItem = URLComponents(string: url.absoluteString)?.queryItems?.filter({$0.name == "q"}).first
+                else {
+                    print("Error in response")
+                    return
+                }
                 
-                let jsonData = JSON(data: data)
-                self.users = jsonData.arrayValue.map { TWTRUserCustom.init(json: $0)! }
-                self.usersTableView.reloadData()
+                // to prevent race condition, ensure only current text's results are displayed
+                if self.urlEncodedCurrentText == queryItem.value {
+                    let jsonData = JSON(data: data)
+                    self.users = jsonData.arrayValue.map { TWTRUserCustom.init(json: $0)! }
+                    self.usersTableView.reloadData()
+                }
             }
         } else {
             self.users = []
