@@ -53,7 +53,7 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
                 }
                 
                 // to prevent race condition, ensure only current text's results are displayed
-                if self.urlEncodedCurrentText == queryItem.value {
+                if self.urlEncodedCurrentText == (queryItem.value?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))! {
                     let jsonData = JSON(data: data)
                     self.users = jsonData.arrayValue.map { TWTRUserCustom.init(json: $0)! }
                     self.usersTableView.reloadData()
