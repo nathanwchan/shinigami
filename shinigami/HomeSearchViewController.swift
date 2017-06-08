@@ -19,6 +19,7 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     private let client = TWTRAPIClient.withCurrentUser()
     private var clientError : NSError?
     private var users: [TWTRUserCustom] = []
+    private var followingUsers: [TWTRUserCustom] = []
     private var urlEncodedCurrentText: String = ""
     
     override func viewDidLoad() {
@@ -31,12 +32,37 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         self.usersTableScrollView.delegate = self
         
         self.usersTableView.tableFooterView = UIView(frame: CGRect.zero)
+
+        self.showFollowingUsers()
     }
     
+    func showFollowingUsers() {
+        if self.followingUsers.isEmpty {
+            let usersFollowingEndpoint = "https://api.twitter.com/1.1/friends/list.json"
+            let request = self.client.urlRequest(withMethod: "GET", url: usersFollowingEndpoint, parameters: nil, error: &self.clientError)
+            
+            self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
+                guard let data = data else {
+                    print("Error: \(connectionError.debugDescription)")
+                    return
+                }
+                let jsonData = JSON(data: data)
+                self.followingUsers = jsonData["users"].arrayValue.map { TWTRUserCustom.init(json: $0)! }
+                self.users = self.followingUsers
+                self.usersTableView.reloadData()
+            }
+        } else {
+            self.users = self.followingUsers
+            self.usersTableView.reloadData()
+        }
+    }
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
         self.urlEncodedCurrentText = (currentText?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))!
-        if !self.urlEncodedCurrentText.isEmpty {
+        if self.urlEncodedCurrentText.isEmpty {
+            self.showFollowingUsers()
+        } else {
             let usersSearchEndpoint = "https://api.twitter.com/1.1/users/search.json?q=\(self.urlEncodedCurrentText)"
             let request = self.client.urlRequest(withMethod: "GET", url: usersSearchEndpoint, parameters: nil, error: &self.clientError)
             
@@ -59,10 +85,12 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
                     self.usersTableView.reloadData()
                 }
             }
-        } else {
-            self.users = []
-            self.usersTableView.reloadData()
         }
+        return true
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        self.showFollowingUsers()
         return true
     }
     
