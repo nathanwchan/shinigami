@@ -32,6 +32,9 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         self.usersTableScrollView.delegate = self
         
         self.usersTableView.tableFooterView = UIView(frame: CGRect.zero)
+        // dynamic cell height based on inner content
+        self.usersTableView.rowHeight = UITableViewAutomaticDimension
+        self.usersTableView.estimatedRowHeight = 70
 
         self.showFollowingUsers()
     }
@@ -106,6 +109,12 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         userCell.userScreenNameLabel.text = "@\(user.screenName)"
         userCell.followingCountLabel.text = abbreviateNumber(num: user.followingCount)
         userCell.userIsVerifiedImageView.isHidden = !user.isVerified
+        if !user.following {
+            userCell.followingIcon.isHidden = true
+            userCell.isFollowingLabel.isHidden = true
+            // Kinda hacky, but what StackOverflow told me to do.  Set height constraint of following icon to zero.
+            userCell.followingIconHeightConstraint.constant = 0
+        }
         return userCell
     }
     

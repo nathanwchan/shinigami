@@ -15,6 +15,9 @@ class UserTableViewCell: UITableViewCell {
     @IBOutlet weak var userScreenNameLabel: UILabel!
     @IBOutlet weak var userIsVerifiedImageView: UIImageView!
     @IBOutlet weak var followingCountLabel: UILabel!
+    @IBOutlet weak var followingIcon: UIImageView!
+    @IBOutlet weak var isFollowingLabel: UILabel!
+    @IBOutlet weak var followingIconHeightConstraint: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()
