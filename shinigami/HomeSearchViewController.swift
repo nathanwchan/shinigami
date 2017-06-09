@@ -42,7 +42,7 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     
     func showFollowingUsers() {
         if self.followingUsers.isEmpty {
-            let usersFollowingEndpoint = "https://api.twitter.com/1.1/friends/list.json?count=100"
+            let usersFollowingEndpoint = "https://api.twitter.com/1.1/friends/list.json?count=200"
             let request = self.client.urlRequest(withMethod: "GET", url: usersFollowingEndpoint, parameters: nil, error: &self.clientError)
             
             self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
