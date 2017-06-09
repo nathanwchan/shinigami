@@ -30,6 +30,7 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         self.searchTextField.delegate = self
         self.usersTableView.dataSource = self
         self.usersTableScrollView.delegate = self
+        self.usersTableScrollView.keyboardDismissMode = .onDrag
         
         self.usersTableView.tableFooterView = UIView(frame: CGRect.zero)
         // dynamic cell height based on inner content
@@ -60,6 +61,11 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         }
     }
 
+    func scrollToFirstRow() {
+        let indexPath = IndexPath(row: 0, section: 0)
+        self.usersTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
         self.urlEncodedCurrentText = (currentText?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))!
@@ -89,11 +95,13 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
                 }
             }
         }
+        self.scrollToFirstRow()
         return true
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         self.showFollowingUsers()
+        self.scrollToFirstRow()
         return true
     }
     
@@ -109,12 +117,10 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         userCell.userScreenNameLabel.text = "@\(user.screenName)"
         userCell.followingCountLabel.text = abbreviateNumber(num: user.followingCount)
         userCell.userIsVerifiedImageView.isHidden = !user.isVerified
-        if !user.following {
-            userCell.followingIcon.isHidden = true
-            userCell.isFollowingLabel.isHidden = true
-            // Kinda hacky, but what StackOverflow told me to do.  Set height constraint of following icon to zero.
-            userCell.followingIconHeightConstraint.constant = 0
-        }
+        userCell.followingIcon.isHidden = !user.following
+        userCell.isFollowingLabel.isHidden = !user.following
+        // Kinda hacky, but what StackOverflow told me to do.  Set height constraint of following icon to zero.
+        userCell.followingIconHeightConstraint.constant = user.following ? 18 : 0
         return userCell
     }
     
@@ -124,11 +130,6 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // hide keyboard when scroll detected
-        self.view.endEditing(true)
     }
     
     @IBAction func clickedLogout(_ sender: Any) {
