@@ -35,7 +35,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             "count": "50"
         ]
         if let oldestTweet = self.tweets.last {
-            params["max_id"] = oldestTweet.tweetID
+            if let tweetID = Int(oldestTweet.tweetID) {
+                params["max_id"] = String(describing: tweetID - 1)
+            } else {
+                params["max_id"] = oldestTweet.tweetID
+            }
         }
         let request = self.client.urlRequest(withMethod: "GET", url: getListTweetsEndpoint, parameters: params, error: &self.clientError)
         
