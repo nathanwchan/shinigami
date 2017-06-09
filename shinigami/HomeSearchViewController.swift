@@ -42,7 +42,7 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     
     func showFollowingUsers() {
         if self.followingUsers.isEmpty {
-            let usersFollowingEndpoint = "https://api.twitter.com/1.1/friends/list.json"
+            let usersFollowingEndpoint = "https://api.twitter.com/1.1/friends/list.json?count=100"
             let request = self.client.urlRequest(withMethod: "GET", url: usersFollowingEndpoint, parameters: nil, error: &self.clientError)
             
             self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
@@ -51,7 +51,14 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
                     return
                 }
                 let jsonData = JSON(data: data)
-                self.followingUsers = jsonData["users"].arrayValue.map { TWTRUserCustom.init(json: $0)! }
+                var followingTWTRUserCustoms = jsonData["users"].arrayValue.map { TWTRUserCustom.init(json: $0)! }
+                // sort by popularity (follower count)
+                followingTWTRUserCustoms = followingTWTRUserCustoms.sorted(by: { $0.followersCount > $1.followersCount })
+                // sort to move groups of users with less following users to the top
+                self.followingUsers =
+                    followingTWTRUserCustoms.filter{$0.followingCount > 0 && $0.followingCount < 200} +
+                    followingTWTRUserCustoms.filter{$0.followingCount >= 200 && $0.followingCount < 500} +
+                    followingTWTRUserCustoms.filter{$0.followingCount >= 500}
                 self.users = self.followingUsers
                 self.usersTableView.reloadData()
             }
