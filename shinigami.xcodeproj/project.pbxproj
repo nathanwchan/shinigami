@@ -22,6 +22,17 @@
 		D810027C1EE083E800B4E34F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D810027B1EE083E800B4E34F /* ProfileViewController.swift */; };
 		D810027F1EE09C1000B4E34F /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D810027E1EE09C1000B4E34F /* ProfileTableViewCell.swift */; };
 		D860E14B1EEA0C8F00467CE2 /* twitter-following-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D860E14A1EEA0C8F00467CE2 /* twitter-following-icon.png */; };
+		D860E1571EEB33E700467CE2 /* Icon-App-20x20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D860E14D1EEB33E700467CE2 /* Icon-App-20x20@2x.png */; };
+		D860E1581EEB33E700467CE2 /* Icon-App-29x29@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = D860E14E1EEB33E700467CE2 /* Icon-App-29x29@1x.png */; };
+		D860E1591EEB33E700467CE2 /* Icon-App-29x29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D860E14F1EEB33E700467CE2 /* Icon-App-29x29@2x.png */; };
+		D860E15A1EEB33E700467CE2 /* Icon-App-29x29@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D860E1501EEB33E700467CE2 /* Icon-App-29x29@3x.png */; };
+		D860E15B1EEB33E700467CE2 /* Icon-App-40x40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D860E1511EEB33E700467CE2 /* Icon-App-40x40@2x.png */; };
+		D860E15C1EEB33E700467CE2 /* Icon-App-40x40@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D860E1521EEB33E700467CE2 /* Icon-App-40x40@3x.png */; };
+		D860E15D1EEB33E700467CE2 /* Icon-App-60x60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D860E1531EEB33E700467CE2 /* Icon-App-60x60@2x.png */; };
+		D860E15E1EEB33E700467CE2 /* Icon-App-60x60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D860E1541EEB33E700467CE2 /* Icon-App-60x60@3x.png */; };
+		D860E15F1EEB33E700467CE2 /* Icon-App-76x76@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = D860E1551EEB33E700467CE2 /* Icon-App-76x76@1x.png */; };
+		D860E1601EEB33E700467CE2 /* Icon-App-76x76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D860E1561EEB33E700467CE2 /* Icon-App-76x76@2x.png */; };
+		D860E1621EEB354300467CE2 /* Icon-App-30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D860E1611EEB354300467CE2 /* Icon-App-30x30@2x.png */; };
 		D8C381BF1EE89BB600D030B0 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C381BE1EE89BB600D030B0 /* Helpers.swift */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +56,17 @@
 		D810027B1EE083E800B4E34F /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D810027E1EE09C1000B4E34F /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		D860E14A1EEA0C8F00467CE2 /* twitter-following-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitter-following-icon.png"; sourceTree = "<group>"; };
+		D860E14D1EEB33E700467CE2 /* Icon-App-20x20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App-20x20@2x.png"; sourceTree = "<group>"; };
+		D860E14E1EEB33E700467CE2 /* Icon-App-29x29@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App-29x29@1x.png"; sourceTree = "<group>"; };
+		D860E14F1EEB33E700467CE2 /* Icon-App-29x29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App-29x29@2x.png"; sourceTree = "<group>"; };
+		D860E1501EEB33E700467CE2 /* Icon-App-29x29@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App-29x29@3x.png"; sourceTree = "<group>"; };
+		D860E1511EEB33E700467CE2 /* Icon-App-40x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App-40x40@2x.png"; sourceTree = "<group>"; };
+		D860E1521EEB33E700467CE2 /* Icon-App-40x40@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App-40x40@3x.png"; sourceTree = "<group>"; };
+		D860E1531EEB33E700467CE2 /* Icon-App-60x60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App-60x60@2x.png"; sourceTree = "<group>"; };
+		D860E1541EEB33E700467CE2 /* Icon-App-60x60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App-60x60@3x.png"; sourceTree = "<group>"; };
+		D860E1551EEB33E700467CE2 /* Icon-App-76x76@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App-76x76@1x.png"; sourceTree = "<group>"; };
+		D860E1561EEB33E700467CE2 /* Icon-App-76x76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App-76x76@2x.png"; sourceTree = "<group>"; };
+		D860E1611EEB354300467CE2 /* Icon-App-30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App-30x30@2x.png"; sourceTree = "<group>"; };
 		D8C381BE1EE89BB600D030B0 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -89,6 +111,7 @@
 		D81002351ED49EDD00B4E34F /* shinigami */ = {
 			isa = PBXGroup;
 			children = (
+				D860E14C1EEB33D400467CE2 /* icons */,
 				D810024A1ED746BE00B4E34F /* images */,
 				D81002521EDF598900B4E34F /* models */,
 				D810024D1ED7685200B4E34F /* controllers */,
@@ -139,6 +162,24 @@
 				D81002711EDFC4DE00B4E34F /* UIImageView+downloadedFrom.swift */,
 			);
 			name = extensions;
+			sourceTree = "<group>";
+		};
+		D860E14C1EEB33D400467CE2 /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				D860E14D1EEB33E700467CE2 /* Icon-App-20x20@2x.png */,
+				D860E14E1EEB33E700467CE2 /* Icon-App-29x29@1x.png */,
+				D860E14F1EEB33E700467CE2 /* Icon-App-29x29@2x.png */,
+				D860E1501EEB33E700467CE2 /* Icon-App-29x29@3x.png */,
+				D860E1611EEB354300467CE2 /* Icon-App-30x30@2x.png */,
+				D860E1511EEB33E700467CE2 /* Icon-App-40x40@2x.png */,
+				D860E1521EEB33E700467CE2 /* Icon-App-40x40@3x.png */,
+				D860E1531EEB33E700467CE2 /* Icon-App-60x60@2x.png */,
+				D860E1541EEB33E700467CE2 /* Icon-App-60x60@3x.png */,
+				D860E1551EEB33E700467CE2 /* Icon-App-76x76@1x.png */,
+				D860E1561EEB33E700467CE2 /* Icon-App-76x76@2x.png */,
+			);
+			name = icons;
 			sourceTree = "<group>";
 		};
 		D8C381BD1EE89B9800D030B0 /* utils */ = {
@@ -193,6 +234,7 @@
 				TargetAttributes = {
 					D81002321ED49EDD00B4E34F = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = 3S86DJ63TR;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -221,11 +263,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				D81002411ED49EDD00B4E34F /* LaunchScreen.storyboard in Resources */,
+				D860E1571EEB33E700467CE2 /* Icon-App-20x20@2x.png in Resources */,
+				D860E15F1EEB33E700467CE2 /* Icon-App-76x76@1x.png in Resources */,
+				D860E15D1EEB33E700467CE2 /* Icon-App-60x60@2x.png in Resources */,
 				D810023E1ED49EDD00B4E34F /* Assets.xcassets in Resources */,
+				D860E15C1EEB33E700467CE2 /* Icon-App-40x40@3x.png in Resources */,
+				D860E1581EEB33E700467CE2 /* Icon-App-29x29@1x.png in Resources */,
+				D860E15B1EEB33E700467CE2 /* Icon-App-40x40@2x.png in Resources */,
+				D860E1601EEB33E700467CE2 /* Icon-App-76x76@2x.png in Resources */,
 				D860E14B1EEA0C8F00467CE2 /* twitter-following-icon.png in Resources */,
+				D860E1621EEB354300467CE2 /* Icon-App-30x30@2x.png in Resources */,
+				D860E15A1EEB33E700467CE2 /* Icon-App-29x29@3x.png in Resources */,
 				D81002781EE07DF300B4E34F /* twitter-verified-icon.png in Resources */,
 				D81002491ED745F900B4E34F /* twitter_eyes_logo.png in Resources */,
+				D860E15E1EEB33E700467CE2 /* Icon-App-60x60@3x.png in Resources */,
 				D810023C1ED49EDD00B4E34F /* Main.storyboard in Resources */,
+				D860E1591EEB33E700467CE2 /* Icon-App-29x29@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +469,7 @@
 			baseConfigurationReference = CDB3DC8364A643D0084D242F /* Pods-shinigami.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 3S86DJ63TR;
 				INFOPLIST_FILE = shinigami/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nathanchan.shinigami;
@@ -429,6 +483,7 @@
 			baseConfigurationReference = 9484142F295752EAB6DAF202 /* Pods-shinigami.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 3S86DJ63TR;
 				INFOPLIST_FILE = shinigami/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nathanchan.shinigami;

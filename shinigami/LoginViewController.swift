@@ -11,6 +11,8 @@ import TwitterKit
 
 class LoginViewController: UIViewController {
     
+    @IBOutlet weak var loginButton: TWTRLogInButton!
+    
     private func loginSuccess() {
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: "LoginSuccessSegue", sender: nil)
@@ -38,16 +40,14 @@ class LoginViewController: UIViewController {
             }
             */
             
-            let logInButton = TWTRLogInButton(logInCompletion: { session, error in
+            loginButton.logInCompletion = { session, error in
                 if (session != nil) {
                     print("****** logged in with id \(session?.userID ?? "none") and username \(session?.userName ?? "unknown")");
                     self.loginSuccess()
                 } else {
                     print("******  login error: \(error?.localizedDescription ?? "unknown")");
                 }
-            })
-            logInButton.center = self.view.center
-            self.view.addSubview(logInButton)
+            }
         }
     }
 }
