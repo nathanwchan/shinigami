@@ -21,12 +21,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="twitter_eyes_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="Yld-SA-Cnc">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="twitter_eyes_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="Yld-SA-Cnc">
                                 <rect key="frame" x="97" y="257" width="180" height="153"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="180" id="teN-QY-RzU"/>
+                                    <constraint firstAttribute="height" constant="153" id="uAJ-6D-Hqj"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Yld-SA-Cnc" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="COy-0J-KWI"/>
+                            <constraint firstItem="Yld-SA-Cnc" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="g9p-GI-pVP"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
