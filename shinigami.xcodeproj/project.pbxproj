@@ -33,6 +33,8 @@
 		D860E15F1EEB33E700467CE2 /* Icon-App-76x76@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = D860E1551EEB33E700467CE2 /* Icon-App-76x76@1x.png */; };
 		D860E1601EEB33E700467CE2 /* Icon-App-76x76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D860E1561EEB33E700467CE2 /* Icon-App-76x76@2x.png */; };
 		D860E1621EEB354300467CE2 /* Icon-App-30x30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D860E1611EEB354300467CE2 /* Icon-App-30x30@2x.png */; };
+		D860E1661EEB641100467CE2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D860E1651EEB641100467CE2 /* GoogleService-Info.plist */; };
+		D860E1681EEB654F00467CE2 /* GoogleAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860E1671EEB654F00467CE2 /* GoogleAnalytics.swift */; };
 		D8C381BF1EE89BB600D030B0 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C381BE1EE89BB600D030B0 /* Helpers.swift */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +69,9 @@
 		D860E1551EEB33E700467CE2 /* Icon-App-76x76@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App-76x76@1x.png"; sourceTree = "<group>"; };
 		D860E1561EEB33E700467CE2 /* Icon-App-76x76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App-76x76@2x.png"; sourceTree = "<group>"; };
 		D860E1611EEB354300467CE2 /* Icon-App-30x30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App-30x30@2x.png"; sourceTree = "<group>"; };
+		D860E1651EEB641100467CE2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D860E1671EEB654F00467CE2 /* GoogleAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleAnalytics.swift; sourceTree = "<group>"; };
+		D860E1691EEB675F00467CE2 /* shinigami-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "shinigami-Bridging-Header.h"; sourceTree = "<group>"; };
 		D8C381BE1EE89BB600D030B0 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,6 +98,7 @@
 		D810022A1ED49EDD00B4E34F = {
 			isa = PBXGroup;
 			children = (
+				D860E1651EEB641100467CE2 /* GoogleService-Info.plist */,
 				D81002351ED49EDD00B4E34F /* shinigami */,
 				D81002341ED49EDD00B4E34F /* Products */,
 				FF30EF43B7A66863B7BC529A /* Pods */,
@@ -121,6 +127,7 @@
 				D81002361ED49EDD00B4E34F /* AppDelegate.swift */,
 				D810023D1ED49EDD00B4E34F /* Assets.xcassets */,
 				D810023F1ED49EDD00B4E34F /* LaunchScreen.storyboard */,
+				D860E1691EEB675F00467CE2 /* shinigami-Bridging-Header.h */,
 				D81002421ED49EDD00B4E34F /* Info.plist */,
 			);
 			path = shinigami;
@@ -186,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				D8C381BE1EE89BB600D030B0 /* Helpers.swift */,
+				D860E1671EEB654F00467CE2 /* GoogleAnalytics.swift */,
 			);
 			name = utils;
 			sourceTree = "<group>";
@@ -235,6 +243,7 @@
 					D81002321ED49EDD00B4E34F = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 3S86DJ63TR;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -273,6 +282,7 @@
 				D860E1601EEB33E700467CE2 /* Icon-App-76x76@2x.png in Resources */,
 				D860E14B1EEA0C8F00467CE2 /* twitter-following-icon.png in Resources */,
 				D860E1621EEB354300467CE2 /* Icon-App-30x30@2x.png in Resources */,
+				D860E1661EEB641100467CE2 /* GoogleService-Info.plist in Resources */,
 				D860E15A1EEB33E700467CE2 /* Icon-App-29x29@3x.png in Resources */,
 				D81002781EE07DF300B4E34F /* twitter-verified-icon.png in Resources */,
 				D81002491ED745F900B4E34F /* twitter_eyes_logo.png in Resources */,
@@ -338,6 +348,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D81002391ED49EDD00B4E34F /* LoginViewController.swift in Sources */,
+				D860E1681EEB654F00467CE2 /* GoogleAnalytics.swift in Sources */,
 				D810027F1EE09C1000B4E34F /* ProfileTableViewCell.swift in Sources */,
 				D81002371ED49EDD00B4E34F /* AppDelegate.swift in Sources */,
 				D810026E1EDF97B500B4E34F /* TWTRUserCustom.swift in Sources */,
@@ -469,11 +480,14 @@
 			baseConfigurationReference = CDB3DC8364A643D0084D242F /* Pods-shinigami.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 3S86DJ63TR;
 				INFOPLIST_FILE = shinigami/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nathanchan.shinigami;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "shinigami/shinigami-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -483,11 +497,13 @@
 			baseConfigurationReference = 9484142F295752EAB6DAF202 /* Pods-shinigami.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 3S86DJ63TR;
 				INFOPLIST_FILE = shinigami/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nathanchan.shinigami;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "shinigami/shinigami-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

@@ -8,6 +8,7 @@
 
 import UIKit
 import TwitterKit
+import Google
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Twitter.sharedInstance().start(
             withConsumerKey:"DhXJZBzIJtTV2sYkeUfGPkubT",
             consumerSecret:"RZ6AQQWVCAkZBvIfHIBVUeN2BR0MbEnNVQeHDHZFjwK5hWpk74")
+        
+        // Google Analytics setup
+        guard let gai = GAI.sharedInstance() else {
+            assert(false, "Google Analytics not configured correctly")
+        }
+        gai.tracker(withTrackingId: "UA-28374993-3")
+        gai.trackUncaughtExceptions = true
+        gai.logger.logLevel = .verbose
         
         return true
     }

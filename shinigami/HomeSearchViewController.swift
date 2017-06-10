@@ -24,7 +24,9 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        GA().logScreen(name: "search")
+        
         self.searchTextField.becomeFirstResponder()
         
         self.searchTextField.delegate = self
@@ -77,8 +79,11 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         let currentText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
         self.urlEncodedCurrentText = (currentText?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))!
         if self.urlEncodedCurrentText.isEmpty {
+            GA().logAction(category: "search", action: "change-empty")
             self.showFollowingUsers()
         } else {
+            GA().logAction(category: "search", action: "change", label: self.urlEncodedCurrentText)
+            
             let usersSearchEndpoint = "https://api.twitter.com/1.1/users/search.json?q=\(self.urlEncodedCurrentText)"
             let request = self.client.urlRequest(withMethod: "GET", url: usersSearchEndpoint, parameters: nil, error: &self.clientError)
             
@@ -107,6 +112,7 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        GA().logAction(category: "search", action: "clear")
         self.showFollowingUsers()
         self.scrollToFirstRow()
         return true
@@ -145,6 +151,7 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         if let userID = store.session()?.userID {
             store.logOutUserID(userID)
             print("logged out user with id \(userID)")
+            GA().logAction(category: "logout", action: "success", label: userID)
         }
         
         DispatchQueue.main.async {
@@ -170,8 +177,10 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
                 guard let indexPath = usersTableView.indexPath(for: selectedUserCell) else {
                     fatalError("The selected cell is not being displayed by the table")
                 }
-                
+                    
                 profileViewController.user = self.users[indexPath.row]
+                GA().logAction(category: "search", action: "click-screenname", label: profileViewController.user?.screenName)
+                GA().logAction(category: "search", action: "click-index", label: String(describing: indexPath.row))
             case "LogoutSegue":
                 break
             default:

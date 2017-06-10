@@ -5,4 +5,5 @@ target 'shinigami' do
 
   pod 'TwitterKit', '~> 3.0'
   pod 'SwiftyJSON'
+  pod 'Google/Analytics'
 end

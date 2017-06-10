@@ -10,7 +10,7 @@ import UIKit
 import TwitterKit
 import SwiftyJSON
 
-class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, TWTRTweetViewDelegate {
     
     var user: TWTRUserCustom?
     private let client = TWTRAPIClient.withCurrentUser()
@@ -58,6 +58,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        GA().logScreen(name: "profile")
         
         self.profileTableView.dataSource = self
         self.profileTableView.delegate = self
@@ -195,6 +197,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             tweetCell.configure(with: self.tweets[indexPath.row - 1])
             tweetCell.tweetView.showActionButtons = true
             tweetCell.tweetView.showBorder = false
+            tweetCell.tweetView.delegate = self
             return tweetCell
         }
     }
@@ -203,17 +206,28 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         return tweets.count + 1 + (self.showSorryCell ? 1 : 0)
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            // link to user profile in Twitter app?
-        } else {
-            // link to tweet in Twitter app?
-        }
-    }
-    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == self.tweets.count - 1 {
+            GA().logAction(category: "profile", action: "load-more-tweets", label: self.user!.screenName)
             loadListTweets()
         }
     }
+    
+    func tweetView(_ tweetView: TWTRTweetView, didTap tweet: TWTRTweet) {
+        GA().logAction(category: "profile", action: "tweet-click", label: "\(self.user!.screenName),\(tweet.author.screenName)")
+        UIApplication.shared.open(tweet.permalink)
+    }
+    
+    func tweetView(_ tweetView: TWTRTweetView, didTapProfileImageFor user: TWTRUser) {
+        GA().logAction(category: "profile", action: "tweet-profile-image-click", label: "\(self.user!.screenName),\(user.screenName)")
+        UIApplication.shared.open(user.profileURL)
+    }
+    
+    /*func tweetView(_ tweetView: TWTRTweetView, didTap url: URL) {
+        let webViewController = UIViewController()
+        let webView = UIWebView(frame: webViewController.view.bounds)
+        webView.loadRequest(URLRequest(url: url))
+        webViewController.view = webView
+        self.navigationController!.pushViewController(webViewController, animated: true)
+    }*/
 }
