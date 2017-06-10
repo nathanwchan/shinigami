@@ -21,6 +21,7 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     private var users: [TWTRUserCustom] = []
     private var followingUsers: [TWTRUserCustom] = []
     private var urlEncodedCurrentText: String = ""
+    private var showingFollowingUsers: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +69,7 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
             self.users = self.followingUsers
             self.usersTableView.reloadData()
         }
+        self.showingFollowingUsers = true
     }
 
     func scrollToFirstRow() {
@@ -104,6 +106,7 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
                     let jsonData = JSON(data: data)
                     self.users = jsonData.arrayValue.map { TWTRUserCustom.init(json: $0)! }
                     self.usersTableView.reloadData()
+                    self.showingFollowingUsers = false
                 }
             }
         }
@@ -179,8 +182,12 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
                 }
                     
                 profileViewController.user = self.users[indexPath.row]
-                GA().logAction(category: "search", action: "click-screenname", label: profileViewController.user?.screenName)
-                GA().logAction(category: "search", action: "click-index", label: String(describing: indexPath.row))
+                if self.showingFollowingUsers {
+                    GA().logAction(category: "search", action: "click-following-index", label: String(describing: indexPath.row))
+                    GA().logAction(category: "search", action: "click-following-screenname", label: profileViewController.user?.screenName)
+                } else {
+                    GA().logAction(category: "search", action: "click-search-screenname", label: profileViewController.user?.screenName)
+                }
             case "LogoutSegue":
                 break
             default:
