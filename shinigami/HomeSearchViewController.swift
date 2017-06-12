@@ -73,8 +73,10 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     }
 
     func scrollToFirstRow() {
-        let indexPath = IndexPath(row: 0, section: 0)
-        self.usersTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        if self.users.count > 0 {
+            let indexPath = IndexPath(row: 0, section: 0)
+            self.usersTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        }
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
