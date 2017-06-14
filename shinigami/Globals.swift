@@ -1,5 +1,5 @@
 //
-//  Constants.swift
+//  Globals.swift
 //  shinigami
 //
 //  Created by Nathan Chan on 6/14/17.

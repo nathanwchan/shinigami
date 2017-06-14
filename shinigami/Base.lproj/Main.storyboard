@@ -53,7 +53,7 @@
         <!--Search-->
         <scene sceneID="Qd2-0w-uAe">
             <objects>
-                <viewController storyboardIdentifier="HomeSearchViewController" automaticallyAdjustsScrollViewInsets="NO" id="mwC-ev-1kG" customClass="HomeSearchViewController" customModule="shinigami" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeSearchViewController" automaticallyAdjustsScrollViewInsets="NO" id="mwC-ev-1kG" customClass="SearchViewController" customModule="shinigami" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="D77-Cl-gRt"/>
                         <viewControllerLayoutGuide type="bottom" id="BT9-MO-2JC"/>

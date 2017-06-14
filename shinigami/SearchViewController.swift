@@ -1,5 +1,5 @@
 //
-//  HomeSearchViewController.swift
+//  SearchViewController.swift
 //  shinigami
 //
 //  Created by Nathan Chan on 5/30/17.
@@ -10,7 +10,7 @@ import UIKit
 import TwitterKit
 import SwiftyJSON
 
-class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableViewDataSource, UIScrollViewDelegate {
+class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDataSource, UIScrollViewDelegate {
 
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var usersTableView: UITableView!
