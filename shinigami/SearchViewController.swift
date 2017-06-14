@@ -160,9 +160,12 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                 // to prevent race condition, ensure only current text's results are displayed
                 if self.urlEncodedCurrentText == (queryItem.value?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))! {
                     let jsonData = JSON(data: data)
-                    self.usersToShow = jsonData.arrayValue.map { TWTRUserCustom.init(json: $0)! }
-                    self.usersTableView.reloadData()
-                    self.showingSuggestedUsers = false
+                    let searchResultsUsers = jsonData.arrayValue.map { TWTRUserCustom.init(json: $0)! }
+                    if searchResultsUsers.count > 0 {
+                        self.usersToShow = searchResultsUsers
+                        self.usersTableView.reloadData()
+                        self.showingSuggestedUsers = false
+                    }
                 }
             }
         }
