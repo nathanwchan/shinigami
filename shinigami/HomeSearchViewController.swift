@@ -53,7 +53,7 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
             let jsonData = JSON(data: data)
             self.usersTELists = jsonData["lists"].arrayValue
                 .map { TWTRList(json: $0)! }
-                .filter { $0.name.hasPrefix("TE_") && $0.memberCount > 0 }
+                .filter { $0.name.hasPrefix(Constants.listPrefix) && $0.memberCount > 0 }
             
             let getUsersEndpoint = "https://api.twitter.com/1.1/users/lookup.json"
             let usersFromTELists = self.usersTELists.map { String($0.name.characters.dropFirst(3)) } // drop TE_ from list name to get username
@@ -234,6 +234,9 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
                 }
                     
                 profileViewController.user = self.usersToShow[indexPath.row]
+                let listName = "\(Constants.listPrefix)\(profileViewController.user!.screenName)"
+                profileViewController.list = usersTELists.filter { $0.name == listName }.first
+                
                 if self.showingSuggestedUsers {
                     GA().logAction(category: "search", action: "click-following-index", label: String(describing: indexPath.row))
                     GA().logAction(category: "search", action: "click-following-screenname", label: profileViewController.user?.screenName)
