@@ -17,11 +17,14 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     @IBOutlet weak var usersTableScrollView: UIScrollView!
     
     private let client = TWTRAPIClient.withCurrentUser()
-    private var clientError : NSError?
-    private var users: [TWTRUserCustom] = []
-    private var followingUsers: [TWTRUserCustom] = []
+    private var clientError: NSError?
+    private var usersTELists: [TWTRList] = []
+    private var usersTEListsUsers: [TWTRUserCustom] = []
+    private var suggestedUsers: [TWTRUserCustom] = []
+    private let maxSuggestedUsersCount: Int = 100
+    private var usersToShow: [TWTRUserCustom] = []
     private var urlEncodedCurrentText: String = ""
-    private var showingFollowingUsers: Bool = false
+    private var showingSuggestedUsers: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,40 +43,87 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         self.usersTableView.rowHeight = UITableViewAutomaticDimension
         self.usersTableView.estimatedRowHeight = 70
 
-        self.showFollowingUsers()
-    }
-    
-    func showFollowingUsers() {
-        if self.followingUsers.isEmpty {
-            let usersFollowingEndpoint = "https://api.twitter.com/1.1/friends/list.json?count=200"
-            let request = self.client.urlRequest(withMethod: "GET", url: usersFollowingEndpoint, parameters: nil, error: &self.clientError)
+        let getListsEndpoint = "https://api.twitter.com/1.1/lists/ownerships.json?count=1000"
+        let request = self.client.urlRequest(withMethod: "GET", url: getListsEndpoint, parameters: nil, error: &self.clientError)
+        self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
+            guard let data = data else {
+                print("Error: \(connectionError.debugDescription)")
+                return
+            }
+            let jsonData = JSON(data: data)
+            self.usersTELists = jsonData["lists"].arrayValue
+                .map { TWTRList(json: $0)! }
+                .filter { $0.name.hasPrefix("TE_") && $0.memberCount > 0 }
             
+            let getUsersEndpoint = "https://api.twitter.com/1.1/users/lookup.json"
+            let usersFromTELists = self.usersTELists.map { String($0.name.characters.dropFirst(3)) } // drop TE_ from list name to get username
+            let params = [
+                "screen_name": usersFromTELists[0..<min(usersFromTELists.count,100)].joined(separator: ",") // users/lookup.json API has 100 users per request limit
+            ]
+            let request = self.client.urlRequest(withMethod: "GET", url: getUsersEndpoint, parameters: params, error: &self.clientError)
             self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
                 guard let data = data else {
                     print("Error: \(connectionError.debugDescription)")
                     return
                 }
                 let jsonData = JSON(data: data)
-                var followingTWTRUserCustoms = jsonData["users"].arrayValue.map { TWTRUserCustom.init(json: $0)! }
-                // sort by popularity (follower count)
-                followingTWTRUserCustoms = followingTWTRUserCustoms.sorted(by: { $0.followersCount > $1.followersCount })
-                // sort to move groups of users with less following users to the top
-                self.followingUsers =
-                    followingTWTRUserCustoms.filter{$0.followingCount > 0 && $0.followingCount < 200} +
-                    followingTWTRUserCustoms.filter{$0.followingCount >= 200 && $0.followingCount < 500} +
-                    followingTWTRUserCustoms.filter{$0.followingCount >= 500}
-                self.users = self.followingUsers
-                self.usersTableView.reloadData()
+                self.usersTEListsUsers = jsonData.arrayValue.map { TWTRUserCustom(json: $0)! }
+                
+                self.retrieveAndShowSuggestedUsers()
+            }
+        }
+    }
+    
+    func showSuggestedUsers() {
+        self.usersToShow = self.suggestedUsers
+        self.usersTableView.reloadData()
+        self.showingSuggestedUsers = true
+    }
+    
+    func retrieveAndShowSuggestedUsers() {
+        if self.suggestedUsers.isEmpty {
+            if self.usersTEListsUsers.count < self.maxSuggestedUsersCount {
+                let usersFollowingEndpoint = "https://api.twitter.com/1.1/friends/list.json?count=200"
+                let request = self.client.urlRequest(withMethod: "GET", url: usersFollowingEndpoint, parameters: nil, error: &self.clientError)
+                
+                self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
+                    guard let data = data else {
+                        print("Error: \(connectionError.debugDescription)")
+                        return
+                    }
+                    let jsonData = JSON(data: data)
+                    var followingTWTRUsers = jsonData["users"].arrayValue.map { TWTRUserCustom(json: $0)! }
+                    // sort by popularity (follower count)
+                    followingTWTRUsers = followingTWTRUsers.sorted(by: { $0.followersCount > $1.followersCount })
+                    // sort to move groups of users with less following users to the top
+                    followingTWTRUsers =
+                        followingTWTRUsers.filter{$0.followingCount > 0 && $0.followingCount < 200} +
+                        followingTWTRUsers.filter{$0.followingCount >= 200 && $0.followingCount < 500} +
+                        followingTWTRUsers.filter{$0.followingCount >= 500}
+                    
+                    self.suggestedUsers = self.usersTEListsUsers + followingTWTRUsers
+                    // remove duplicates
+                    var duplicateUserIds = Set<String>()
+                    let dedupedSuggestedUsers = self.suggestedUsers.flatMap { (user) -> TWTRUserCustom? in
+                        guard !duplicateUserIds.contains(user.idStr) else { return nil }
+                        duplicateUserIds.insert(user.idStr)
+                        return user
+                    }
+                    self.suggestedUsers = Array(dedupedSuggestedUsers[0..<min(dedupedSuggestedUsers.count, self.maxSuggestedUsersCount)])
+                    self.showSuggestedUsers()
+                }
+            } else {
+                // suggested users will be all from existing TE lists
+                self.suggestedUsers = Array(self.usersTEListsUsers[0..<100])
+                self.showSuggestedUsers()
             }
         } else {
-            self.users = self.followingUsers
-            self.usersTableView.reloadData()
+            self.showSuggestedUsers()
         }
-        self.showingFollowingUsers = true
     }
 
     func scrollToFirstRow() {
-        if self.users.count > 0 {
+        if self.usersToShow.count > 0 {
             let indexPath = IndexPath(row: 0, section: 0)
             self.usersTableView.scrollToRow(at: indexPath, at: .top, animated: true)
         }
@@ -84,7 +134,7 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         self.urlEncodedCurrentText = (currentText?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))!
         if self.urlEncodedCurrentText.isEmpty {
             GA().logAction(category: "search", action: "change-empty")
-            self.showFollowingUsers()
+            self.retrieveAndShowSuggestedUsers()
         } else {
             GA().logAction(category: "search", action: "change", label: self.urlEncodedCurrentText)
             
@@ -106,9 +156,9 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
                 // to prevent race condition, ensure only current text's results are displayed
                 if self.urlEncodedCurrentText == (queryItem.value?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))! {
                     let jsonData = JSON(data: data)
-                    self.users = jsonData.arrayValue.map { TWTRUserCustom.init(json: $0)! }
+                    self.usersToShow = jsonData.arrayValue.map { TWTRUserCustom.init(json: $0)! }
                     self.usersTableView.reloadData()
-                    self.showingFollowingUsers = false
+                    self.showingSuggestedUsers = false
                 }
             }
         }
@@ -118,7 +168,7 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         GA().logAction(category: "search", action: "clear")
-        self.showFollowingUsers()
+        self.retrieveAndShowSuggestedUsers()
         self.scrollToFirstRow()
         return true
     }
@@ -127,7 +177,7 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
         guard let userCell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as? UserTableViewCell else {
             fatalError("The dequeued cell is not an instance of UserTableViewCell.")
         }
-        let user = self.users[indexPath.row]
+        let user = self.usersToShow[indexPath.row]
         userCell.userProfileImageView.image(fromUrl: user.profileImageNormalSizeUrl)
         userCell.userProfileImageView.layer.cornerRadius = 5
         userCell.userProfileImageView.clipsToBounds = true
@@ -143,7 +193,7 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.users.count
+        return self.usersToShow.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
@@ -183,8 +233,8 @@ class HomeSearchViewController: UIViewController, UITextFieldDelegate, UITableVi
                     fatalError("The selected cell is not being displayed by the table")
                 }
                     
-                profileViewController.user = self.users[indexPath.row]
-                if self.showingFollowingUsers {
+                profileViewController.user = self.usersToShow[indexPath.row]
+                if self.showingSuggestedUsers {
                     GA().logAction(category: "search", action: "click-following-index", label: String(describing: indexPath.row))
                     GA().logAction(category: "search", action: "click-following-screenname", label: profileViewController.user?.screenName)
                 } else {

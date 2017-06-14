@@ -84,7 +84,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 self.errorOccured()
                 return
             }
-            
+
             let jsonData = JSON(data: data)
             let matchingLists = jsonData.arrayValue.filter { $0["name"].stringValue == listName && $0["member_count"] > 0}
             if let matchingList = matchingLists.first {
