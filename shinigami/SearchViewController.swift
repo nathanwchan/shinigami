@@ -15,6 +15,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var usersTableView: UITableView!
     @IBOutlet weak var usersTableScrollView: UIScrollView!
+    @IBOutlet weak var searchActivityIndicator: UIActivityIndicatorView!
     
     private let client = TWTRAPIClient.withCurrentUser()
     private var clientError: NSError?
@@ -72,6 +73,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                 self.usersTEListsUsers = jsonData.arrayValue.map { TWTRUserCustom(json: $0)! }
                 
                 self.retrieveAndShowSuggestedUsers()
+                self.searchActivityIndicator.stopAnimating()
             }
         }
     }

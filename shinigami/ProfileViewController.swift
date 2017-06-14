@@ -17,6 +17,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     private let client = TWTRAPIClient.withCurrentUser()
     private var clientError: NSError?
     private var tweets: [TWTRTweet] = []
+    private var showSpinnerCell: Bool = true
     private var showSorryCell: Bool = false
     private func errorOccured() {
         self.showSorryCell = true
@@ -158,6 +159,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             
             let jsonData = JSON(data: data)
             self.tweets.append(contentsOf: TWTRTweet.tweets(withJSONArray: jsonData.arrayObject) as! [TWTRTweet])
+            self.showSpinnerCell = false
             self.profileTableView.reloadData()
         }
     }
@@ -181,6 +183,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             profileCell.whatNameSeesLabel.text = "What \(user.name) sees..."
             profileCell.followingLabel.text = abbreviateNumber(num: user.followingCount)
             return profileCell
+        } else if self.showSpinnerCell {
+            let spinnerCell = tableView.dequeueReusableCell(withIdentifier: "spinnerCell", for: indexPath) as UITableViewCell
+            spinnerCell.separatorInset = UIEdgeInsetsMake(0, 0, 0, tableView.bounds.width);
+            return spinnerCell
         } else if self.showSorryCell {
             let sorryCell = tableView.dequeueReusableCell(withIdentifier: "sorryCell", for: indexPath) as UITableViewCell
             return sorryCell
@@ -198,7 +204,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tweets.count + 1 + (self.showSorryCell ? 1 : 0)
+        return tweets.count + 1 + (self.showSorryCell ? 1 : 0) + (self.showSpinnerCell ? 1 : 0)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
