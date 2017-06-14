@@ -48,6 +48,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
             guard let data = data else {
                 print("Error: \(connectionError.debugDescription)")
+                GA().logAction(category: "twitter-error", action: "lists-ownerships", label: connectionError.debugDescription)
                 return
             }
             let jsonData = JSON(data: data)
@@ -64,6 +65,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
             self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
                 guard let data = data else {
                     print("Error: \(connectionError.debugDescription)")
+                    GA().logAction(category: "twitter-error", action: "users-lookup", label: connectionError.debugDescription)
                     return
                 }
                 let jsonData = JSON(data: data)
@@ -89,6 +91,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                 self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
                     guard let data = data else {
                         print("Error: \(connectionError.debugDescription)")
+                        GA().logAction(category: "twitter-error", action: "friends-list", label: connectionError.debugDescription)
                         return
                     }
                     let jsonData = JSON(data: data)
@@ -144,6 +147,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
             self.client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
                 guard let data = data else {
                     print("Error: \(connectionError.debugDescription)")
+                    GA().logAction(category: "twitter-error", action: "users-search", label: connectionError.debugDescription)
                     return
                 }
                 guard let url = response?.url,

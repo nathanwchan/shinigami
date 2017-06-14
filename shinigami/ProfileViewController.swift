@@ -61,6 +61,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
                 guard let data = data else {
                     print("Error: \(connectionError.debugDescription)")
+                    GA().logAction(category: "twitter-error", action: "lists-create", label: connectionError.debugDescription)
                     self.errorOccured()
                     return
                 }
@@ -75,6 +76,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
                     guard let data = data else {
                         print("Error: \(connectionError.debugDescription)")
+                        GA().logAction(category: "twitter-error", action: "friends-ids", label: connectionError.debugDescription)
                         self.errorOccured()
                         return
                     }
@@ -100,13 +102,16 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                         self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
                             guard let data = data else {
                                 print("Error: \(connectionError.debugDescription)")
+                                GA().logAction(category: "twitter-error", action: "lists-members-create-all", label: connectionError.debugDescription)
                                 self.errorOccured()
                                 return
                             }
                             
                             let jsonData = JSON(data: data)
                             if jsonData["member_count"].int == 0 {
-                                print("Error: response to lists/members/create_all.json returned successfully, but no members were added")
+                                let errorMessage = "Error: response to lists/members/create_all.json returned successfully, but no members were added"
+                                print(errorMessage)
+                                GA().logAction(category: "twitter-error", action: "lists-no-members", label: errorMessage)
                                 self.errorOccured()
                                 return
                             }
@@ -146,6 +151,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
             guard let data = data else {
                 print("Error: \(connectionError.debugDescription)")
+                GA().logAction(category: "twitter-error", action: "lists-statuses", label: connectionError.debugDescription)
                 self.errorOccured()
                 return
             }
