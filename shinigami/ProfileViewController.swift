@@ -20,6 +20,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     private var showSpinnerCell: Bool = true
     private var showSorryCell: Bool = false
     private func errorOccured() {
+        self.showSpinnerCell = false
         self.showSorryCell = true
         self.profileTableView.reloadData()
     }
