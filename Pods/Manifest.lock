@@ -16,6 +16,11 @@ PODS:
   - GoogleToolboxForMac/Defines (2.1.1)
   - GoogleToolboxForMac/NSData+zlib (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
+  - Realm (2.8.0):
+    - Realm/Headers (= 2.8.0)
+  - Realm/Headers (2.8.0)
+  - RealmSwift (2.8.0):
+    - Realm (= 2.8.0)
   - SwiftyJSON (3.1.4)
   - TwitterCore (3.0.0)
   - TwitterKit (3.0.3):
@@ -23,6 +28,7 @@ PODS:
 
 DEPENDENCIES:
   - Google/Analytics
+  - RealmSwift
   - SwiftyJSON
   - TwitterKit (~> 3.0.3)
 
@@ -33,10 +39,12 @@ SPEC CHECKSUMS:
   Google: 98da4b1a60ed0beb80a290387a28333406a1eb90
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
+  Realm: 929243ad2b618b3232e70658bedc61110e7563f1
+  RealmSwift: 5b7079b891f2833d1849294161ba3e092bbda3f6
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   TwitterCore: 8ce250be1eb34633a0e6acc89520d4165ec52c10
   TwitterKit: 202404be71aadd81d19f677b34579fe77d9cb67e
 
-PODFILE CHECKSUM: af8d648405050ee90e739bf87c11f965439df9b5
+PODFILE CHECKSUM: 4e3fb0fccead1d0f90578e75655e43f294c664c8
 
 COCOAPODS: 1.2.1

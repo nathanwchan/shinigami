@@ -6,4 +6,5 @@ target 'shinigami' do
   pod 'TwitterKit', '~> 3.0.3'
   pod 'SwiftyJSON'
   pod 'Google/Analytics'
+  pod 'RealmSwift'
 end
