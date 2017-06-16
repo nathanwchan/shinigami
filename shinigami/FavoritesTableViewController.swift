@@ -29,7 +29,7 @@ class FavoritesTableViewController: UITableViewController {
         self.tableView.estimatedRowHeight = 70
 
         // Observe Results Notifications
-        notificationToken = favorites.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+        notificationToken = self.favorites.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             guard let tableView = self?.tableView else { return }
             switch changes {
             case .initial:
