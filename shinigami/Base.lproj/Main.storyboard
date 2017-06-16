@@ -428,7 +428,7 @@ Try again in 15 minutes.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QsO-cV-FAb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6421.6000000000004" y="410.64467766116945"/>
+            <point key="canvasLocation" x="6526" y="762"/>
         </scene>
         <!--Search-->
         <scene sceneID="PYk-OB-hg4">
@@ -580,6 +580,7 @@ Try again in 15 minutes.</string>
                                     <outlet property="userNameLabel" destination="iUn-BL-GxR" id="dFH-fy-z8p"/>
                                     <outlet property="userProfileImageView" destination="oWo-wJ-QDm" id="kPn-bN-D64"/>
                                     <outlet property="userScreenNameLabel" destination="3cW-EB-zjA" id="XDF-8V-bc3"/>
+                                    <segue destination="h0p-8T-Cyf" kind="show" identifier="ShowFavoriteProfileSegue" id="h17-fK-x0p"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -619,4 +620,7 @@ Try again in 15 minutes.</string>
         <image name="twitter-following-icon.png" width="17" height="18"/>
         <image name="twitter-verified-icon.png" width="15" height="15"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="h17-fK-x0p"/>
+    </inferredMetricsTieBreakers>
 </document>

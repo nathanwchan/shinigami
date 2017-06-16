@@ -73,4 +73,32 @@ class FavoritesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        super.prepare(for: segue, sender: sender)
+        
+        switch(segue.identifier ?? "") {
+        case "ShowFavoriteProfileSegue":
+            guard let profileViewController = segue.destination as? ProfileViewController else {
+                fatalError("Unexpected destination: \(segue.destination)")
+            }
+            
+            guard let selectedUserCell = sender as? UserTableViewCell else {
+                fatalError("Unexpected sender: \(sender.debugDescription)")
+            }
+            
+            guard let indexPath = self.tableView.indexPath(for: selectedUserCell) else {
+                fatalError("The selected cell is not being displayed by the table")
+            }
+            
+            let favorite = self.favorites[indexPath.row]
+            profileViewController.user = favorite.user
+            profileViewController.list = favorite.list
+            
+            GA().logAction(category: "search", action: "click-favorite-screenname", label: profileViewController.user?.screenName)
+        default:
+            fatalError("Unexpected Segue Identifier; \(segue.identifier ?? "unknown")")
+        }
+    }
 }
