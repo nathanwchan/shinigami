@@ -8,21 +8,23 @@
 
 import Foundation
 import SwiftyJSON
+import RealmSwift
 
-class TWTRUserCustom {
-    let idStr: String
-    let name: String
-    let screenName: String
-    let location: String
-    let description: String
-    let followersCount: Int // unused
-    let followingCount: Int // friends_count
-    let isVerified: Bool
-    let profileImageNormalSizeUrl: String
-    let profileImageOriginalSizeUrl: String
-    let following: Bool // is the logged-in user following this user?
+class TWTRUserCustom: Object {
+    dynamic var idStr: String = ""
+    dynamic var name: String = ""
+    dynamic var screenName: String = ""
+    dynamic var location: String = ""
+    dynamic var userDescription: String = ""
+    dynamic var followersCount: Int = 0 // unused
+    dynamic var followingCount: Int = 0 // friends_count
+    dynamic var isVerified: Bool = false
+    dynamic var profileImageNormalSizeUrl: String = ""
+    dynamic var profileImageOriginalSizeUrl: String = ""
+    dynamic var following: Bool = false // is the logged-in user following this user?
     
-    init?(json: JSON) {
+    convenience init?(json: JSON) {
+        self.init()
         guard
             let idStr = json["id_str"].string,
             let name = json["name"].string,
@@ -42,7 +44,7 @@ class TWTRUserCustom {
         self.name = name
         self.screenName = screenName
         self.location = location
-        self.description = description
+        self.userDescription = description
         self.followersCount = followersCount
         self.followingCount = followingCount
         self.isVerified = isVerified

@@ -30,4 +30,17 @@ class UserTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    func configureWith(_ user: TWTRUserCustom) {
+        self.userProfileImageView.image(fromUrl: user.profileImageNormalSizeUrl)
+        self.userProfileImageView.layer.cornerRadius = 5
+        self.userProfileImageView.clipsToBounds = true
+        self.userNameLabel.text = user.name
+        self.userScreenNameLabel.text = "@\(user.screenName)"
+        self.followingCountLabel.text = abbreviateNumber(num: user.followingCount)
+        self.userIsVerifiedImageView.isHidden = !user.isVerified
+        self.followingIcon.isHidden = !user.following
+        self.isFollowingLabel.isHidden = !user.following
+        // Feels hacky, but what StackOverflow told me to do.  Set height constraint of following icon to zero.
+        self.followingIconHeightConstraint.constant = user.following ? 18 : 0
+    }
 }

@@ -187,15 +187,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
             fatalError("The dequeued cell is not an instance of UserTableViewCell.")
         }
         let user = self.usersToShow[indexPath.row]
-        userCell.userProfileImageView.image(fromUrl: user.profileImageNormalSizeUrl)
-        userCell.userProfileImageView.layer.cornerRadius = 5
-        userCell.userProfileImageView.clipsToBounds = true
-        userCell.userNameLabel.text = user.name
-        userCell.userScreenNameLabel.text = "@\(user.screenName)"
-        userCell.followingCountLabel.text = abbreviateNumber(num: user.followingCount)
-        userCell.userIsVerifiedImageView.isHidden = !user.isVerified
-        userCell.followingIcon.isHidden = !user.following
-        userCell.isFollowingLabel.isHidden = !user.following
+        userCell.configureWith(user)
         // Kinda hacky, but what StackOverflow told me to do.  Set height constraint of following icon to zero.
         userCell.followingIconHeightConstraint.constant = user.following ? 18 : 0
         return userCell

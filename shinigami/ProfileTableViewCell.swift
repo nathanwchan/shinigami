@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import TwitterKit
+import RealmSwift
 
 class ProfileTableViewCell: UITableViewCell {
 
@@ -17,6 +19,10 @@ class ProfileTableViewCell: UITableViewCell {
     @IBOutlet weak var whatNameSeesLabel: UILabel!
     @IBOutlet weak var isVerifiedImageView: UIImageView!
     @IBOutlet weak var followingLabel: UILabel!
+    @IBOutlet weak var favoriteButton: UIButton!
+    var isFavorite: Bool = false
+    var user: TWTRUserCustom?
+    var list: TWTRList?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,5 +34,31 @@ class ProfileTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    
+    func toggleFavoriteButtonOn() {
+        self.isFavorite = true
+        self.favoriteButton.setImage(UIImage(named: "heart-filled.png")!, for: .normal)
+    }
+    
+    @IBAction func clickFavoriteButton(_ sender: UIButton) {
+        if !self.isFavorite {
+            let realm = try! Realm()
+            try! realm.write() {
+                guard let ownerId = Twitter.sharedInstance().sessionStore.session()?.userID else {
+                    return
+                }
+                guard let user = self.user else {
+                    fatalError("User is not set.")
+                }
+                guard let list = self.list else {
+                    // this should not happen once the favorite button is disabled after an error occurs
+                    print("List is not set.")
+                    return
+                }
+                let favorite = Favorite(ownerId: ownerId, user: user, list: list)
+                realm.create(Favorite.self, value: favorite)
+            }
+            self.toggleFavoriteButtonOn()
+        }
+    }
 }

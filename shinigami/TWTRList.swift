@@ -8,15 +8,17 @@
 
 import Foundation
 import SwiftyJSON
+import RealmSwift
 
-class TWTRList {
-    let idStr: String
-    let name: String
-    let uri: String
-    let memberCount: Int
-    let createdAt: String
+class TWTRList: Object {
+    dynamic var idStr: String = ""
+    dynamic var name: String = ""
+    dynamic var uri: String = ""
+    dynamic var memberCount: Int = 0
+    dynamic var createdAt: String = ""
     
-    init?(json: JSON) {
+    convenience init?(json: JSON) {
+        self.init()
         guard
             let idStr = json["id_str"].string,
             let name = json["name"].string,
