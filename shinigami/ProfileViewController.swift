@@ -23,7 +23,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     private func errorOccured() {
         self.showSpinnerCell = false
         self.showSorryCell = true
-        // TODO: hide favorite button
         self.profileTableView.reloadData()
     }
     
@@ -185,17 +184,21 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             profileCell.descriptionLabel.text = user.userDescription
             profileCell.whatNameSeesLabel.text = "What \(user.name) sees..."
             profileCell.followingLabel.text = abbreviateNumber(num: user.followingCount)
-            let favorites: Results<Favorite> = {
-                let realm = try! Realm()
-                let ownerId = Twitter.sharedInstance().sessionStore.session()!.userID
-                let predicate = NSPredicate(format: "ownerId = '\(ownerId)'")
-                return realm.objects(Favorite.self).filter(predicate)
-                }()
-            if !(favorites.flatMap { $0.user }.filter { $0.screenName == user.screenName }.isEmpty) {
-                profileCell.toggleFavoriteButtonOn()
+            if self.showSorryCell {
+                profileCell.favoriteButton.isHidden = true
+            } else {
+                let favorites: Results<Favorite> = {
+                    let realm = try! Realm()
+                    let ownerId = Twitter.sharedInstance().sessionStore.session()!.userID
+                    let predicate = NSPredicate(format: "ownerId = '\(ownerId)'")
+                    return realm.objects(Favorite.self).filter(predicate)
+                    }()
+                if !(favorites.flatMap { $0.user }.filter { $0.screenName == user.screenName }.isEmpty) {
+                    profileCell.toggleFavoriteButtonOn()
+                }
+                profileCell.user = user
+                profileCell.list = self.list
             }
-            profileCell.user = user
-            profileCell.list = self.list
             return profileCell
         } else if self.showSpinnerCell {
             let spinnerCell = tableView.dequeueReusableCell(withIdentifier: "spinnerCell", for: indexPath) as UITableViewCell
