@@ -22,8 +22,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fwg-sR-ILT" customClass="TWTRLogInButton">
-                                <rect key="frame" x="98" y="318" width="179" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fwg-sR-ILT" customClass="TWTRLogInButton">
+                                <rect key="frame" x="126.5" y="318" width="122" height="30"/>
                                 <color key="backgroundColor" red="0.15157633400000001" green="0.70179590960000005" blue="0.95525016190000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Login with Twitter">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -186,8 +186,12 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="MGE-UU-Gdo">
-                                <rect key="frame" x="171" y="133" width="37" height="37"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="MGE-UU-Gdo">
+                                <rect key="frame" x="169" y="135" width="37" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="37" id="SuK-qb-yzy"/>
+                                    <constraint firstAttribute="width" constant="37" id="ZJe-Ft-UIL"/>
+                                </constraints>
                                 <color key="color" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
                         </subviews>
@@ -543,13 +547,6 @@ Try again in 15 minutes.</string>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="twitter-verified-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="rRI-sK-qPi">
-                                            <rect key="frame" x="197" y="33" width="15" height="15"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="15" id="CbK-hA-nes"/>
-                                                <constraint firstAttribute="width" constant="15" id="HpH-Sj-RbO"/>
-                                            </constraints>
-                                        </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="57" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bIx-Hc-QAD">
                                             <rect key="frame" x="351" y="10" width="16" height="17"/>
                                             <constraints>
@@ -598,6 +595,13 @@ Try again in 15 minutes.</string>
                                                 <constraint firstAttribute="height" constant="48" id="ahQ-VF-63j"/>
                                             </constraints>
                                         </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="twitter-verified-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="rRI-sK-qPi">
+                                            <rect key="frame" x="194" y="31" width="15" height="15"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="15" id="CbK-hA-nes"/>
+                                                <constraint firstAttribute="width" constant="15" id="HpH-Sj-RbO"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="GS9-oT-zg8" firstAttribute="leading" secondItem="tFd-G1-6SG" secondAttribute="leadingMargin" constant="35" id="0KS-Go-bhZ"/>
@@ -616,7 +620,7 @@ Try again in 15 minutes.</string>
                                         <constraint firstItem="bIx-Hc-QAD" firstAttribute="top" secondItem="tFd-G1-6SG" secondAttribute="topMargin" constant="2" id="abR-AC-CpT"/>
                                         <constraint firstItem="3cW-EB-zjA" firstAttribute="top" secondItem="iUn-BL-GxR" secondAttribute="bottom" constant="3" id="bFs-ft-6UW"/>
                                         <constraint firstItem="iUn-BL-GxR" firstAttribute="top" secondItem="oWo-wJ-QDm" secondAttribute="top" constant="-2" id="kTe-E6-wdP"/>
-                                        <constraint firstItem="rRI-sK-qPi" firstAttribute="centerY" secondItem="iUn-BL-GxR" secondAttribute="centerY" id="pAF-G6-Bvj"/>
+                                        <constraint firstItem="rRI-sK-qPi" firstAttribute="centerY" secondItem="iUn-BL-GxR" secondAttribute="centerY" id="ncd-qP-zyG"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
