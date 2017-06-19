@@ -12,8 +12,8 @@ import RealmSwift
 
 class ProfileTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var profileImageButton: UIButton!
+    @IBOutlet weak var nameButton: UIButton!
     @IBOutlet weak var screenNameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var whatNameSeesLabel: UILabel!
@@ -26,13 +26,6 @@ class ProfileTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     func toggleFavoriteButtonOn() {

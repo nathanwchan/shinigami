@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		020ACD712F1F5773DA28C2D3 /* Pods_shinigami.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A8BC89F844F4219F316174 /* Pods_shinigami.framework */; };
+		D80C45911EF872AB0080B044 /* ProfileViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80C45901EF872AB0080B044 /* ProfileViewControllerDelegate.swift */; };
+		D80C45931EF87D8C0080B044 /* UIButton+setImageFromUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80C45921EF87D8C0080B044 /* UIButton+setImageFromUrl.swift */; };
 		D81002371ED49EDD00B4E34F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81002361ED49EDD00B4E34F /* AppDelegate.swift */; };
 		D81002391ED49EDD00B4E34F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81002381ED49EDD00B4E34F /* LoginViewController.swift */; };
 		D810023C1ED49EDD00B4E34F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D810023A1ED49EDD00B4E34F /* Main.storyboard */; };
@@ -50,6 +52,8 @@
 		9484142F295752EAB6DAF202 /* Pods-shinigami.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shinigami.release.xcconfig"; path = "Pods/Target Support Files/Pods-shinigami/Pods-shinigami.release.xcconfig"; sourceTree = "<group>"; };
 		B5A8BC89F844F4219F316174 /* Pods_shinigami.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_shinigami.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDB3DC8364A643D0084D242F /* Pods-shinigami.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shinigami.debug.xcconfig"; path = "Pods/Target Support Files/Pods-shinigami/Pods-shinigami.debug.xcconfig"; sourceTree = "<group>"; };
+		D80C45901EF872AB0080B044 /* ProfileViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerDelegate.swift; sourceTree = "<group>"; };
+		D80C45921EF87D8C0080B044 /* UIButton+setImageFromUrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+setImageFromUrl.swift"; sourceTree = "<group>"; };
 		D81002331ED49EDD00B4E34F /* shinigami.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shinigami.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D81002361ED49EDD00B4E34F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D81002381ED49EDD00B4E34F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -111,6 +115,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D80C458F1EF8727E0080B044 /* protocols */ = {
+			isa = PBXGroup;
+			children = (
+				D80C45901EF872AB0080B044 /* ProfileViewControllerDelegate.swift */,
+			);
+			name = protocols;
+			sourceTree = "<group>";
+		};
 		D810022A1ED49EDD00B4E34F = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +149,7 @@
 				D81002521EDF598900B4E34F /* models */,
 				D810024D1ED7685200B4E34F /* controllers */,
 				D8C381BD1EE89B9800D030B0 /* utils */,
+				D80C458F1EF8727E0080B044 /* protocols */,
 				D810027D1EE09A9300B4E34F /* extensions */,
 				D810023A1ED49EDD00B4E34F /* Main.storyboard */,
 				D81002361ED49EDD00B4E34F /* AppDelegate.swift */,
@@ -190,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				D81002711EDFC4DE00B4E34F /* UIImageView+downloadedFrom.swift */,
+				D80C45921EF87D8C0080B044 /* UIButton+setImageFromUrl.swift */,
 			);
 			name = extensions;
 			sourceTree = "<group>";
@@ -375,9 +389,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D81002391ED49EDD00B4E34F /* LoginViewController.swift in Sources */,
+				D80C45911EF872AB0080B044 /* ProfileViewControllerDelegate.swift in Sources */,
 				D82F38731EF096BB0044DA58 /* TWTRList.swift in Sources */,
 				D8A037E71EF309F4007D2C75 /* Favorite.swift in Sources */,
 				D860E1681EEB654F00467CE2 /* GoogleAnalytics.swift in Sources */,
+				D80C45931EF87D8C0080B044 /* UIButton+setImageFromUrl.swift in Sources */,
 				D810027F1EE09C1000B4E34F /* ProfileTableViewCell.swift in Sources */,
 				D813857D1EF3366C00EFE58F /* FavoritesTableViewController.swift in Sources */,
 				D81002371ED49EDD00B4E34F /* AppDelegate.swift in Sources */,

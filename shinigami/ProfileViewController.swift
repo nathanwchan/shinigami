@@ -174,11 +174,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             guard let user = self.user else {
                 fatalError("User is not set.")
             }
-            
-            profileCell.profileImageView.image(fromUrl: user.profileImageOriginalSizeUrl)
-            profileCell.profileImageView.layer.cornerRadius = 5
-            profileCell.profileImageView.clipsToBounds = true
-            profileCell.nameLabel.text = user.name
+
+            profileCell.profileImageButton.setImage(fromUrl: user.profileImageOriginalSizeUrl, for: .normal)
+            profileCell.profileImageButton.layer.cornerRadius = 5
+            profileCell.profileImageButton.clipsToBounds = true
+            profileCell.nameButton.setTitle(user.name, for: .normal)
             profileCell.screenNameLabel.text = "@\(user.screenName)"
             profileCell.isVerifiedImageView.isHidden = !user.isVerified
             profileCell.descriptionLabel.text = user.userDescription
@@ -261,6 +261,13 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             }
             if let url = sender as? URL {
                 tweetWebViewController.url = url
+            }
+        case "ProfileImageClickSegue", "ProfileNameClickSegue":
+            guard let tweetWebViewController = segue.destination as? TweetWebViewController else {
+                fatalError("Unexpected destination: \(segue.destination)")
+            }
+            if let user = user {
+                tweetWebViewController.url = URL(string: "https://twitter.com/\(user.screenName)")
             }
         default:
             fatalError("Unexpected Segue Identifier; \(segue.identifier ?? "unknown")")
