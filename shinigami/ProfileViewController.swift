@@ -231,21 +231,39 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     
+    func redirectToUrl(_ url: URL) {
+        self.performSegue(withIdentifier: "TweetClickSegue", sender: url)
+    }
+    
     func tweetView(_ tweetView: TWTRTweetView, didTap tweet: TWTRTweet) {
         GA().logAction(category: "profile", action: "tweet-click", label: "\(self.user!.screenName),\(tweet.author.screenName)")
-        UIApplication.shared.open(tweet.permalink)
+        self.redirectToUrl(tweet.permalink)
     }
     
     func tweetView(_ tweetView: TWTRTweetView, didTapProfileImageFor user: TWTRUser) {
         GA().logAction(category: "profile", action: "tweet-profile-image-click", label: "\(self.user!.screenName),\(user.screenName)")
-        UIApplication.shared.open(user.profileURL)
+        self.redirectToUrl(user.profileURL)
     }
     
-    /*func tweetView(_ tweetView: TWTRTweetView, didTap url: URL) {
-        let webViewController = UIViewController()
-        let webView = UIWebView(frame: webViewController.view.bounds)
-        webView.loadRequest(URLRequest(url: url))
-        webViewController.view = webView
-        self.navigationController!.pushViewController(webViewController, animated: true)
-    }*/
+    func tweetView(_ tweetView: TWTRTweetView, didTap url: URL) {
+        GA().logAction(category: "profile", action: "tweet-url-click", label: "\(self.user!.screenName)")
+        self.redirectToUrl(url)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        super.prepare(for: segue, sender: sender)
+        
+        switch(segue.identifier ?? "") {
+        case "TweetClickSegue":
+            guard let tweetWebViewController = segue.destination as? TweetWebViewController else {
+                fatalError("Unexpected destination: \(segue.destination)")
+            }
+            if let url = sender as? URL {
+                tweetWebViewController.url = url
+            }
+        default:
+            fatalError("Unexpected Segue Identifier; \(segue.identifier ?? "unknown")")
+        }
+    }
 }
