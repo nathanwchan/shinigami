@@ -73,13 +73,13 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                 self.usersTEListsUsers = jsonData.arrayValue.map { TWTRUserCustom(json: $0)! }
                 
                 self.retrieveAndShowSuggestedUsers()
-                self.searchActivityIndicator.stopAnimating()
             }
         }
     }
     
     func showSuggestedUsers() {
         self.usersToShow = self.suggestedUsers
+        self.searchActivityIndicator.stopAnimating()
         self.usersTableView.reloadData()
         self.showingSuggestedUsers = true
     }
@@ -165,6 +165,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                     let searchResultsUsers = jsonData.arrayValue.map { TWTRUserCustom.init(json: $0)! }
                     if searchResultsUsers.count > 0 {
                         self.usersToShow = searchResultsUsers
+                        self.searchActivityIndicator.stopAnimating()
                         self.usersTableView.reloadData()
                         self.showingSuggestedUsers = false
                     }
