@@ -17,14 +17,6 @@ Copyright 2017 Google
 
 Copyright 2017 Google
 
-## Google
-
-Copyright 2016 Google Inc.
-
-## GoogleAnalytics
-
-Copyright 2016 Google
-
 ## GoogleToolboxForMac
 
 
