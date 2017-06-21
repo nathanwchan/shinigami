@@ -231,9 +231,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     let predicate = NSPredicate(format: "ownerId = '\(ownerId)'")
                     return realm.objects(Favorite.self).filter(predicate)
                     }()
-                if !(favorites.flatMap { $0.user }.filter { $0.screenName == user.screenName }.isEmpty) {
-                    profileCell.toggleFavoriteButtonOn()
-                }
+                
+                let favorite = favorites.filter { $0.user?.screenName == user.screenName }.first
+                profileCell.toggleFavoriteButton(favorite != nil)
+                profileCell.favorite = favorite
                 profileCell.user = user
                 profileCell.list = self.list
             }

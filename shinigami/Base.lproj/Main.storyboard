@@ -301,10 +301,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EBu-5i-tWQ">
-                                                    <rect key="frame" x="348" y="7" width="20" height="20"/>
+                                                    <rect key="frame" x="341" y="4" width="30" height="30"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="20" id="dIZ-Vw-7Me"/>
-                                                        <constraint firstAttribute="height" constant="20" id="hrx-9t-8HI"/>
+                                                        <constraint firstAttribute="width" constant="30" id="dIZ-Vw-7Me"/>
+                                                        <constraint firstAttribute="height" constant="30" id="hrx-9t-8HI"/>
                                                     </constraints>
                                                     <state key="normal" title="Button" image="heart.png"/>
                                                     <connections>
@@ -340,13 +340,13 @@
                                                 <constraint firstItem="alY-8f-wjV" firstAttribute="leading" secondItem="Hsc-Uc-dWO" secondAttribute="trailing" constant="10" id="Azb-7E-rt2"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="5bo-dF-gg3" secondAttribute="trailing" constant="2" id="Bbc-zt-e79"/>
                                                 <constraint firstItem="5bo-dF-gg3" firstAttribute="top" secondItem="Hsc-Uc-dWO" secondAttribute="bottom" constant="6.5" id="EJZ-xy-ghn"/>
-                                                <constraint firstAttribute="trailing" secondItem="EBu-5i-tWQ" secondAttribute="trailing" constant="7" id="Eej-OY-UmC"/>
+                                                <constraint firstAttribute="trailing" secondItem="EBu-5i-tWQ" secondAttribute="trailing" constant="4" id="Eej-OY-UmC"/>
                                                 <constraint firstItem="5bo-dF-gg3" firstAttribute="leading" secondItem="Hsc-Uc-dWO" secondAttribute="leading" id="FAX-s1-IDa"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="5bo-dF-gg3" secondAttribute="bottom" id="FkO-ps-cTh"/>
                                                 <constraint firstItem="Bxj-0D-NSQ" firstAttribute="leading" secondItem="Hsc-Uc-dWO" secondAttribute="trailing" constant="10" id="HaE-Sd-sJw"/>
                                                 <constraint firstItem="V2i-Qp-jGD" firstAttribute="bottom" secondItem="5CM-Od-lYq" secondAttribute="bottom" id="KTn-8Q-u7Q"/>
                                                 <constraint firstItem="5CM-Od-lYq" firstAttribute="top" secondItem="st4-Qy-oOS" secondAttribute="bottom" constant="8.5" id="Ol8-xK-1Ig"/>
-                                                <constraint firstItem="EBu-5i-tWQ" firstAttribute="top" secondItem="Iti-1h-tpG" secondAttribute="top" constant="7" id="RRI-VT-4Gn"/>
+                                                <constraint firstItem="EBu-5i-tWQ" firstAttribute="top" secondItem="Iti-1h-tpG" secondAttribute="top" constant="4" id="RRI-VT-4Gn"/>
                                                 <constraint firstItem="st4-Qy-oOS" firstAttribute="leading" secondItem="Hsc-Uc-dWO" secondAttribute="trailing" constant="10" id="Xbv-O9-Mjb"/>
                                                 <constraint firstItem="xgV-CY-C11" firstAttribute="leading" secondItem="Bxj-0D-NSQ" secondAttribute="trailing" constant="5" id="cUn-Pv-Ukg"/>
                                                 <constraint firstItem="xgV-CY-C11" firstAttribute="centerY" secondItem="Bxj-0D-NSQ" secondAttribute="centerY" id="gOM-xh-DZk"/>

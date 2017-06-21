@@ -21,22 +21,36 @@ class ProfileTableViewCell: UITableViewCell {
     @IBOutlet weak var followingLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
     var isFavorite: Bool = false
+    var favorite: Favorite?
     var user: TWTRUserCustom?
     var list: TWTRList?
     
+    enum HeartFileNames: String {
+        case on = "heart-filled.png"
+        case off = "heart.png"
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     
-    func toggleFavoriteButtonOn() {
-        self.isFavorite = true
-        self.favoriteButton.setImage(UIImage(named: "heart-filled.png")!, for: .normal)
+    func toggleFavoriteButton(_ turnOn: Bool) {
+        self.isFavorite = turnOn
+        let heartFileName = turnOn ? HeartFileNames.on.rawValue : HeartFileNames.off.rawValue
+        self.favoriteButton.setImage(UIImage(named: heartFileName)!, for: .normal)
     }
     
     @IBAction func clickFavoriteButton(_ sender: UIButton) {
-        if !self.isFavorite {
-            let realm = try! Realm()
-            try! realm.write() {
+        let realm = try! Realm()
+        try! realm.write() {
+            if self.isFavorite {
+                if let favorite = self.favorite {
+                    realm.delete(favorite)
+                    
+                    Firebase().logEvent("profile_delete_favorite", [
+                        "screenname": self.user?.screenName ?? "unknown"
+                        ])
+                }
+            } else {
                 guard let ownerId = Twitter.sharedInstance().sessionStore.session()?.userID else {
                     return
                 }
@@ -49,13 +63,13 @@ class ProfileTableViewCell: UITableViewCell {
                     return
                 }
                 let favorite = Favorite(ownerId: ownerId, user: user, list: list)
-                realm.create(Favorite.self, value: favorite)
+                self.favorite = realm.create(Favorite.self, value: favorite)
+                
+                Firebase().logEvent("profile_save_favorite", [
+                    "screenname": self.user?.screenName ?? "unknown"
+                    ])
             }
-            self.toggleFavoriteButtonOn()
-            
-            Firebase().logEvent("profile_save_favorite", [
-                "screenname": self.user?.screenName ?? "unknown"
-                ])
+            self.toggleFavoriteButton(!self.isFavorite)
         }
     }
 }
