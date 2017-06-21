@@ -9,6 +9,7 @@
 import UIKit
 import TwitterKit
 import Google
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Twitter.sharedInstance().start(
             withConsumerKey:"DhXJZBzIJtTV2sYkeUfGPkubT",
             consumerSecret:"RZ6AQQWVCAkZBvIfHIBVUeN2BR0MbEnNVQeHDHZFjwK5hWpk74")
+        
+        FIRApp.configure()
         
         // Google Analytics setup
         guard let gai = GAI.sharedInstance() else {

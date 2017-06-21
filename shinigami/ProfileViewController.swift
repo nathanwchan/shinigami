@@ -31,8 +31,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        GA().logScreen(name: "profile")
-        
         self.profileTableView.dataSource = self
         self.profileTableView.delegate = self
         
@@ -64,7 +62,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
                 guard let data = data else {
                     print("Error: \(connectionError.debugDescription)")
-                    GA().logAction(category: "twitter-error", action: "lists-create", label: connectionError.debugDescription)
+                    Firebase().logEvent("twitter_error", [
+                        "endpoint": "lists_create",
+                        "description": connectionError.debugDescription
+                        ])
                     self.errorOccured()
                     return
                 }
@@ -79,7 +80,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
                     guard let data = data else {
                         print("Error: \(connectionError.debugDescription)")
-                        GA().logAction(category: "twitter-error", action: "friends-ids", label: connectionError.debugDescription)
+                        Firebase().logEvent("twitter_error", [
+                            "endpoint": "friends_ids",
+                            "description": connectionError.debugDescription
+                            ])
                         self.errorOccured()
                         return
                     }
@@ -105,7 +109,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                         self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
                             guard let data = data else {
                                 print("Error: \(connectionError.debugDescription)")
-                                GA().logAction(category: "twitter-error", action: "lists-members-create-all", label: connectionError.debugDescription)
+                                Firebase().logEvent("twitter_error", [
+                                    "endpoint": "lists_members_create_all",
+                                    "description": connectionError.debugDescription
+                                    ])
                                 self.errorOccured()
                                 return
                             }
@@ -114,7 +121,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                             if jsonData["member_count"].int == 0 {
                                 let errorMessage = "Error: response to lists/members/create_all.json returned successfully, but no members were added"
                                 print(errorMessage)
-                                GA().logAction(category: "twitter-error", action: "lists-no-members", label: errorMessage)
+                                Firebase().logEvent("twitter_error", [
+                                    "endpoint": "lists_no_members",
+                                    "description": errorMessage
+                                    ])
                                 self.errorOccured()
                                 return
                             }
@@ -154,7 +164,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
             guard let data = data else {
                 print("Error: \(connectionError.debugDescription)")
-                GA().logAction(category: "twitter-error", action: "lists-statuses", label: connectionError.debugDescription)
+                Firebase().logEvent("twitter_error", [
+                    "endpoint": "lists_statuses",
+                    "description": connectionError.debugDescription
+                    ])
                 self.errorOccured()
                 return
             }
@@ -226,7 +239,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == self.tweets.count - 1 {
-            GA().logAction(category: "profile", action: "load-more-tweets", label: self.user!.screenName)
+            Firebase().logEvent("profile_load_more_tweets", [
+                "screenname": self.user!.screenName
+                ])
             loadListTweets()
         }
     }
@@ -236,17 +251,25 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tweetView(_ tweetView: TWTRTweetView, didTap tweet: TWTRTweet) {
-        GA().logAction(category: "profile", action: "tweet-click", label: "\(self.user!.screenName),\(tweet.author.screenName)")
+        Firebase().logEvent("profile_tweet_click", [
+            "from_screenname": self.user?.screenName ?? "unknown",
+            "to_screenname": tweet.author.screenName
+            ])
         self.redirectToUrl(tweet.permalink)
     }
     
     func tweetView(_ tweetView: TWTRTweetView, didTapProfileImageFor user: TWTRUser) {
-        GA().logAction(category: "profile", action: "tweet-profile-image-click", label: "\(self.user!.screenName),\(user.screenName)")
+        Firebase().logEvent("profile_tweet_profile_image_click", [
+            "from_screenname": self.user?.screenName ?? "unknown",
+            "to_screenname": user.screenName
+            ])
         self.redirectToUrl(user.profileURL)
     }
     
     func tweetView(_ tweetView: TWTRTweetView, didTap url: URL) {
-        GA().logAction(category: "profile", action: "tweet-url-click", label: "\(self.user!.screenName)")
+        Firebase().logEvent("profile_tweet_url_click", [
+            "from_screenname": self.user?.screenName ?? "unknown"
+            ])
         self.redirectToUrl(url)
     }
     
@@ -268,6 +291,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             }
             if let user = user {
                 tweetWebViewController.url = URL(string: "https://twitter.com/\(user.screenName)")
+                
+                Firebase().logEvent("profile_image_or_name_click", [
+                    "screenname": user.screenName
+                    ])
             }
         default:
             fatalError("Unexpected Segue Identifier; \(segue.identifier ?? "unknown")")

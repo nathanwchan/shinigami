@@ -96,7 +96,9 @@ class FavoritesTableViewController: UITableViewController {
             profileViewController.user = favorite.user
             profileViewController.list = favorite.list
             
-            GA().logAction(category: "search", action: "click-favorite-screenname", label: profileViewController.user?.screenName)
+            Firebase().logEvent("search_click_favorite", [
+                "screenname": profileViewController.user?.screenName ?? "unknown"
+                ])
         default:
             fatalError("Unexpected Segue Identifier; \(segue.identifier ?? "unknown")")
         }

@@ -17,6 +17,7 @@
 		D80C45A01EF88C510080B044 /* twitter-following-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C459A1EF88C510080B044 /* twitter-following-icon.png */; };
 		D80C45A11EF88C510080B044 /* twitter-verified-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C459B1EF88C510080B044 /* twitter-verified-icon.png */; };
 		D80C45A51EF88D870080B044 /* heart-tab-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C45A41EF88D870080B044 /* heart-tab-icon.png */; };
+		D80C45A71EF8A2060080B044 /* Firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80C45A61EF8A2060080B044 /* Firebase.swift */; };
 		D81002371ED49EDD00B4E34F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81002361ED49EDD00B4E34F /* AppDelegate.swift */; };
 		D81002391ED49EDD00B4E34F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81002381ED49EDD00B4E34F /* LoginViewController.swift */; };
 		D810023C1ED49EDD00B4E34F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D810023A1ED49EDD00B4E34F /* Main.storyboard */; };
@@ -44,7 +45,6 @@
 		D82F38891EF1D08F0044DA58 /* Icon-App-60x60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D82F387E1EF1D08F0044DA58 /* Icon-App-60x60@3x.png */; };
 		D82F388A1EF1D08F0044DA58 /* Icon-App-76x76@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = D82F387F1EF1D08F0044DA58 /* Icon-App-76x76@1x.png */; };
 		D82F388B1EF1D08F0044DA58 /* Icon-App-76x76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D82F38801EF1D08F0044DA58 /* Icon-App-76x76@2x.png */; };
-		D860E1681EEB654F00467CE2 /* GoogleAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860E1671EEB654F00467CE2 /* GoogleAnalytics.swift */; };
 		D8A037E71EF309F4007D2C75 /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A037E61EF309F4007D2C75 /* Favorite.swift */; };
 		D8C381BF1EE89BB600D030B0 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C381BE1EE89BB600D030B0 /* Helpers.swift */; };
 /* End PBXBuildFile section */
@@ -62,6 +62,7 @@
 		D80C459A1EF88C510080B044 /* twitter-following-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "twitter-following-icon.png"; path = "images/twitter-following-icon.png"; sourceTree = "<group>"; };
 		D80C459B1EF88C510080B044 /* twitter-verified-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "twitter-verified-icon.png"; path = "images/twitter-verified-icon.png"; sourceTree = "<group>"; };
 		D80C45A41EF88D870080B044 /* heart-tab-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "heart-tab-icon.png"; path = "images/heart-tab-icon.png"; sourceTree = "<group>"; };
+		D80C45A61EF8A2060080B044 /* Firebase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Firebase.swift; sourceTree = "<group>"; };
 		D81002331ED49EDD00B4E34F /* shinigami.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shinigami.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D81002361ED49EDD00B4E34F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D81002381ED49EDD00B4E34F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -91,7 +92,6 @@
 		D82F387E1EF1D08F0044DA58 /* Icon-App-60x60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-App-60x60@3x.png"; path = "icons/Icon-App-60x60@3x.png"; sourceTree = "<group>"; };
 		D82F387F1EF1D08F0044DA58 /* Icon-App-76x76@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-App-76x76@1x.png"; path = "icons/Icon-App-76x76@1x.png"; sourceTree = "<group>"; };
 		D82F38801EF1D08F0044DA58 /* Icon-App-76x76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-App-76x76@2x.png"; path = "icons/Icon-App-76x76@2x.png"; sourceTree = "<group>"; };
-		D860E1671EEB654F00467CE2 /* GoogleAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleAnalytics.swift; sourceTree = "<group>"; };
 		D860E1691EEB675F00467CE2 /* shinigami-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "shinigami-Bridging-Header.h"; sourceTree = "<group>"; };
 		D8A037E61EF309F4007D2C75 /* Favorite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
 		D8C381BE1EE89BB600D030B0 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
@@ -234,7 +234,7 @@
 			children = (
 				D8C381BE1EE89BB600D030B0 /* Helpers.swift */,
 				D82F38741EF1C9340044DA58 /* Globals.swift */,
-				D860E1671EEB654F00467CE2 /* GoogleAnalytics.swift */,
+				D80C45A61EF8A2060080B044 /* Firebase.swift */,
 			);
 			name = utils;
 			sourceTree = "<group>";
@@ -396,8 +396,8 @@
 				D80C45911EF872AB0080B044 /* ProfileViewControllerDelegate.swift in Sources */,
 				D82F38731EF096BB0044DA58 /* TWTRList.swift in Sources */,
 				D8A037E71EF309F4007D2C75 /* Favorite.swift in Sources */,
-				D860E1681EEB654F00467CE2 /* GoogleAnalytics.swift in Sources */,
 				D80C45931EF87D8C0080B044 /* UIButton+setImageFromUrl.swift in Sources */,
+				D80C45A71EF8A2060080B044 /* Firebase.swift in Sources */,
 				D810027F1EE09C1000B4E34F /* ProfileTableViewCell.swift in Sources */,
 				D813857D1EF3366C00EFE58F /* FavoritesTableViewController.swift in Sources */,
 				D81002371ED49EDD00B4E34F /* AppDelegate.swift in Sources */,

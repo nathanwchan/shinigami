@@ -52,6 +52,10 @@ class ProfileTableViewCell: UITableViewCell {
                 realm.create(Favorite.self, value: favorite)
             }
             self.toggleFavoriteButtonOn()
+            
+            Firebase().logEvent("profile_save_favorite", [
+                "screenname": self.user?.screenName ?? "unknown"
+                ])
         }
     }
 }

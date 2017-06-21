@@ -30,8 +30,6 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        GA().logScreen(name: "search")
-        
         self.searchTextField.becomeFirstResponder()
         
         self.searchTextField.delegate = self
@@ -49,7 +47,10 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
             guard let data = data else {
                 print("Error: \(connectionError.debugDescription)")
-                GA().logAction(category: "twitter-error", action: "lists-ownerships", label: connectionError.debugDescription)
+                Firebase().logEvent("twitter_error", [
+                    "endpoint": "lists_ownerships",
+                    "description": connectionError.debugDescription
+                    ])
                 return
             }
             let jsonData = JSON(data: data)
@@ -66,7 +67,10 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
             self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
                 guard let data = data else {
                     print("Error: \(connectionError.debugDescription)")
-                    GA().logAction(category: "twitter-error", action: "users-lookup", label: connectionError.debugDescription)
+                    Firebase().logEvent("twitter_error", [
+                        "endpoint": "users_lookup",
+                        "description": connectionError.debugDescription
+                        ])
                     return
                 }
                 let jsonData = JSON(data: data)
@@ -93,7 +97,10 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                 self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
                     guard let data = data else {
                         print("Error: \(connectionError.debugDescription)")
-                        GA().logAction(category: "twitter-error", action: "friends-list", label: connectionError.debugDescription)
+                        Firebase().logEvent("twitter_error", [
+                            "endpoint": "friends_list",
+                            "description": connectionError.debugDescription
+                            ])
                         return
                     }
                     let jsonData = JSON(data: data)
@@ -138,10 +145,12 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         let currentText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
         self.urlEncodedCurrentText = (currentText?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))!
         if self.urlEncodedCurrentText.isEmpty {
-            GA().logAction(category: "search", action: "change-empty")
+            Firebase().logEvent("search_change_empty", nil)
             self.retrieveAndShowSuggestedUsers()
         } else {
-            GA().logAction(category: "search", action: "change", label: self.urlEncodedCurrentText)
+            Firebase().logEvent("search_change", [
+                "text": self.urlEncodedCurrentText
+                ])
             
             let usersSearchEndpoint = "https://api.twitter.com/1.1/users/search.json?q=\(self.urlEncodedCurrentText)"
             let request = self.client.urlRequest(withMethod: "GET", url: usersSearchEndpoint, parameters: nil, error: &self.clientError)
@@ -149,7 +158,10 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
             self.client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
                 guard let data = data else {
                     print("Error: \(connectionError.debugDescription)")
-                    GA().logAction(category: "twitter-error", action: "users-search", label: connectionError.debugDescription)
+                    Firebase().logEvent("twitter_error", [
+                        "endpoint": "users_search",
+                        "description": connectionError.debugDescription
+                        ])
                     return
                 }
                 guard let url = response?.url,
@@ -177,7 +189,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        GA().logAction(category: "search", action: "clear")
+        Firebase().logEvent("search_clear", nil)
         self.retrieveAndShowSuggestedUsers()
         self.scrollToFirstRow()
         return true
@@ -208,7 +220,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         if let userID = store.session()?.userID {
             store.logOutUserID(userID)
             print("logged out user with id \(userID)")
-            GA().logAction(category: "logout", action: "success", label: userID)
+            Firebase().logEvent("logout", nil)
         }
         
         DispatchQueue.main.async {
@@ -240,10 +252,16 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                 profileViewController.list = usersTELists.filter { $0.name == listName }.first
                 
                 if self.showingSuggestedUsers {
-                    GA().logAction(category: "search", action: "click-following-index", label: String(describing: indexPath.row))
-                    GA().logAction(category: "search", action: "click-following-screenname", label: profileViewController.user?.screenName)
+                    Firebase().logEvent("search_click_following_index", [
+                        "index": String(describing: indexPath.row)
+                        ])
+                    Firebase().logEvent("search_click_following_screenname", [
+                        "screenname": profileViewController.user?.screenName ?? "unknown"
+                        ])
                 } else {
-                    GA().logAction(category: "search", action: "click-search-screenname", label: profileViewController.user?.screenName)
+                    Firebase().logEvent("search_click_search_screenname", [
+                        "screenname": profileViewController.user?.screenName ?? "unknown"
+                        ])
                 }
             case "LogoutSegue":
                 break

@@ -22,13 +22,11 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        GA().logScreen(name: "login")
-        
         let store = Twitter.sharedInstance().sessionStore
 
         if let userID = store.session()?.userID {
             print("****** user already logged in with id \(userID)")
-            GA().logAction(category: "login", action: "already", label: userID)
+            Firebase().logEvent("login_already", nil)
             loginSuccess()
         } else {
             /*
@@ -48,7 +46,9 @@ class LoginViewController: UIViewController {
                     let userID = session?.userID ?? "none"
                     let username = session?.userName ?? "unknown"
                     print("****** logged in with id \(userID) and username \(username)");
-                    GA().logAction(category: "login", action: "success", label: "\(userID),\(username)")
+                    Firebase().logEvent("login_success", [
+                        "username": username
+                        ])
                     self.loginSuccess()
                 } else {
                     print("******  login error: \(error?.localizedDescription ?? "unknown")");
