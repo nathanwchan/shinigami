@@ -92,7 +92,7 @@
 		D82F387E1EF1D08F0044DA58 /* Icon-App-60x60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-App-60x60@3x.png"; path = "icons/Icon-App-60x60@3x.png"; sourceTree = "<group>"; };
 		D82F387F1EF1D08F0044DA58 /* Icon-App-76x76@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-App-76x76@1x.png"; path = "icons/Icon-App-76x76@1x.png"; sourceTree = "<group>"; };
 		D82F38801EF1D08F0044DA58 /* Icon-App-76x76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-App-76x76@2x.png"; path = "icons/Icon-App-76x76@2x.png"; sourceTree = "<group>"; };
-		D860E1691EEB675F00467CE2 /* shinigami-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "shinigami-Bridging-Header.h"; sourceTree = "<group>"; };
+		D88ADF341EFB18BC002AF349 /* shinigami-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "shinigami-Bridging-Header.h"; sourceTree = "<group>"; };
 		D8A037E61EF309F4007D2C75 /* Favorite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
 		D8C381BE1EE89BB600D030B0 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,9 +157,9 @@
 				D81002361ED49EDD00B4E34F /* AppDelegate.swift */,
 				D810023D1ED49EDD00B4E34F /* Assets.xcassets */,
 				D810023F1ED49EDD00B4E34F /* LaunchScreen.storyboard */,
-				D860E1691EEB675F00467CE2 /* shinigami-Bridging-Header.h */,
 				D81037F11EED053B00C34B82 /* GoogleService-Info.plist */,
 				D81002421ED49EDD00B4E34F /* Info.plist */,
+				D88ADF341EFB18BC002AF349 /* shinigami-Bridging-Header.h */,
 			);
 			path = shinigami;
 			sourceTree = "<group>";

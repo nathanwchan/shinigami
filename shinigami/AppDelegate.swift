@@ -8,7 +8,6 @@
 
 import UIKit
 import TwitterKit
-import Google
 import Firebase
 
 @UIApplicationMain
@@ -24,15 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             consumerSecret:"RZ6AQQWVCAkZBvIfHIBVUeN2BR0MbEnNVQeHDHZFjwK5hWpk74")
         
         FIRApp.configure()
-        
-        // Google Analytics setup
-        guard let gai = GAI.sharedInstance() else {
-            print("Google Analytics not configured correctly")
-            return true
-        }
-        gai.tracker(withTrackingId: "UA-28374993-3")
-        gai.trackUncaughtExceptions = true
-        gai.logger.logLevel = .verbose
         
         return true
     }

@@ -252,10 +252,10 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                 profileViewController.list = usersTELists.filter { $0.name == listName }.first
                 
                 if self.showingSuggestedUsers {
-                    Firebase().logEvent("search_click_following_index", [
+                    Firebase().logEvent("search_click_suggested_index", [
                         "index": String(describing: indexPath.row)
                         ])
-                    Firebase().logEvent("search_click_following_screenname", [
+                    Firebase().logEvent("search_click_suggested_screenname", [
                         "screenname": profileViewController.user?.screenName ?? "unknown"
                         ])
                 } else {
