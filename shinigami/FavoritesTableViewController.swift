@@ -74,6 +74,21 @@ class FavoritesTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let realm = try! Realm()
+            try! realm.write() {
+                let favorite = self.favorites[indexPath.row]
+                let favoriteScreenName = favorite.user?.screenName ?? "unknown"
+                realm.delete(favorite)
+                    
+                Firebase().logEvent("favorites_delete_favorite", [
+                    "screenname": favoriteScreenName
+                    ])
+            }
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         super.prepare(for: segue, sender: sender)
@@ -96,8 +111,8 @@ class FavoritesTableViewController: UITableViewController {
             profileViewController.user = favorite.user
             profileViewController.list = favorite.list
             
-            Firebase().logEvent("search_click_favorite", [
-                "screenname": profileViewController.user?.screenName ?? "unknown"
+            Firebase().logEvent("favorites_click_favorite", [
+                "screenname": favorite.user?.screenName ?? "unknown"
                 ])
         default:
             fatalError("Unexpected Segue Identifier; \(segue.identifier ?? "unknown")")
