@@ -10,8 +10,9 @@ import UIKit
 import TwitterKit
 import SwiftyJSON
 import RealmSwift
+import SafariServices
 
-class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, TWTRTweetViewDelegate {
+class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, TWTRTweetViewDelegate, SFSafariViewControllerDelegate {
     
     var user: TWTRUserCustom?
     var list: TWTRList?
@@ -179,6 +180,28 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     
+    func openUrlInModal(_ url: URL?) {
+        if let url = url {
+            if UIApplication.shared.canOpenURL(url) {
+                let vc = SFSafariViewController(url: url, entersReaderIfAvailable: true)
+                vc.modalPresentationStyle = .overFullScreen
+                present(vc, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    func openTwitterProfile(sender: Any?) {
+        guard let user = self.user else {
+            fatalError("User is not set.")
+        }
+        
+        Firebase().logEvent("profile_image_or_name_click", [
+            "screenname": user.screenName
+            ])
+        let profileUrl = URL(string: "https://twitter.com/\(user.screenName)")
+        self.openUrlInModal(profileUrl)
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             guard let profileCell = tableView.dequeueReusableCell(withIdentifier: "profileCell", for: indexPath) as? ProfileTableViewCell else {
@@ -191,7 +214,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             profileCell.profileImageButton.setImage(fromUrl: user.profileImageOriginalSizeUrl, for: .normal)
             profileCell.profileImageButton.layer.cornerRadius = 5
             profileCell.profileImageButton.clipsToBounds = true
+            profileCell.profileImageButton.addTarget(self,action:#selector(self.openTwitterProfile(sender:)), for: .touchUpInside)
             profileCell.nameButton.setTitle(user.name, for: .normal)
+            profileCell.nameButton.addTarget(self,action:#selector(self.openTwitterProfile(sender:)), for: .touchUpInside)
             profileCell.screenNameLabel.text = "@\(user.screenName)"
             profileCell.isVerifiedImageView.isHidden = !user.isVerified
             profileCell.descriptionLabel.text = user.userDescription
@@ -246,16 +271,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     
-    func redirectToUrl(_ url: URL) {
-        self.performSegue(withIdentifier: "TweetClickSegue", sender: url)
-    }
-    
     func tweetView(_ tweetView: TWTRTweetView, didTap tweet: TWTRTweet) {
         Firebase().logEvent("profile_tweet_click", [
             "from_screenname": self.user?.screenName ?? "unknown",
             "to_screenname": tweet.author.screenName
             ])
-        self.redirectToUrl(tweet.permalink)
+        self.openUrlInModal(tweet.permalink)
     }
     
     func tweetView(_ tweetView: TWTRTweetView, didTapProfileImageFor user: TWTRUser) {
@@ -263,41 +284,13 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             "from_screenname": self.user?.screenName ?? "unknown",
             "to_screenname": user.screenName
             ])
-        self.redirectToUrl(user.profileURL)
+        self.openUrlInModal(user.profileURL)
     }
     
     func tweetView(_ tweetView: TWTRTweetView, didTap url: URL) {
         Firebase().logEvent("profile_tweet_url_click", [
             "from_screenname": self.user?.screenName ?? "unknown"
             ])
-        self.redirectToUrl(url)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        super.prepare(for: segue, sender: sender)
-        
-        switch(segue.identifier ?? "") {
-        case "TweetClickSegue":
-            guard let tweetWebViewController = segue.destination as? TweetWebViewController else {
-                fatalError("Unexpected destination: \(segue.destination)")
-            }
-            if let url = sender as? URL {
-                tweetWebViewController.url = url
-            }
-        case "ProfileImageClickSegue", "ProfileNameClickSegue":
-            guard let tweetWebViewController = segue.destination as? TweetWebViewController else {
-                fatalError("Unexpected destination: \(segue.destination)")
-            }
-            if let user = user {
-                tweetWebViewController.url = URL(string: "https://twitter.com/\(user.screenName)")
-                
-                Firebase().logEvent("profile_image_or_name_click", [
-                    "screenname": user.screenName
-                    ])
-            }
-        default:
-            fatalError("Unexpected Segue Identifier; \(segue.identifier ?? "unknown")")
-        }
+        self.openUrlInModal(url)
     }
 }
