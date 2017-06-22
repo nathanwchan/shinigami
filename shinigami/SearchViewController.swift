@@ -17,6 +17,8 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     @IBOutlet weak var usersTableScrollView: UIScrollView!
     @IBOutlet weak var searchActivityIndicator: UIActivityIndicatorView!
     
+    private let searchTextPlaceholders = ["elon musk", "donald trump", "michelle obama", "katy perry"]
+    
     private let client = TWTRAPIClient.withCurrentUser()
     private var clientError: NSError?
     private var usersTELists: [TWTRList] = []
@@ -33,6 +35,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         if globals.launchCount == 1 {
             self.searchTextField.becomeFirstResponder()
         }
+        self.searchTextField.placeholder = self.searchTextPlaceholders[Int(arc4random()) % self.searchTextPlaceholders.count]
         
         self.searchTextField.delegate = self
         self.usersTableView.dataSource = self
