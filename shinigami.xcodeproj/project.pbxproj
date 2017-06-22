@@ -12,11 +12,9 @@
 		D80C45931EF87D8C0080B044 /* UIButton+setImageFromUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80C45921EF87D8C0080B044 /* UIButton+setImageFromUrl.swift */; };
 		D80C459C1EF88C510080B044 /* heart-filled.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C45961EF88C510080B044 /* heart-filled.png */; };
 		D80C459D1EF88C510080B044 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C45971EF88C510080B044 /* heart.png */; };
-		D80C459E1EF88C510080B044 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C45981EF88C510080B044 /* search.png */; };
 		D80C459F1EF88C510080B044 /* twitter_eyes_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C45991EF88C510080B044 /* twitter_eyes_logo.png */; };
 		D80C45A01EF88C510080B044 /* twitter-following-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C459A1EF88C510080B044 /* twitter-following-icon.png */; };
 		D80C45A11EF88C510080B044 /* twitter-verified-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C459B1EF88C510080B044 /* twitter-verified-icon.png */; };
-		D80C45A51EF88D870080B044 /* heart-tab-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C45A41EF88D870080B044 /* heart-tab-icon.png */; };
 		D80C45A71EF8A2060080B044 /* Firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80C45A61EF8A2060080B044 /* Firebase.swift */; };
 		D81002371ED49EDD00B4E34F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81002361ED49EDD00B4E34F /* AppDelegate.swift */; };
 		D81002391ED49EDD00B4E34F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81002381ED49EDD00B4E34F /* LoginViewController.swift */; };
@@ -44,6 +42,9 @@
 		D82F38891EF1D08F0044DA58 /* Icon-App-60x60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D82F387E1EF1D08F0044DA58 /* Icon-App-60x60@3x.png */; };
 		D82F388A1EF1D08F0044DA58 /* Icon-App-76x76@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = D82F387F1EF1D08F0044DA58 /* Icon-App-76x76@1x.png */; };
 		D82F388B1EF1D08F0044DA58 /* Icon-App-76x76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D82F38801EF1D08F0044DA58 /* Icon-App-76x76@2x.png */; };
+		D88ADF4A1EFC712D002AF349 /* heart-tab-bar-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D88ADF471EFC712D002AF349 /* heart-tab-bar-icon.png */; };
+		D88ADF4B1EFC712D002AF349 /* heart-tab-bar-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88ADF481EFC712D002AF349 /* heart-tab-bar-icon@2x.png */; };
+		D88ADF4C1EFC712D002AF349 /* heart-tab-bar-icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88ADF491EFC712D002AF349 /* heart-tab-bar-icon@3x.png */; };
 		D8A037E71EF309F4007D2C75 /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A037E61EF309F4007D2C75 /* Favorite.swift */; };
 		D8C381BF1EE89BB600D030B0 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C381BE1EE89BB600D030B0 /* Helpers.swift */; };
 /* End PBXBuildFile section */
@@ -56,11 +57,9 @@
 		D80C45921EF87D8C0080B044 /* UIButton+setImageFromUrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+setImageFromUrl.swift"; sourceTree = "<group>"; };
 		D80C45961EF88C510080B044 /* heart-filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "heart-filled.png"; path = "images/heart-filled.png"; sourceTree = "<group>"; };
 		D80C45971EF88C510080B044 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = heart.png; path = images/heart.png; sourceTree = "<group>"; };
-		D80C45981EF88C510080B044 /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = search.png; path = images/search.png; sourceTree = "<group>"; };
 		D80C45991EF88C510080B044 /* twitter_eyes_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = twitter_eyes_logo.png; path = images/twitter_eyes_logo.png; sourceTree = "<group>"; };
 		D80C459A1EF88C510080B044 /* twitter-following-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "twitter-following-icon.png"; path = "images/twitter-following-icon.png"; sourceTree = "<group>"; };
 		D80C459B1EF88C510080B044 /* twitter-verified-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "twitter-verified-icon.png"; path = "images/twitter-verified-icon.png"; sourceTree = "<group>"; };
-		D80C45A41EF88D870080B044 /* heart-tab-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "heart-tab-icon.png"; path = "images/heart-tab-icon.png"; sourceTree = "<group>"; };
 		D80C45A61EF8A2060080B044 /* Firebase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Firebase.swift; sourceTree = "<group>"; };
 		D81002331ED49EDD00B4E34F /* shinigami.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shinigami.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D81002361ED49EDD00B4E34F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +90,9 @@
 		D82F387F1EF1D08F0044DA58 /* Icon-App-76x76@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-App-76x76@1x.png"; path = "icons/Icon-App-76x76@1x.png"; sourceTree = "<group>"; };
 		D82F38801EF1D08F0044DA58 /* Icon-App-76x76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-App-76x76@2x.png"; path = "icons/Icon-App-76x76@2x.png"; sourceTree = "<group>"; };
 		D88ADF341EFB18BC002AF349 /* shinigami-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "shinigami-Bridging-Header.h"; sourceTree = "<group>"; };
+		D88ADF471EFC712D002AF349 /* heart-tab-bar-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "heart-tab-bar-icon.png"; path = "images/heart-tab-bar-icon.png"; sourceTree = "<group>"; };
+		D88ADF481EFC712D002AF349 /* heart-tab-bar-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "heart-tab-bar-icon@2x.png"; path = "images/heart-tab-bar-icon@2x.png"; sourceTree = "<group>"; };
+		D88ADF491EFC712D002AF349 /* heart-tab-bar-icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "heart-tab-bar-icon@3x.png"; path = "images/heart-tab-bar-icon@3x.png"; sourceTree = "<group>"; };
 		D8A037E61EF309F4007D2C75 /* Favorite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
 		D8C381BE1EE89BB600D030B0 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -165,10 +167,11 @@
 		D810024A1ED746BE00B4E34F /* images */ = {
 			isa = PBXGroup;
 			children = (
-				D80C45A41EF88D870080B044 /* heart-tab-icon.png */,
+				D88ADF471EFC712D002AF349 /* heart-tab-bar-icon.png */,
+				D88ADF481EFC712D002AF349 /* heart-tab-bar-icon@2x.png */,
+				D88ADF491EFC712D002AF349 /* heart-tab-bar-icon@3x.png */,
 				D80C45961EF88C510080B044 /* heart-filled.png */,
 				D80C45971EF88C510080B044 /* heart.png */,
-				D80C45981EF88C510080B044 /* search.png */,
 				D80C45991EF88C510080B044 /* twitter_eyes_logo.png */,
 				D80C459A1EF88C510080B044 /* twitter-following-icon.png */,
 				D80C459B1EF88C510080B044 /* twitter-verified-icon.png */,
@@ -312,7 +315,6 @@
 				D80C459D1EF88C510080B044 /* heart.png in Resources */,
 				D82F38831EF1D08F0044DA58 /* Icon-App-29x29@2x.png in Resources */,
 				D81002411ED49EDD00B4E34F /* LaunchScreen.storyboard in Resources */,
-				D80C45A51EF88D870080B044 /* heart-tab-icon.png in Resources */,
 				D82F388B1EF1D08F0044DA58 /* Icon-App-76x76@2x.png in Resources */,
 				D80C45A11EF88C510080B044 /* twitter-verified-icon.png in Resources */,
 				D810023E1ED49EDD00B4E34F /* Assets.xcassets in Resources */,
@@ -322,12 +324,14 @@
 				D82F388A1EF1D08F0044DA58 /* Icon-App-76x76@1x.png in Resources */,
 				D81037F21EED053B00C34B82 /* GoogleService-Info.plist in Resources */,
 				D82F38851EF1D08F0044DA58 /* Icon-App-30x30@2x.png in Resources */,
+				D88ADF4B1EFC712D002AF349 /* heart-tab-bar-icon@2x.png in Resources */,
 				D82F38891EF1D08F0044DA58 /* Icon-App-60x60@3x.png in Resources */,
 				D810023C1ED49EDD00B4E34F /* Main.storyboard in Resources */,
 				D82F38871EF1D08F0044DA58 /* Icon-App-40x40@3x.png in Resources */,
 				D80C459F1EF88C510080B044 /* twitter_eyes_logo.png in Resources */,
-				D80C459E1EF88C510080B044 /* search.png in Resources */,
+				D88ADF4C1EFC712D002AF349 /* heart-tab-bar-icon@3x.png in Resources */,
 				D80C459C1EF88C510080B044 /* heart-filled.png in Resources */,
+				D88ADF4A1EFC712D002AF349 /* heart-tab-bar-icon.png in Resources */,
 				D80C45A01EF88C510080B044 /* twitter-following-icon.png in Resources */,
 				D82F38861EF1D08F0044DA58 /* Icon-App-40x40@2x.png in Resources */,
 				D82F38821EF1D08F0044DA58 /* Icon-App-29x29@1x.png in Resources */,

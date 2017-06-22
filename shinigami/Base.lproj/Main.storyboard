@@ -440,11 +440,11 @@ Try again in 15 minutes.</string>
             </objects>
             <point key="canvasLocation" x="6525.6000000000004" y="761.46926536731644"/>
         </scene>
-        <!--Search-->
+        <!--Navigation Controller-->
         <scene sceneID="PYk-OB-hg4">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aDy-px-hdS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search" image="search.png" id="4x3-jU-W9N"/>
+                    <tabBarItem key="tabBarItem" systemItem="search" id="4x3-jU-W9N"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bhZ-ea-InJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -463,7 +463,7 @@ Try again in 15 minutes.</string>
         <scene sceneID="0Rf-Zf-TGn">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FrV-oN-md7" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Favorites" image="heart-tab-icon.png" id="wcV-mw-xGS"/>
+                    <tabBarItem key="tabBarItem" title="Favorites" image="heart-tab-bar-icon.png" id="wcV-mw-xGS"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="6R9-SN-dHn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -626,9 +626,8 @@ Try again in 15 minutes.</string>
         </scene>
     </scenes>
     <resources>
-        <image name="heart-tab-icon.png" width="30" height="30"/>
+        <image name="heart-tab-bar-icon.png" width="35" height="35"/>
         <image name="heart.png" width="50" height="50"/>
-        <image name="search.png" width="30" height="30"/>
         <image name="twitter-following-icon.png" width="17" height="18"/>
         <image name="twitter-verified-icon.png" width="15" height="15"/>
     </resources>
