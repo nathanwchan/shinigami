@@ -30,7 +30,9 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.searchTextField.becomeFirstResponder()
+        if globals.launchCount == 1 {
+            self.searchTextField.becomeFirstResponder()
+        }
         
         self.searchTextField.delegate = self
         self.usersTableView.dataSource = self
@@ -220,6 +222,8 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         if let userID = store.session()?.userID {
             store.logOutUserID(userID)
             print("logged out user with id \(userID)")
+            globals.launchCount = UserDefaults.standard.integer(forKey: Constants.launchCountUserDefaultsKey) - 1
+            UserDefaults.standard.set(globals.launchCount, forKey: Constants.launchCountUserDefaultsKey)
             Firebase().logEvent("logout", nil)
         }
         

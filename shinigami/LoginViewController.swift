@@ -14,6 +14,10 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: TWTRLogInButton!
     
     private func loginSuccess() {
+        globals.launchCount = UserDefaults.standard.integer(forKey: Constants.launchCountUserDefaultsKey) + 1
+        UserDefaults.standard.set(globals.launchCount, forKey: Constants.launchCountUserDefaultsKey)
+        Firebase().logEvent("launch_count_\(globals.launchCount)", nil)
+        
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: "LoginSuccessSegue", sender: nil)
         }

@@ -10,4 +10,11 @@ import Foundation
 
 struct Constants {
     static let listPrefix: String = "TE_"
+    static let launchCountUserDefaultsKey = "launchCount"
 }
+
+struct Globals {
+    var launchCount: Int = 0
+}
+
+var globals = Globals()

@@ -53,6 +53,10 @@ class FavoritesTableViewController: UITableViewController {
                 break
             }
         }
+        
+        if self.favorites.count == 0 {
+            self.tabBarController?.selectedIndex = 1 // navigate to search tab
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

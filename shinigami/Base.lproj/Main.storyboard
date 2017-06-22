@@ -616,8 +616,8 @@ Try again in 15 minutes.</string>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="aDy-px-hdS" kind="relationship" relationship="viewControllers" id="WWb-1z-KgG"/>
                         <segue destination="FrV-oN-md7" kind="relationship" relationship="viewControllers" id="KJ2-LO-txc"/>
+                        <segue destination="aDy-px-hdS" kind="relationship" relationship="viewControllers" id="WWb-1z-KgG"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u3s-jr-OqS" userLabel="First Responder" sceneMemberID="firstResponder"/>
