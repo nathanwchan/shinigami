@@ -83,12 +83,9 @@ class FavoritesTableViewController: UITableViewController {
             let realm = try! Realm()
             try! realm.write() {
                 let favorite = self.favorites[indexPath.row]
-                let favoriteScreenName = favorite.user?.screenName ?? "unknown"
                 realm.delete(favorite)
                     
-                Firebase().logEvent("favorites_delete_favorite", [
-                    "screenname": favoriteScreenName
-                    ])
+                firebase.logEvent("favorites_delete_favorite")
             }
         }
     }
@@ -115,9 +112,7 @@ class FavoritesTableViewController: UITableViewController {
             profileViewController.user = favorite.user
             profileViewController.list = favorite.list
             
-            Firebase().logEvent("favorites_click_favorite", [
-                "screenname": favorite.user?.screenName ?? "unknown"
-                ])
+            firebase.logEvent("favorites_click_favorite")
         default:
             fatalError("Unexpected Segue Identifier; \(segue.identifier ?? "unknown")")
         }

@@ -11,16 +11,16 @@ import Firebase
 import TwitterKit
 
 class Firebase {
-    var userId = Twitter.sharedInstance().sessionStore.session()?.userID
-    
-    func logEvent(_ name: String, _ params: [String: Any]?) {
-        var parameters: [String: Any] = [:]
-        if params != nil {
-            parameters = params!
+    func logEvent(_ name: String) {
+        let eventNameCharacterLimit = 40
+        var eventName = name
+        if eventName.characters.count > eventNameCharacterLimit {
+            eventName = eventName.substring(to: eventName.index(eventName.startIndex, offsetBy: eventNameCharacterLimit))
         }
-        parameters["userId"] = self.userId
-        
-        FIRAnalytics.logEvent(withName: name, parameters: parameters)
+        // FYI: Firebase Analytics doesn't expose parameters unless you hook it up to BigQuery
+        FIRAnalytics.logEvent(withName: eventName, parameters: nil)
     }
 }
+
+let firebase = Firebase()
 

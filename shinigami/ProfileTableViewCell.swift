@@ -46,9 +46,7 @@ class ProfileTableViewCell: UITableViewCell {
                 if let favorite = self.favorite {
                     realm.delete(favorite)
                     
-                    Firebase().logEvent("profile_delete_favorite", [
-                        "screenname": self.user?.screenName ?? "unknown"
-                        ])
+                    firebase.logEvent("profile_delete_favorite")
                 }
             } else {
                 guard let ownerId = Twitter.sharedInstance().sessionStore.session()?.userID else {
@@ -65,9 +63,7 @@ class ProfileTableViewCell: UITableViewCell {
                 let favorite = Favorite(ownerId: ownerId, user: user, list: list)
                 self.favorite = realm.create(Favorite.self, value: favorite)
                 
-                Firebase().logEvent("profile_save_favorite", [
-                    "screenname": self.user?.screenName ?? "unknown"
-                    ])
+                firebase.logEvent("profile_save_favorite")
             }
             self.toggleFavoriteButton(!self.isFavorite)
         }

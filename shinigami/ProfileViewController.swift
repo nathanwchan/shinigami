@@ -63,10 +63,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
                 guard let data = data else {
                     print("Error: \(connectionError.debugDescription)")
-                    Firebase().logEvent("twitter_error", [
-                        "endpoint": "lists_create",
-                        "description": connectionError.debugDescription
-                        ])
+                    firebase.logEvent("twitter_error_lists_create")
                     self.errorOccured()
                     return
                 }
@@ -81,10 +78,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
                     guard let data = data else {
                         print("Error: \(connectionError.debugDescription)")
-                        Firebase().logEvent("twitter_error", [
-                            "endpoint": "friends_ids",
-                            "description": connectionError.debugDescription
-                            ])
+                        firebase.logEvent("twitter_error_friends_ids")
                         self.errorOccured()
                         return
                     }
@@ -110,10 +104,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                         self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
                             guard let data = data else {
                                 print("Error: \(connectionError.debugDescription)")
-                                Firebase().logEvent("twitter_error", [
-                                    "endpoint": "lists_members_create_all",
-                                    "description": connectionError.debugDescription
-                                    ])
+                                firebase.logEvent("twitter_error_lists_members_create_all")
                                 self.errorOccured()
                                 return
                             }
@@ -122,10 +113,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                             if jsonData["member_count"].int == 0 {
                                 let errorMessage = "Error: response to lists/members/create_all.json returned successfully, but no members were added"
                                 print(errorMessage)
-                                Firebase().logEvent("twitter_error", [
-                                    "endpoint": "lists_no_members",
-                                    "description": errorMessage
-                                    ])
+                                firebase.logEvent("twitter_error_lists_no_members")
                                 self.errorOccured()
                                 return
                             }
@@ -165,10 +153,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
             guard let data = data else {
                 print("Error: \(connectionError.debugDescription)")
-                Firebase().logEvent("twitter_error", [
-                    "endpoint": "lists_statuses",
-                    "description": connectionError.debugDescription
-                    ])
+                firebase.logEvent("twitter_error_lists_statuses")
                 self.errorOccured()
                 return
             }
@@ -195,9 +180,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             fatalError("User is not set.")
         }
         
-        Firebase().logEvent("profile_image_or_name_click", [
-            "screenname": user.screenName
-            ])
+        firebase.logEvent("profile_image_or_name_click")
         let profileUrl = URL(string: "https://twitter.com/\(user.screenName)")
         self.openUrlInModal(profileUrl)
     }
@@ -265,33 +248,23 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == self.tweets.count - 1 {
-            Firebase().logEvent("profile_load_more_tweets", [
-                "screenname": self.user!.screenName
-                ])
+            firebase.logEvent("profile_load_more_tweets")
             loadListTweets()
         }
     }
     
     func tweetView(_ tweetView: TWTRTweetView, didTap tweet: TWTRTweet) {
-        Firebase().logEvent("profile_tweet_click", [
-            "from_screenname": self.user?.screenName ?? "unknown",
-            "to_screenname": tweet.author.screenName
-            ])
+        firebase.logEvent("profile_tweet_click")
         self.openUrlInModal(tweet.permalink)
     }
     
     func tweetView(_ tweetView: TWTRTweetView, didTapProfileImageFor user: TWTRUser) {
-        Firebase().logEvent("profile_tweet_profile_image_click", [
-            "from_screenname": self.user?.screenName ?? "unknown",
-            "to_screenname": user.screenName
-            ])
+        firebase.logEvent("profile_tweet_profile_image_click")
         self.openUrlInModal(user.profileURL)
     }
     
     func tweetView(_ tweetView: TWTRTweetView, didTap url: URL) {
-        Firebase().logEvent("profile_tweet_url_click", [
-            "from_screenname": self.user?.screenName ?? "unknown"
-            ])
+        firebase.logEvent("profile_tweet_url_click")
         self.openUrlInModal(url)
     }
 }

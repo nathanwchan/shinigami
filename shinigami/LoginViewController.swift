@@ -16,7 +16,7 @@ class LoginViewController: UIViewController {
     private func loginSuccess() {
         globals.launchCount = UserDefaults.standard.integer(forKey: Constants.launchCountUserDefaultsKey) + 1
         UserDefaults.standard.set(globals.launchCount, forKey: Constants.launchCountUserDefaultsKey)
-        Firebase().logEvent("launch_count_\(globals.launchCount)", nil)
+        firebase.logEvent("launch_count_\(globals.launchCount)")
         
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: "LoginSuccessSegue", sender: nil)
@@ -26,11 +26,8 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let store = Twitter.sharedInstance().sessionStore
-
-        if let userID = store.session()?.userID {
-            print("****** user already logged in with id \(userID)")
-            Firebase().logEvent("login_already", nil)
+        if let userID = Twitter.sharedInstance().sessionStore.session()?.userID {
+            firebase.logEvent("login_already_\(userID)")
             loginSuccess()
         } else {
             /*
@@ -39,23 +36,15 @@ class LoginViewController: UIViewController {
                 if let s = session {
                     print("****** logged in user with id \(s.userID)")
                     self.loginSuccess()
-                } else {
-                    print("****** login error \(error.debugDescription)")
                 }
             }
             */
             
             loginButton.logInCompletion = { session, error in
                 if (session != nil) {
-                    let userID = session?.userID ?? "none"
                     let username = session?.userName ?? "unknown"
-                    print("****** logged in with id \(userID) and username \(username)");
-                    Firebase().logEvent("login_success", [
-                        "username": username
-                        ])
+                    firebase.logEvent("login_success_\(username)")
                     self.loginSuccess()
-                } else {
-                    print("******  login error: \(error?.localizedDescription ?? "unknown")");
                 }
             }
         }

@@ -52,10 +52,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
             guard let data = data else {
                 print("Error: \(connectionError.debugDescription)")
-                Firebase().logEvent("twitter_error", [
-                    "endpoint": "lists_ownerships",
-                    "description": connectionError.debugDescription
-                    ])
+                firebase.logEvent("twitter_error_lists_ownerships")
                 return
             }
             let jsonData = JSON(data: data)
@@ -72,10 +69,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
             self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
                 guard let data = data else {
                     print("Error: \(connectionError.debugDescription)")
-                    Firebase().logEvent("twitter_error", [
-                        "endpoint": "users_lookup",
-                        "description": connectionError.debugDescription
-                        ])
+                    firebase.logEvent("twitter_error_users_lookup")
                     return
                 }
                 let jsonData = JSON(data: data)
@@ -102,10 +96,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                 self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
                     guard let data = data else {
                         print("Error: \(connectionError.debugDescription)")
-                        Firebase().logEvent("twitter_error", [
-                            "endpoint": "friends_list",
-                            "description": connectionError.debugDescription
-                            ])
+                        firebase.logEvent("twitter_error_friends_list")
                         return
                     }
                     let jsonData = JSON(data: data)
@@ -150,23 +141,15 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         let currentText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
         self.urlEncodedCurrentText = (currentText?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))!
         if self.urlEncodedCurrentText.isEmpty {
-            Firebase().logEvent("search_change_empty", nil)
             self.retrieveAndShowSuggestedUsers()
         } else {
-            Firebase().logEvent("search_change", [
-                "text": self.urlEncodedCurrentText
-                ])
-            
             let usersSearchEndpoint = "https://api.twitter.com/1.1/users/search.json?q=\(self.urlEncodedCurrentText)"
             let request = self.client.urlRequest(withMethod: "GET", url: usersSearchEndpoint, parameters: nil, error: &self.clientError)
             
             self.client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
                 guard let data = data else {
                     print("Error: \(connectionError.debugDescription)")
-                    Firebase().logEvent("twitter_error", [
-                        "endpoint": "users_search",
-                        "description": connectionError.debugDescription
-                        ])
+                    firebase.logEvent("twitter_error_users_search")
                     return
                 }
                 guard let url = response?.url,
@@ -194,7 +177,6 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        Firebase().logEvent("search_clear", nil)
         self.retrieveAndShowSuggestedUsers()
         self.scrollToFirstRow()
         return true
@@ -224,10 +206,9 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         
         if let userID = store.session()?.userID {
             store.logOutUserID(userID)
-            print("logged out user with id \(userID)")
             globals.launchCount = UserDefaults.standard.integer(forKey: Constants.launchCountUserDefaultsKey) - 1
             UserDefaults.standard.set(globals.launchCount, forKey: Constants.launchCountUserDefaultsKey)
-            Firebase().logEvent("logout", nil)
+            firebase.logEvent("logout_\(userID)")
         }
         
         DispatchQueue.main.async {
@@ -259,16 +240,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                 profileViewController.list = usersTELists.filter { $0.name == listName }.first
                 
                 if self.showingSuggestedUsers {
-                    Firebase().logEvent("search_click_suggested_index", [
-                        "index": String(describing: indexPath.row)
-                        ])
-                    Firebase().logEvent("search_click_suggested_screenname", [
-                        "screenname": profileViewController.user?.screenName ?? "unknown"
-                        ])
-                } else {
-                    Firebase().logEvent("search_click_search_screenname", [
-                        "screenname": profileViewController.user?.screenName ?? "unknown"
-                        ])
+                    firebase.logEvent("search_click_suggested_index_\(indexPath.row)")
                 }
             case "LogoutSegue":
                 break
