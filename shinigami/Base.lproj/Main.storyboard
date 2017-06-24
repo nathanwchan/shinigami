@@ -233,7 +233,7 @@
         <!--Profile View Controller-->
         <scene sceneID="bRA-NV-W0k">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="h0p-8T-Cyf" customClass="ProfileViewController" customModule="shinigami" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="profileViewController" automaticallyAdjustsScrollViewInsets="NO" id="h0p-8T-Cyf" customClass="ProfileViewController" customModule="shinigami" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Bl9-PW-rzg"/>
                         <viewControllerLayoutGuide type="bottom" id="ryu-7c-zrT"/>
