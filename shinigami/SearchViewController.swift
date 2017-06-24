@@ -17,7 +17,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     @IBOutlet weak var usersTableScrollView: UIScrollView!
     @IBOutlet weak var searchActivityIndicator: UIActivityIndicatorView!
     
-    private let searchTextPlaceholders = ["elon musk", "donald trump", "michelle obama", "katy perry"]
+    private let searchTextPlaceholders = ["elon musk", "donald trump", "michelle obama", "katy perry", "lebron james"]
     
     private let client = TWTRAPIClient.withCurrentUser()
     private var clientError: NSError?
