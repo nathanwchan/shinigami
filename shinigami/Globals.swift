@@ -11,10 +11,12 @@ import Foundation
 struct Constants {
     static let listPrefix: String = "Tweetsee_"
     static let launchCountUserDefaultsKey = "launchCount"
+    static let lastStoreReviewLaunchCountUserDefaultsKey = "lastStoreReviewLaunchCount"
 }
 
 struct Globals {
     var launchCount: Int = 0
+    var lastStoreReviewLaunchCount: Int = UserDefaults.standard.integer(forKey: Constants.lastStoreReviewLaunchCountUserDefaultsKey)
 }
 
 var globals = Globals()

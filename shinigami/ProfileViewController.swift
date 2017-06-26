@@ -11,6 +11,7 @@ import TwitterKit
 import SwiftyJSON
 import RealmSwift
 import SafariServices
+import StoreKit
 
 class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, TWTRTweetViewDelegate, SFSafariViewControllerDelegate {
     
@@ -178,6 +179,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 params["max_id"] = String(describing: tweetID - 1)
             } else {
                 params["max_id"] = oldestTweet.tweetID
+            }
+            // ask to review app when loading more tweets, with at least 3 launches in between prompting.
+            if (globals.launchCount - globals.lastStoreReviewLaunchCount) > 2 {
+                globals.lastStoreReviewLaunchCount = globals.launchCount
+                UserDefaults.standard.set(globals.launchCount, forKey: Constants.lastStoreReviewLaunchCountUserDefaultsKey)
+                SKStoreReviewController.requestReview()
             }
         }
         let request = self.client.urlRequest(withMethod: "GET", url: getListTweetsEndpoint, parameters: params, error: &self.clientError)
