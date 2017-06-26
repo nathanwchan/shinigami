@@ -37,6 +37,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
             self.searchTextField.becomeFirstResponder()
         }
         self.searchTextField.placeholder = self.searchTextPlaceholders[Int(arc4random()) % self.searchTextPlaceholders.count]
+        self.suggestionsForYouLabelHeightConstraint.constant = 0
         
         self.searchTextField.delegate = self
         self.usersTableView.dataSource = self
