@@ -175,14 +175,15 @@
                                 </prototypes>
                             </tableView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="elon musk" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="fhO-aZ-Xmp">
-                                <rect key="frame" x="16" y="95" width="343" height="30"/>
+                                <rect key="frame" x="12" y="95" width="351" height="30"/>
+                                <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Whose eyes would you like to see through?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rm7-Mk-zb3">
-                                <rect key="frame" x="16" y="72" width="343" height="18"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <rect key="frame" x="37.5" y="72" width="300.5" height="18"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -207,16 +208,15 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="pKM-SR-TQA" firstAttribute="leading" secondItem="b65-NO-fLP" secondAttribute="leadingMargin" constant="-4" id="3IT-Za-JTi"/>
-                            <constraint firstItem="rm7-Mk-zb3" firstAttribute="trailing" secondItem="b65-NO-fLP" secondAttribute="trailingMargin" id="3x6-ks-SKN"/>
                             <constraint firstItem="MGE-UU-Gdo" firstAttribute="top" secondItem="pKM-SR-TQA" secondAttribute="bottom" constant="4" id="78g-K6-SQg"/>
-                            <constraint firstItem="fhO-aZ-Xmp" firstAttribute="trailing" secondItem="b65-NO-fLP" secondAttribute="trailingMargin" id="HKd-8X-bQ9"/>
+                            <constraint firstItem="fhO-aZ-Xmp" firstAttribute="trailing" secondItem="b65-NO-fLP" secondAttribute="trailingMargin" constant="4" id="HKd-8X-bQ9"/>
                             <constraint firstItem="dpD-NH-uZ2" firstAttribute="leading" secondItem="b65-NO-fLP" secondAttribute="leading" id="K5u-Lc-wdm"/>
                             <constraint firstAttribute="trailing" secondItem="dpD-NH-uZ2" secondAttribute="trailing" id="LPt-Bt-rqA"/>
-                            <constraint firstItem="fhO-aZ-Xmp" firstAttribute="leading" secondItem="b65-NO-fLP" secondAttribute="leadingMargin" id="Nhq-Oo-Uyj"/>
                             <constraint firstItem="MGE-UU-Gdo" firstAttribute="centerX" secondItem="b65-NO-fLP" secondAttribute="centerX" id="Xlk-yG-wLU"/>
+                            <constraint firstItem="fhO-aZ-Xmp" firstAttribute="leading" secondItem="pKM-SR-TQA" secondAttribute="leading" id="erE-9g-bQl"/>
                             <constraint firstItem="dpD-NH-uZ2" firstAttribute="top" secondItem="pKM-SR-TQA" secondAttribute="bottom" constant="2" id="iKZ-iR-ulU"/>
                             <constraint firstItem="pKM-SR-TQA" firstAttribute="top" secondItem="fhO-aZ-Xmp" secondAttribute="bottom" constant="8" id="ikb-zQ-DZH"/>
-                            <constraint firstItem="rm7-Mk-zb3" firstAttribute="leading" secondItem="b65-NO-fLP" secondAttribute="leadingMargin" id="mHW-Gp-fNz"/>
+                            <constraint firstItem="rm7-Mk-zb3" firstAttribute="centerX" secondItem="b65-NO-fLP" secondAttribute="centerX" id="pGV-jf-BmK"/>
                             <constraint firstItem="BT9-MO-2JC" firstAttribute="top" secondItem="dpD-NH-uZ2" secondAttribute="bottom" id="rZg-Lb-GHT"/>
                             <constraint firstItem="fhO-aZ-Xmp" firstAttribute="top" secondItem="rm7-Mk-zb3" secondAttribute="bottom" constant="5" id="wli-R4-i8i"/>
                             <constraint firstItem="rm7-Mk-zb3" firstAttribute="top" secondItem="D77-Cl-gRt" secondAttribute="bottom" constant="8" id="xaM-ld-bOs"/>
