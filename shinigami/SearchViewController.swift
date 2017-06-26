@@ -62,7 +62,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                 .filter { $0.name.hasPrefix(Constants.listPrefix) && $0.memberCount > 0 }
             
             let getUsersEndpoint = "https://api.twitter.com/1.1/users/lookup.json"
-            let usersFromTELists = self.usersTELists.map { String($0.name.characters.dropFirst(3)) } // drop TE_ from list name to get username
+            let usersFromTELists = self.usersTELists.map { String($0.name.characters.dropFirst(Constants.listPrefix.characters.count)) } // drop prefix from list name to get username
             let params = [
                 "screen_name": usersFromTELists[0..<min(usersFromTELists.count,100)].joined(separator: ",") // users/lookup.json API has 100 users per request limit
             ]

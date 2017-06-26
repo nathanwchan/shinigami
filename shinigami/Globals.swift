@@ -9,7 +9,7 @@
 import Foundation
 
 struct Constants {
-    static let listPrefix: String = "TE_"
+    static let listPrefix: String = "Tweetsee_"
     static let launchCountUserDefaultsKey = "launchCount"
 }
 
