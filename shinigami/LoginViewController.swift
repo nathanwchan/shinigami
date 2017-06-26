@@ -2,7 +2,7 @@
 //  LoginViewController.swift
 //  shinigami
 //
-//  Created by Nathan Chan on 5/23/17.g
+//  Created by Nathan Chan on 5/23/17.
 //  Copyright © 2017 Nathan Chan. All rights reserved.
 //
 
