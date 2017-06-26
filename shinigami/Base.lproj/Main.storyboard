@@ -63,7 +63,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="89" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dpD-NH-uZ2">
-                                <rect key="frame" x="0.0" y="135" width="375" height="483"/>
+                                <rect key="frame" x="0.0" y="150" width="375" height="468"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -187,26 +187,37 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="MGE-UU-Gdo">
-                                <rect key="frame" x="169" y="135" width="37" height="37"/>
+                                <rect key="frame" x="169" y="152" width="37" height="37"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="37" id="SuK-qb-yzy"/>
                                     <constraint firstAttribute="width" constant="37" id="ZJe-Ft-UIL"/>
                                 </constraints>
                                 <color key="color" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SUGGESTIONS FOR YOU" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pKM-SR-TQA">
+                                <rect key="frame" x="12" y="133" width="137" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="NeI-0A-BGL"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="pKM-SR-TQA" firstAttribute="leading" secondItem="b65-NO-fLP" secondAttribute="leadingMargin" constant="-4" id="3IT-Za-JTi"/>
                             <constraint firstItem="rm7-Mk-zb3" firstAttribute="trailing" secondItem="b65-NO-fLP" secondAttribute="trailingMargin" id="3x6-ks-SKN"/>
+                            <constraint firstItem="MGE-UU-Gdo" firstAttribute="top" secondItem="pKM-SR-TQA" secondAttribute="bottom" constant="4" id="78g-K6-SQg"/>
                             <constraint firstItem="fhO-aZ-Xmp" firstAttribute="trailing" secondItem="b65-NO-fLP" secondAttribute="trailingMargin" id="HKd-8X-bQ9"/>
                             <constraint firstItem="dpD-NH-uZ2" firstAttribute="leading" secondItem="b65-NO-fLP" secondAttribute="leading" id="K5u-Lc-wdm"/>
                             <constraint firstAttribute="trailing" secondItem="dpD-NH-uZ2" secondAttribute="trailing" id="LPt-Bt-rqA"/>
                             <constraint firstItem="fhO-aZ-Xmp" firstAttribute="leading" secondItem="b65-NO-fLP" secondAttribute="leadingMargin" id="Nhq-Oo-Uyj"/>
                             <constraint firstItem="MGE-UU-Gdo" firstAttribute="centerX" secondItem="b65-NO-fLP" secondAttribute="centerX" id="Xlk-yG-wLU"/>
+                            <constraint firstItem="dpD-NH-uZ2" firstAttribute="top" secondItem="pKM-SR-TQA" secondAttribute="bottom" constant="2" id="iKZ-iR-ulU"/>
+                            <constraint firstItem="pKM-SR-TQA" firstAttribute="top" secondItem="fhO-aZ-Xmp" secondAttribute="bottom" constant="8" id="ikb-zQ-DZH"/>
                             <constraint firstItem="rm7-Mk-zb3" firstAttribute="leading" secondItem="b65-NO-fLP" secondAttribute="leadingMargin" id="mHW-Gp-fNz"/>
-                            <constraint firstItem="MGE-UU-Gdo" firstAttribute="top" secondItem="fhO-aZ-Xmp" secondAttribute="bottom" constant="10" id="r17-e5-3EP"/>
                             <constraint firstItem="BT9-MO-2JC" firstAttribute="top" secondItem="dpD-NH-uZ2" secondAttribute="bottom" id="rZg-Lb-GHT"/>
-                            <constraint firstItem="dpD-NH-uZ2" firstAttribute="top" secondItem="fhO-aZ-Xmp" secondAttribute="bottom" constant="10" id="rqm-hz-aF9"/>
                             <constraint firstItem="fhO-aZ-Xmp" firstAttribute="top" secondItem="rm7-Mk-zb3" secondAttribute="bottom" constant="5" id="wli-R4-i8i"/>
                             <constraint firstItem="rm7-Mk-zb3" firstAttribute="top" secondItem="D77-Cl-gRt" secondAttribute="bottom" constant="8" id="xaM-ld-bOs"/>
                         </constraints>
@@ -221,6 +232,7 @@
                     <connections>
                         <outlet property="searchActivityIndicator" destination="MGE-UU-Gdo" id="N51-PU-aMF"/>
                         <outlet property="searchTextField" destination="fhO-aZ-Xmp" id="qeJ-H0-DfG"/>
+                        <outlet property="suggestionsForYouLabelHeightConstraint" destination="NeI-0A-BGL" id="QGh-fm-IgG"/>
                         <outlet property="usersTableScrollView" destination="dpD-NH-uZ2" id="M6s-0B-cah"/>
                         <outlet property="usersTableView" destination="dpD-NH-uZ2" id="yTA-Jl-JYE"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="LogoutSegue" animates="NO" id="iH7-gT-Wpy"/>
@@ -632,6 +644,6 @@ Try again in 15 minutes.</string>
         <image name="twitter-verified-icon.png" width="15" height="15"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="h17-fK-x0p"/>
+        <segue reference="jBL-E0-8xR"/>
     </inferredMetricsTieBreakers>
 </document>

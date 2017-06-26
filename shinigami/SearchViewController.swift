@@ -13,6 +13,7 @@ import SwiftyJSON
 class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDataSource, UIScrollViewDelegate {
 
     @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak var suggestionsForYouLabelHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var usersTableView: UITableView!
     @IBOutlet weak var usersTableScrollView: UIScrollView!
     @IBOutlet weak var searchActivityIndicator: UIActivityIndicatorView!
@@ -85,6 +86,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         self.searchActivityIndicator.stopAnimating()
         self.usersTableView.reloadData()
         self.showingSuggestedUsers = true
+        self.suggestionsForYouLabelHeightConstraint.constant = 15
     }
     
     func retrieveAndShowSuggestedUsers() {
@@ -168,6 +170,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                         self.searchActivityIndicator.stopAnimating()
                         self.usersTableView.reloadData()
                         self.showingSuggestedUsers = false
+                        self.suggestionsForYouLabelHeightConstraint.constant = 0
                     }
                 }
             }
