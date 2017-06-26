@@ -21,11 +21,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="twitter_eyes_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="Yld-SA-Cnc">
-                                <rect key="frame" x="97" y="257" width="180" height="153"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppIcon-512.png" translatesAutoresizingMaskIntoConstraints="NO" id="Yld-SA-Cnc">
+                                <rect key="frame" x="58.835239329533124" y="205.51734613407234" width="256.00000000000011" height="256"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="180" id="teN-QY-RzU"/>
-                                    <constraint firstAttribute="height" constant="153" id="uAJ-6D-Hqj"/>
+                                    <constraint firstAttribute="height" constant="256" id="FNg-vI-HOR"/>
+                                    <constraint firstAttribute="width" constant="256.00000000000011" id="N9e-Tw-uSm"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -42,6 +42,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="twitter_eyes_logo.png" width="738" height="600"/>
+        <image name="AppIcon-512.png" width="512" height="512"/>
     </resources>
 </document>
