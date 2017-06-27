@@ -30,16 +30,6 @@ class LoginViewController: UIViewController {
             firebase.logEvent("login_already_\(userID)")
             loginSuccess()
         } else {
-            /*
-            // for directly popping up login page
-            Twitter.sharedInstance().logIn {(session, error) in
-                if let s = session {
-                    print("****** logged in user with id \(s.userID)")
-                    self.loginSuccess()
-                }
-            }
-            */
-            
             loginButton.logInCompletion = { session, error in
                 if (session != nil) {
                     let username = session?.userName ?? "unknown"
