@@ -604,6 +604,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 3S86DJ63TR;
 				INFOPLIST_FILE = shinigami/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nathanchan.shinigami;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -622,6 +623,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 3S86DJ63TR;
 				INFOPLIST_FILE = shinigami/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nathanchan.shinigami;
 				PRODUCT_NAME = "$(TARGET_NAME)";
