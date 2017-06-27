@@ -54,7 +54,13 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
             guard let data = data else {
                 print("Error: \(connectionError.debugDescription)")
-                firebase.logEvent("twitter_error_lists_ownerships")
+                if connectionError!._code == 89 {
+                    // invalid or expired token
+                    firebase.logEvent("twitter_error_invalid_or_expired_token")
+                    self.logout()
+                } else {
+                    firebase.logEvent("twitter_error_lists_ownerships")
+                }
                 return
             }
             let jsonData = JSON(data: data)
@@ -210,7 +216,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    @IBAction func clickedLogout(_ sender: Any) {
+    func logout() {
         let store = Twitter.sharedInstance().sessionStore
         
         if let userID = store.session()?.userID {
@@ -224,6 +230,10 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
             self.navigationController?.viewControllers = []
             self.performSegue(withIdentifier: "LogoutSegue", sender: nil)
         }
+    }
+    
+    @IBAction func clickedLogout(_ sender: Any) {
+        self.logout()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
