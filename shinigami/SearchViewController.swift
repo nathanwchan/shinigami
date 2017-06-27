@@ -62,22 +62,27 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                 .map { TWTRList(json: $0)! }
                 .filter { $0.name.hasPrefix(Constants.listPrefix) && $0.memberCount > 0 }
             
-            let getUsersEndpoint = "https://api.twitter.com/1.1/users/lookup.json"
-            let usersFromTELists = self.usersTELists.map { String($0.name.characters.dropFirst(Constants.listPrefix.characters.count)) } // drop prefix from list name to get username
-            let params = [
-                "screen_name": usersFromTELists[0..<min(usersFromTELists.count,100)].joined(separator: ",") // users/lookup.json API has 100 users per request limit
-            ]
-            let request = self.client.urlRequest(withMethod: "GET", url: getUsersEndpoint, parameters: params, error: &self.clientError)
-            self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
-                guard let data = data else {
-                    print("Error: \(connectionError.debugDescription)")
-                    firebase.logEvent("twitter_error_users_lookup")
-                    return
-                }
-                let jsonData = JSON(data: data)
-                self.usersTEListsUsers = jsonData.arrayValue.map { TWTRUserCustom(json: $0)! }
-                
+            if self.usersTELists.isEmpty {
+                // User doesn't have existing TE lists
                 self.retrieveAndShowSuggestedUsers()
+            } else {
+                let getUsersEndpoint = "https://api.twitter.com/1.1/users/lookup.json"
+                let usersFromTELists = self.usersTELists.map { String($0.name.characters.dropFirst(Constants.listPrefix.characters.count)) } // drop prefix from list name to get username
+                let params = [
+                    "screen_name": usersFromTELists[0..<min(usersFromTELists.count,100)].joined(separator: ",") // users/lookup.json API has 100 users per request limit
+                ]
+                let request = self.client.urlRequest(withMethod: "GET", url: getUsersEndpoint, parameters: params, error: &self.clientError)
+                self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
+                    guard let data = data else {
+                        print("Error: \(connectionError.debugDescription)")
+                        firebase.logEvent("twitter_error_users_lookup")
+                        return
+                    }
+                    let jsonData = JSON(data: data)
+                    self.usersTEListsUsers = jsonData.arrayValue.map { TWTRUserCustom(json: $0)! }
+                    
+                    self.retrieveAndShowSuggestedUsers()
+                }
             }
         }
     }
