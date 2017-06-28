@@ -27,6 +27,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         self.showSorryCell = true
         self.profileTableView.reloadData()
     }
+    var navigationTitleUILabel = UILabel()
+    var profileCellInView: Bool = true
     
     @IBOutlet weak var profileTableView: UITableView!
     
@@ -41,6 +43,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         self.profileTableView.estimatedRowHeight = 120
         // remove separator lines between empty rows
         self.profileTableView.tableFooterView = UIView(frame: CGRect.zero)
+        
+        self.navigationItem.titleView = self.navigationTitleUILabel
         
         if self.user != nil {
             loadTweetsFromList()
@@ -73,6 +77,13 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             fatalError("User is not set.")
         }
         firebase.logEvent("profile_page_\(user.screenName)")
+        
+        DispatchQueue.main.async {
+            self.navigationTitleUILabel.text = user.name
+            self.navigationTitleUILabel.font = UIFont(name: "HelveticaNeue-Bold", size: 17)
+            self.navigationTitleUILabel.sizeToFit()
+            self.navigationTitleUILabel.alpha = 0.0
+        }
         
         if self.list == nil {
             self.createAndPopulateList(user: user)
@@ -274,14 +285,30 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if self.profileCellInView {
+            self.navigationTitleUILabel.alpha = max(0, min(1, self.profileTableView.contentOffset.y / 140))
+            print(self.navigationTitleUILabel.alpha)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (self.user != nil ? 1 : 0) + tweets.count + (self.showSorryCell ? 1 : 0) + (self.showSpinnerCell ? 1 : 0)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 && self.user != nil {
+            self.profileCellInView = true
+        }
         if indexPath.row == self.tweets.count - 1 {
             firebase.logEvent("profile_load_more_tweets")
             self.retrieveAndRenderListTweets()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 && self.user != nil {
+            self.profileCellInView = false
         }
     }
     
