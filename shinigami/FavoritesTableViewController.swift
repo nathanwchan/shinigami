@@ -83,9 +83,10 @@ class FavoritesTableViewController: UITableViewController {
             let realm = try! Realm()
             try! realm.write() {
                 let favorite = self.favorites[indexPath.row]
+                let user = favorite.user
                 realm.delete(favorite)
-                    
-                firebase.logEvent("favorites_delete_favorite")
+
+                firebase.logEvent("favorites_delete_favorite_\(user?.screenName ?? "unknown")")
             }
         }
     }
