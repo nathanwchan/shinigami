@@ -86,7 +86,7 @@ class FavoritesTableViewController: UITableViewController {
                 let user = favorite.user
                 realm.delete(favorite)
 
-                firebase.logEvent("favorites_delete_favorite_\(user?.screenName ?? "unknown")")
+                firebase.logEvent("favorite_delete_favorite_\(user?.screenName ?? "unknown")")
             }
         }
     }
