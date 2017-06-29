@@ -17,6 +17,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     var user: TWTRUserCustom?
     var userID: String?
     var list: TWTRList?
+    var favorite: Favorite?
     private let client = TWTRAPIClient.withCurrentUser()
     private var clientError: NSError?
     private var tweets: [TWTRTweet] = []
@@ -44,8 +45,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         // remove separator lines between empty rows
         self.profileTableView.tableFooterView = UIView(frame: CGRect.zero)
         
-        self.navigationItem.titleView = self.navigationTitleUILabel
-        
         if self.user != nil {
             loadTweetsFromList()
         } else {
@@ -71,18 +70,104 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
     }
-        
+    
+    func addOrDeleteFavoriteFromDB() {
+        let realm = try! Realm()
+        try! realm.write() {
+            if let favorite = self.favorite {
+                realm.delete(favorite)
+                self.favorite = nil
+                
+                firebase.logEvent("profile_delete_favorite_\(self.user?.screenName ?? "unknown")")
+            } else {
+                guard let ownerId = Twitter.sharedInstance().sessionStore.session()?.userID else {
+                    return
+                }
+                guard let user = self.user else {
+                    fatalError("User is not set.")
+                }
+                guard let list = self.list else {
+                    // this should not happen once the favorite button is disabled after an error occurs
+                    print("List is not set.")
+                    return
+                }
+                let favorite = Favorite(ownerId: ownerId, user: user, list: list)
+                self.favorite = realm.create(Favorite.self, value: favorite)
+                
+                firebase.logEvent("profile_save_favorite_\(user.screenName)")
+            }
+        }
+    }
+    
+    func toggleFavoriteNavBarButton(sender: UIButton) {
+        addOrDeleteFavoriteFromDB()
+        let favoriteButtonImage = self.getFavoriteButtonUIImage()
+        DispatchQueue.main.async {
+            sender.setImage(favoriteButtonImage, for: .normal)
+        }
+        guard let profileCell = self.profileTableView.dequeueReusableCell(withIdentifier: "profileCell", for: IndexPath(row: 0, section: 0)) as? ProfileTableViewCell else {
+            return
+        }
+        DispatchQueue.main.async {
+            profileCell.favoriteButton.setImage(favoriteButtonImage, for: .normal)
+        }
+    }
+    
+    func toggleFavoriteProfileCellButton(sender: UIButton) {
+        addOrDeleteFavoriteFromDB()
+        let favoriteButtonImage = self.getFavoriteButtonUIImage()
+        DispatchQueue.main.async {
+            sender.setImage(favoriteButtonImage, for: .normal)
+        }
+        guard let favoriteNavBarButton = self.navigationItem.rightBarButtonItems?[1].customView as? UIButton else {
+            return
+        }
+        DispatchQueue.main.async {
+            favoriteNavBarButton.setImage(favoriteButtonImage, for: .normal)
+        }
+    }
+    
+    func getFavoriteButtonUIImage() -> UIImage {
+        enum HeartFileNames: String {
+            case on = "heart-filled.png"
+            case off = "heart.png"
+        }
+        let heartFileName = self.favorite != nil ? HeartFileNames.on.rawValue : HeartFileNames.off.rawValue
+        guard let image = UIImage(named: heartFileName) else {
+            fatalError("heart image \(heartFileName) can't be found")
+        }
+        return image.withRenderingMode(.alwaysOriginal)
+    }
+    
     func loadTweetsFromList() {
         guard let user = self.user else {
             fatalError("User is not set.")
         }
         firebase.logEvent("profile_page_\(user.screenName)")
         
+        let favorites: Results<Favorite> = {
+            let realm = try! Realm()
+            let ownerId = Twitter.sharedInstance().sessionStore.session()!.userID
+            let predicate = NSPredicate(format: "ownerId = '\(ownerId)'")
+            return realm.objects(Favorite.self).filter(predicate)
+        }()
+        self.favorite = favorites.filter { $0.user?.screenName == user.screenName }.first
+        
+        let favoriteButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        favoriteButton.setImage(getFavoriteButtonUIImage(), for: .normal)
+        favoriteButton.addTarget(self, action: #selector(self.toggleFavoriteNavBarButton(sender:)), for: .touchUpInside)
+        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        negativeSpacer.width = -11;
+        self.navigationItem.rightBarButtonItems = [negativeSpacer, UIBarButtonItem(customView: favoriteButton)]
+        
         DispatchQueue.main.async {
+            self.navigationItem.titleView = self.navigationTitleUILabel
             self.navigationTitleUILabel.text = user.name
             self.navigationTitleUILabel.font = UIFont(name: "HelveticaNeue-Bold", size: 17)
             self.navigationTitleUILabel.sizeToFit()
             self.navigationTitleUILabel.alpha = 0.0
+            
+            self.navigationItem.rightBarButtonItems?[1].customView?.alpha = 0.0
         }
         
         if self.list == nil {
@@ -240,9 +325,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             profileCell.profileImageButton.setImage(fromUrl: user.profileImageOriginalSizeUrl, for: .normal)
             profileCell.profileImageButton.layer.cornerRadius = 5
             profileCell.profileImageButton.clipsToBounds = true
-            profileCell.profileImageButton.addTarget(self,action:#selector(self.openTwitterProfile(sender:)), for: .touchUpInside)
+            profileCell.profileImageButton.addTarget(self, action: #selector(self.openTwitterProfile(sender:)), for: .touchUpInside)
             profileCell.nameButton.setTitle(user.name, for: .normal)
-            profileCell.nameButton.addTarget(self,action:#selector(self.openTwitterProfile(sender:)), for: .touchUpInside)
+            profileCell.nameButton.addTarget(self, action: #selector(self.openTwitterProfile(sender:)), for: .touchUpInside)
             profileCell.screenNameLabel.text = "@\(user.screenName)"
             profileCell.isVerifiedImageView.isHidden = !user.isVerified
             profileCell.descriptionLabel.text = user.userDescription
@@ -251,18 +336,8 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             if self.showSorryCell {
                 profileCell.favoriteButton.isHidden = true
             } else {
-                let favorites: Results<Favorite> = {
-                    let realm = try! Realm()
-                    let ownerId = Twitter.sharedInstance().sessionStore.session()!.userID
-                    let predicate = NSPredicate(format: "ownerId = '\(ownerId)'")
-                    return realm.objects(Favorite.self).filter(predicate)
-                    }()
-                
-                let favorite = favorites.filter { $0.user?.screenName == user.screenName }.first
-                profileCell.toggleFavoriteButton(favorite != nil)
-                profileCell.favorite = favorite
-                profileCell.user = user
-                profileCell.list = self.list
+                profileCell.favoriteButton.setImage(getFavoriteButtonUIImage(), for: .normal)
+                profileCell.favoriteButton.addTarget(self, action: #selector(self.toggleFavoriteProfileCellButton(sender:)), for: .touchUpInside)
             }
             return profileCell
         } else if self.showSpinnerCell {
@@ -286,9 +361,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if self.profileCellInView {
-            self.navigationTitleUILabel.alpha = max(0, min(1, self.profileTableView.contentOffset.y / 140))
-            print(self.navigationTitleUILabel.alpha)
+        if self.profileCellInView && !self.showSorryCell {
+            let alpha = max(0, min(1, (self.profileTableView.contentOffset.y - 30) / 110))
+            self.navigationTitleUILabel.alpha = alpha
+            self.navigationItem.rightBarButtonItems?[1].customView?.alpha = alpha
         }
     }
     
