@@ -52,4 +52,8 @@ class TWTRUserCustom: Object {
         self.profileImageOriginalSizeUrl = profileImageNormalSizeUrl.replacingOccurrences(of: "_normal", with: "")
         self.following = following
     }
+    
+    override static func primaryKey() -> String? {
+        return "idStr"
+    }
 }

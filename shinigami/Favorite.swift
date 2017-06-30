@@ -11,7 +11,6 @@ import RealmSwift
 
 class Favorite: Object {
     dynamic var ownerId: String = ""
-    dynamic var user: TWTRUserCustom?
     dynamic var list: TWTRList?
     dynamic var createdAt = Date()
     
@@ -19,10 +18,9 @@ class Favorite: Object {
         return ["ownerId", "createdAt"]
     }
     
-    convenience init(ownerId: String, user: TWTRUserCustom, list: TWTRList) {
+    convenience init(ownerId: String, list: TWTRList) {
         self.init()
         self.ownerId = ownerId
-        self.user = user
         self.list = list
     }
 }

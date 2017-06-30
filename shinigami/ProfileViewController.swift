@@ -14,19 +14,21 @@ import SafariServices
 
 class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, TWTRTweetViewDelegate, SFSafariViewControllerDelegate {
     
-    var user: TWTRUserCustom?
-    var userID: String?
+    var userID: String? // used only when coming from clicking on tweet's profile pic
     var list: TWTRList?
+    var user: TWTRUserCustom?
     var favorite: Favorite?
     private let client = TWTRAPIClient.withCurrentUser()
     private var clientError: NSError?
     private var tweets: [TWTRTweet] = []
     private var showSpinnerCell: Bool = true
     private var showSorryCell: Bool = false
-    private func errorOccured() {
+    private func errorOccurred() {
         self.showSpinnerCell = false
         self.showSorryCell = true
         self.profileTableView.reloadData()
+        
+        // TODO: delete list from Twitter and Realm DB
     }
     var navigationTitleUILabel = UILabel()
     var profileCellInView: Bool = true
@@ -45,11 +47,14 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         // remove separator lines between empty rows
         self.profileTableView.tableFooterView = UIView(frame: CGRect.zero)
         
-        if self.user != nil {
+        if let list = self.list {
+            self.user = list.user
+            loadTweetsFromList()
+        } else if self.user != nil {
             loadTweetsFromList()
         } else {
             guard let userID = self.userID else {
-                fatalError("User and UserID are not set.")
+                fatalError("List, User and UserID are not set.")
             }
             let getUserEndpoint = "https://api.twitter.com/1.1/users/show.json?user_id=\(userID)"
             let request = self.client.urlRequest(withMethod: "GET", url: getUserEndpoint, parameters: nil, error: &self.clientError)
@@ -58,7 +63,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 guard let data = data else {
                     print("Error: \(connectionError.debugDescription)")
                     firebase.logEvent("twitter_error_users_show")
-                    self.errorOccured()
+                    self.errorOccurred()
                     return
                 }
                 
@@ -83,18 +88,19 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 guard let ownerId = Twitter.sharedInstance().sessionStore.session()?.userID else {
                     return
                 }
-                guard let user = self.user else {
-                    fatalError("User is not set.")
-                }
                 guard let list = self.list else {
                     // this should not happen once the favorite button is disabled after an error occurs
                     print("List is not set.")
                     return
                 }
-                let favorite = Favorite(ownerId: ownerId, user: user, list: list)
+                guard let realmList = realm.object(ofType: TWTRList.self, forPrimaryKey: list.idStr) else {
+                    // TODO: retrieve if for some reason not in DB
+                    return
+                }
+                let favorite = Favorite(ownerId: ownerId, list: realmList)
                 self.favorite = realm.create(Favorite.self, value: favorite)
                 
-                firebase.logEvent("profile_save_favorite_\(user.screenName)")
+                firebase.logEvent("profile_save_favorite_\(list.user?.screenName ?? "unknown")")
             }
         }
     }
@@ -151,7 +157,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             let predicate = NSPredicate(format: "ownerId = '\(ownerId)'")
             return realm.objects(Favorite.self).filter(predicate)
         }()
-        self.favorite = favorites.filter { $0.user?.screenName == user.screenName }.first
+        self.favorite = favorites.filter { $0.list?.user?.screenName == user.screenName }.first
         
         let favoriteButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         favoriteButton.setImage(getFavoriteButtonUIImage(), for: .normal)
@@ -169,6 +175,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             
             self.navigationItem.rightBarButtonItems?[1].customView?.alpha = 0.0
         }
+        
+        let realm = try! Realm()
+        let existingListName = Constants.listPrefix + user.screenName
+        self.list = realm.objects(TWTRList.self).filter("name = '\(existingListName)'").sorted(byKeyPath: "createdAt", ascending: false).first
         
         if self.list == nil {
             self.createAndPopulateList(user: user)
@@ -195,13 +205,16 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             guard let data = data else {
                 print("Error: \(connectionError.debugDescription)")
                 firebase.logEvent("twitter_error_lists_create")
-                self.errorOccured()
+                self.errorOccurred()
                 return
             }
             
             let jsonData = JSON(data: data)
-            self.list = TWTRList(json: jsonData)
-            // TODO: add this new list back to usersTELists
+            guard let listID = jsonData["id_str"].string else {
+                firebase.logEvent("twitter_error_list_id_not_found")
+                self.errorOccurred()
+                return
+            }
             
             let getFollowingIdsEndpoint = "https://api.twitter.com/1.1/friends/ids.json?screen_name=\(user.screenName)"
             let request = self.client.urlRequest(withMethod: "GET", url: getFollowingIdsEndpoint, parameters: nil, error: &self.clientError)
@@ -210,7 +223,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 guard let data = data else {
                     print("Error: \(connectionError.debugDescription)")
                     firebase.logEvent("twitter_error_friends_ids")
-                    self.errorOccured()
+                    self.errorOccurred()
                     return
                 }
                 
@@ -227,7 +240,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     let startIndex = maxMembersCount*i
                     let endIndex = min(maxMembersCount*(i+1), followingIdsList.count)
                     let params = [
-                        "list_id": self.list!.idStr,
+                        "list_id": listID,
                         "user_id": followingIdsList[startIndex..<endIndex].joined(separator: ",")
                     ]
                     let request = self.client.urlRequest(withMethod: "POST", url: addMembersToListEndpoint, parameters: params, error: &self.clientError)
@@ -238,7 +251,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                         guard let data = data else {
                             print("Error: \(connectionError.debugDescription)")
                             firebase.logEvent("twitter_error_lists_members_create_all")
-                            self.errorOccured()
+                            self.errorOccurred()
                             return
                         }
                         
@@ -247,8 +260,14 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                             let errorMessage = "Error: response to lists/members/create_all.json returned successfully, but no members were added"
                             print(errorMessage)
                             firebase.logEvent("twitter_error_lists_no_members")
-                            self.errorOccured()
+                            self.errorOccurred()
                             return
+                        }
+                        
+                        self.list = TWTRList(json: jsonData, user: user)
+                        let realm = try! Realm()
+                        try! realm.write() {
+                            realm.create(TWTRList.self, value: self.list!, update: true)
                         }
                     }
                 }
@@ -284,7 +303,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             guard let data = data else {
                 print("Error: \(connectionError.debugDescription)")
                 firebase.logEvent("twitter_error_lists_statuses")
-                self.errorOccured()
+                self.errorOccurred()
                 return
             }
             

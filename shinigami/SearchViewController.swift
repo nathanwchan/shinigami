@@ -9,6 +9,7 @@
 import UIKit
 import TwitterKit
 import SwiftyJSON
+import RealmSwift
 
 class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDataSource, UIScrollViewDelegate {
 
@@ -22,13 +23,21 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     
     private let client = TWTRAPIClient.withCurrentUser()
     private var clientError: NSError?
-    private var usersTELists: [TWTRList] = []
-    private var usersTEListsUsers: [TWTRUserCustom] = []
+    private var followingUsers: [TWTRUserCustom] = []
     private var suggestedUsers: [TWTRUserCustom] = []
     private let maxSuggestedUsersCount: Int = 100
     private var usersToShow: [TWTRUserCustom] = []
     private var urlEncodedCurrentText: String = ""
     private var showingSuggestedUsers: Bool = false
+    
+    let cachedLists: Results<TWTRList> = {
+        let realm = try! Realm()
+        // TODO: add ownerID to lists and users in Realm
+        //let ownerId = Twitter.sharedInstance().sessionStore.session()!.userID
+        //let predicate = NSPredicate(format: "ownerId = '\(ownerId)'")
+        return realm.objects(TWTRList.self).sorted(byKeyPath: "createdAt", ascending: false)
+    }()
+    var notificationToken: NotificationToken? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +58,23 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         self.usersTableView.rowHeight = UITableViewAutomaticDimension
         self.usersTableView.estimatedRowHeight = 70
 
+        // Observe Results Notifications
+        notificationToken = self.cachedLists.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+            //guard let tableView = self?.usersTableView else { return }
+            switch changes {
+            case .initial:
+                self?.retrieveAndShowSuggestedUsers()
+                break
+            case .update(_, _, _, _):
+                break
+            case .error(let error):
+                // An error occurred while opening the Realm file on the background worker thread
+                fatalError("\(error)")
+                break
+            }
+        }
+
+        // Retrieve updated lists from Twitter
         let getListsEndpoint = "https://api.twitter.com/1.1/lists/ownerships.json?count=1000"
         let request = self.client.urlRequest(withMethod: "GET", url: getListsEndpoint, parameters: nil, error: &self.clientError)
         self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
@@ -64,18 +90,19 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                 return
             }
             let jsonData = JSON(data: data)
-            self.usersTELists = jsonData["lists"].arrayValue
-                .map { TWTRList(json: $0)! }
+            var usersTELists = jsonData["lists"].arrayValue
+                .map { TWTRList(json: $0, user: nil)! }
                 .filter { $0.name.hasPrefix(Constants.listPrefix) && $0.memberCount > 0 }
-            
-            if self.usersTELists.isEmpty {
+            usersTELists = Array(usersTELists[0..<min(20, usersTELists.count)])
+                
+            if usersTELists.isEmpty {
                 // User doesn't have existing TE lists
                 self.retrieveAndShowSuggestedUsers()
             } else {
                 let getUsersEndpoint = "https://api.twitter.com/1.1/users/lookup.json"
-                let usersFromTELists = self.usersTELists.map { String($0.name.characters.dropFirst(Constants.listPrefix.characters.count)) } // drop prefix from list name to get username
+                let usersFromTELists = usersTELists.map { String($0.name.characters.dropFirst(Constants.listPrefix.characters.count)) } // drop prefix from list name to get username
                 let params = [
-                    "screen_name": usersFromTELists[0..<min(usersFromTELists.count,100)].joined(separator: ",") // users/lookup.json API has 100 users per request limit
+                    "screen_name": usersFromTELists.joined(separator: ",")
                 ]
                 let request = self.client.urlRequest(withMethod: "GET", url: getUsersEndpoint, parameters: params, error: &self.clientError)
                 self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
@@ -85,7 +112,23 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                         return
                     }
                     let jsonData = JSON(data: data)
-                    self.usersTEListsUsers = jsonData.arrayValue.map { TWTRUserCustom(json: $0)! }
+                    let usersTEListsUsers = jsonData.arrayValue.map { TWTRUserCustom(json: $0)! }
+                    
+                    var userTEListsToCache: [TWTRList] = []
+                    for userTEList in usersTELists {
+                        let userScreenName = String(userTEList.name.characters.dropFirst(Constants.listPrefix.characters.count))
+                        if let user = usersTEListsUsers.filter({ $0.screenName == userScreenName }).first {
+                            userTEList.user = user
+                            userTEListsToCache.append(userTEList)
+                        }
+                    }
+                    
+                    let realm = try! Realm()
+                    try! realm.write() {
+                        for userTEListToCache in userTEListsToCache {
+                            realm.create(TWTRList.self, value: userTEListToCache, update: true)
+                        }
+                    }
                     
                     self.retrieveAndShowSuggestedUsers()
                 }
@@ -94,6 +137,15 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     }
     
     func showSuggestedUsers() {
+        // dedup suggested users
+        var duplicateUserIds = Set<String>()
+        let dedupedSuggestedUsers = self.suggestedUsers.flatMap { (user) -> TWTRUserCustom? in
+            guard !duplicateUserIds.contains(user.idStr) else { return nil }
+            duplicateUserIds.insert(user.idStr)
+            return user
+        }
+        self.suggestedUsers = Array(dedupedSuggestedUsers[0..<min(dedupedSuggestedUsers.count, self.maxSuggestedUsersCount)])
+        
         self.usersToShow = self.suggestedUsers
         self.searchActivityIndicator.stopAnimating()
         self.usersTableView.reloadData()
@@ -102,44 +154,38 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     }
     
     func retrieveAndShowSuggestedUsers() {
-        if self.suggestedUsers.isEmpty {
-            if self.usersTEListsUsers.count < self.maxSuggestedUsersCount {
-                let usersFollowingEndpoint = "https://api.twitter.com/1.1/friends/list.json?count=200"
-                let request = self.client.urlRequest(withMethod: "GET", url: usersFollowingEndpoint, parameters: nil, error: &self.clientError)
-                
-                self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
-                    guard let data = data else {
-                        print("Error: \(connectionError.debugDescription)")
-                        firebase.logEvent("twitter_error_friends_list")
-                        return
-                    }
-                    let jsonData = JSON(data: data)
-                    var followingTWTRUsers = jsonData["users"].arrayValue.map { TWTRUserCustom(json: $0)! }
-                    // sort by popularity (follower count)
-                    followingTWTRUsers = followingTWTRUsers.sorted(by: { $0.followersCount > $1.followersCount })
-                    // sort to move groups of users with less following users to the top
-                    followingTWTRUsers =
-                        followingTWTRUsers.filter{$0.followingCount > 0 && $0.followingCount < 200} +
-                        followingTWTRUsers.filter{$0.followingCount >= 200 && $0.followingCount < 500} +
-                        followingTWTRUsers.filter{$0.followingCount >= 500}
-                    
-                    self.suggestedUsers = self.usersTEListsUsers + followingTWTRUsers
-                    // remove duplicates
-                    var duplicateUserIds = Set<String>()
-                    let dedupedSuggestedUsers = self.suggestedUsers.flatMap { (user) -> TWTRUserCustom? in
-                        guard !duplicateUserIds.contains(user.idStr) else { return nil }
-                        duplicateUserIds.insert(user.idStr)
-                        return user
-                    }
-                    self.suggestedUsers = Array(dedupedSuggestedUsers[0..<min(dedupedSuggestedUsers.count, self.maxSuggestedUsersCount)])
-                    self.showSuggestedUsers()
+        if self.followingUsers.isEmpty {
+            let usersFollowingEndpoint = "https://api.twitter.com/1.1/friends/list.json?count=200"
+            let request = self.client.urlRequest(withMethod: "GET", url: usersFollowingEndpoint, parameters: nil, error: &self.clientError)
+            
+            self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
+                guard let data = data else {
+                    print("Error: \(connectionError.debugDescription)")
+                    firebase.logEvent("twitter_error_friends_list")
+                    return
                 }
-            } else {
-                // suggested users will be all from existing TE lists
-                self.suggestedUsers = Array(self.usersTEListsUsers[0..<100])
+                let jsonData = JSON(data: data)
+                var followingTWTRUsers = jsonData["users"].arrayValue.map { TWTRUserCustom(json: $0)! }
+                // sort by popularity (follower count)
+                followingTWTRUsers = followingTWTRUsers.sorted(by: { $0.followersCount > $1.followersCount })
+                // sort to move groups of users with less following users to the top
+                followingTWTRUsers =
+                    followingTWTRUsers.filter{$0.followingCount >= 10 && $0.followingCount < 200} +
+                    followingTWTRUsers.filter{$0.followingCount >= 200 && $0.followingCount < 500} +
+                    followingTWTRUsers.filter{$0.followingCount >= 500}
+                self.followingUsers = followingTWTRUsers
+                
+                self.suggestedUsers = self.cachedLists
+                    .filter { $0.user != nil && $0.memberCount > 0}
+                    .map { $0.user! }
+                    + followingTWTRUsers
                 self.showSuggestedUsers()
             }
         } else {
+            self.suggestedUsers = self.cachedLists
+                .filter { $0.user != nil && $0.memberCount > 0}
+                .map { $0.user! }
+                + self.followingUsers
             self.showSuggestedUsers()
         }
     }
@@ -256,7 +302,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                     
                 profileViewController.user = self.usersToShow[indexPath.row]
                 let listName = "\(Constants.listPrefix)\(profileViewController.user!.screenName)"
-                profileViewController.list = usersTELists.filter { $0.name == listName }.first
+                profileViewController.list = self.cachedLists.filter { $0.name == listName }.first
                 
                 if self.showingSuggestedUsers {
                     firebase.logEvent("search_click_suggested_index_\(indexPath.row)")

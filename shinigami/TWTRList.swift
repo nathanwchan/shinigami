@@ -15,24 +15,33 @@ class TWTRList: Object {
     dynamic var name: String = ""
     dynamic var uri: String = ""
     dynamic var memberCount: Int = 0
-    dynamic var createdAt: String = ""
+    dynamic var createdAt: Date?
+    dynamic var user: TWTRUserCustom?
     
-    convenience init?(json: JSON) {
+    convenience init?(json: JSON, user: TWTRUserCustom?) {
         self.init()
         guard
             let idStr = json["id_str"].string,
             let name = json["name"].string,
             let uri = json["uri"].string,
             let memberCount = json["member_count"].int,
-            let createdAt = json["created_at"].string
+            let createdAtStr = json["created_at"].string
             else {
                 return nil
         }
+        
+        let formatter  = DateFormatter()
+        formatter.dateFormat = "E MMM d HH:mm:ss Z yyyy"
         
         self.idStr = idStr
         self.name = name
         self.uri = uri
         self.memberCount = memberCount
-        self.createdAt = createdAt
+        self.createdAt = formatter.date(from: createdAtStr) ?? Date()
+        self.user = user
+    }
+    
+    override static func primaryKey() -> String? {
+        return "idStr"
     }
 }

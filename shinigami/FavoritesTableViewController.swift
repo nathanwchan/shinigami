@@ -63,7 +63,7 @@ class FavoritesTableViewController: UITableViewController {
         guard let userCell = tableView.dequeueReusableCell(withIdentifier: "favoriteUserCell", for: indexPath) as? UserTableViewCell else {
             fatalError("The dequeued cell is not an instance of UserTableViewCell.")
         }
-        guard let user = self.favorites[indexPath.row].user else {
+        guard let user = self.favorites[indexPath.row].list?.user else {
             fatalError("No user found in Favorite instance")
         }
         userCell.configureWith(user)
@@ -83,7 +83,7 @@ class FavoritesTableViewController: UITableViewController {
             let realm = try! Realm()
             try! realm.write() {
                 let favorite = self.favorites[indexPath.row]
-                let user = favorite.user
+                let user = favorite.list?.user
                 realm.delete(favorite)
 
                 firebase.logEvent("favorite_delete_favorite_\(user?.screenName ?? "unknown")")
@@ -110,7 +110,6 @@ class FavoritesTableViewController: UITableViewController {
             }
             
             let favorite = self.favorites[indexPath.row]
-            profileViewController.user = favorite.user
             profileViewController.list = favorite.list
             
             firebase.logEvent("favorites_click_favorite")
