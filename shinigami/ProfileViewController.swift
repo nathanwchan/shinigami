@@ -340,6 +340,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             profileCell.profileImageButton.setImage(fromUrl: user.profileImageOriginalSizeUrl, for: .normal)
             profileCell.profileImageButton.layer.cornerRadius = 5
             profileCell.profileImageButton.clipsToBounds = true
+            profileCell.profileImageButton.imageView?.contentMode = .scaleAspectFill
             profileCell.profileImageButton.addTarget(self, action: #selector(self.openTwitterProfile(sender:)), for: .touchUpInside)
             profileCell.nameButton.setTitle(user.name, for: .normal)
             profileCell.nameButton.addTarget(self, action: #selector(self.openTwitterProfile(sender:)), for: .touchUpInside)
