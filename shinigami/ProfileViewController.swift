@@ -85,9 +85,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 
                 firebase.logEvent("profile_delete_favorite_\(self.user?.screenName ?? "unknown")")
             } else {
-                guard let ownerId = Twitter.sharedInstance().sessionStore.session()?.userID else {
-                    return
-                }
                 guard let list = self.list else {
                     // this should not happen once the favorite button is disabled after an error occurs
                     print("List is not set.")
@@ -97,10 +94,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     // TODO: retrieve if for some reason not in DB
                     return
                 }
-                let favorite = Favorite(ownerId: ownerId, list: realmList)
-                self.favorite = realm.create(Favorite.self, value: favorite)
-                
-                firebase.logEvent("profile_save_favorite_\(list.user?.screenName ?? "unknown")")
+                if let favorite = Favorite(list: realmList) {
+                    self.favorite = realm.create(Favorite.self, value: favorite)
+                    firebase.logEvent("profile_save_favorite_\(list.user?.screenName ?? "unknown")")
+                }
             }
         }
     }
@@ -151,13 +148,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         firebase.logEvent("profile_page_\(user.screenName)")
         
-        let favorites: Results<Favorite> = {
-            let realm = try! Realm()
-            let ownerId = Twitter.sharedInstance().sessionStore.session()!.userID
-            let predicate = NSPredicate(format: "ownerId = '\(ownerId)'")
-            return realm.objects(Favorite.self).filter(predicate)
-        }()
-        self.favorite = favorites.filter { $0.list?.user?.screenName == user.screenName }.first
+        let realm = try! Realm()
+        let ownerId = Twitter.sharedInstance().sessionStore.session()!.userID
+        
+        self.favorite = realm.objects(Favorite.self)
+            .filter("ownerId = '\(ownerId)' AND list.user.screenName = '\(user.screenName)'").first
         
         let favoriteButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         favoriteButton.setImage(getFavoriteButtonUIImage(), for: .normal)
@@ -176,9 +171,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             self.navigationItem.rightBarButtonItems?[1].customView?.alpha = 0.0
         }
         
-        let realm = try! Realm()
         let existingListName = Constants.listPrefix + user.screenName
-        self.list = realm.objects(TWTRList.self).filter("name = '\(existingListName)'").sorted(byKeyPath: "createdAt", ascending: false).first
+        self.list = realm.objects(TWTRList.self)
+            .filter("ownerId = '\(ownerId)' AND name = '\(existingListName)'")
+            .sorted(byKeyPath: "createdAt", ascending: false).first
         
         if self.list == nil {
             self.createAndPopulateList(user: user)

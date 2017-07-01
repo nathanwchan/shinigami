@@ -9,8 +9,10 @@
 import Foundation
 import SwiftyJSON
 import RealmSwift
+import TwitterKit
 
 class TWTRList: Object {
+    dynamic var ownerId: String = ""
     dynamic var idStr: String = ""
     dynamic var name: String = ""
     dynamic var uri: String = ""
@@ -21,6 +23,7 @@ class TWTRList: Object {
     convenience init?(json: JSON, user: TWTRUserCustom?) {
         self.init()
         guard
+            let ownerId = Twitter.sharedInstance().sessionStore.session()?.userID,
             let idStr = json["id_str"].string,
             let name = json["name"].string,
             let uri = json["uri"].string,
@@ -33,6 +36,7 @@ class TWTRList: Object {
         let formatter  = DateFormatter()
         formatter.dateFormat = "E MMM d HH:mm:ss Z yyyy"
         
+        self.ownerId = ownerId
         self.idStr = idStr
         self.name = name
         self.uri = uri

@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import TwitterKit
 
 class Favorite: Object {
     dynamic var ownerId: String = ""
@@ -18,8 +19,11 @@ class Favorite: Object {
         return ["ownerId", "createdAt"]
     }
     
-    convenience init(ownerId: String, list: TWTRList) {
+    convenience init?(list: TWTRList) {
         self.init()
+        guard let ownerId = Twitter.sharedInstance().sessionStore.session()?.userID else {
+            return nil
+        }
         self.ownerId = ownerId
         self.list = list
     }

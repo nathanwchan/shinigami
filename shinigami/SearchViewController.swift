@@ -32,10 +32,10 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     
     let cachedLists: Results<TWTRList> = {
         let realm = try! Realm()
-        // TODO: add ownerID to lists and users in Realm
-        //let ownerId = Twitter.sharedInstance().sessionStore.session()!.userID
-        //let predicate = NSPredicate(format: "ownerId = '\(ownerId)'")
-        return realm.objects(TWTRList.self).sorted(byKeyPath: "createdAt", ascending: false)
+        let ownerId = Twitter.sharedInstance().sessionStore.session()!.userID
+        return realm.objects(TWTRList.self)
+            .filter("ownerId = '\(ownerId)'")
+            .sorted(byKeyPath: "createdAt", ascending: false)
     }()
     var notificationToken: NotificationToken? = nil
     
