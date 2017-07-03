@@ -23,12 +23,42 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     private var tweets: [TWTRTweet] = []
     private var showSpinnerCell: Bool = true
     private var showSorryCell: Bool = false
-    private func errorOccurred() {
+    private var usersToShowWhenErrorOccurs: [TWTRUserCustom] = []
+    private func errorOccurred(deleteList: Bool = false) {
         self.showSpinnerCell = false
         self.showSorryCell = true
+        
+        let realm = try! Realm()
+        let ownerId = Twitter.sharedInstance().sessionStore.session()!.userID
+        self.usersToShowWhenErrorOccurs = realm.objects(TWTRList.self)
+            .filter("ownerId = '\(ownerId)'")
+            .sorted(byKeyPath: "createdAt", ascending: false)
+            .map { $0.user! }
+        
         self.profileTableView.reloadData()
         
-        // TODO: delete list from Twitter and Realm DB
+        if deleteList {
+            // Delete list from Realm DB and Twitter
+            if let listID = self.list?.idStr {
+                if let realmList = realm.object(ofType: TWTRList.self, forPrimaryKey: listID) {
+                    try! realm.write() {
+                        realm.delete(realmList)
+                        self.list = nil
+                    }
+                }
+                let deleteListEndpoint = "https://api.twitter.com/1.1/lists/destroy.json?list_id=\(listID)"
+                let request = self.client.urlRequest(withMethod: "POST", url: deleteListEndpoint, parameters: nil, error: &self.clientError)
+                
+                self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
+                    if data == nil {
+                        print("Error: \(connectionError.debugDescription)")
+                        firebase.logEvent("twitter_error_lists_destroy")
+                        return
+                    }
+                    self.list = nil
+                }
+            }
+        }
     }
     var navigationTitleUILabel = UILabel()
     var profileCellInView: Bool = true
@@ -211,6 +241,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 self.errorOccurred()
                 return
             }
+            self.list = TWTRList(json: jsonData, user: user)
             
             let getFollowingIdsEndpoint = "https://api.twitter.com/1.1/friends/ids.json?screen_name=\(user.screenName)"
             let request = self.client.urlRequest(withMethod: "GET", url: getFollowingIdsEndpoint, parameters: nil, error: &self.clientError)
@@ -252,15 +283,15 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                         }
                         
                         let jsonData = JSON(data: data)
+                        self.list = TWTRList(json: jsonData, user: user)
                         if jsonData["member_count"].int == 0 {
                             let errorMessage = "Error: response to lists/members/create_all.json returned successfully, but no members were added"
                             print(errorMessage)
                             firebase.logEvent("twitter_error_lists_no_members")
-                            self.errorOccurred()
+                            self.errorOccurred(deleteList: true)
                             return
                         }
                         
-                        self.list = TWTRList(json: jsonData, user: user)
                         let realm = try! Realm()
                         try! realm.write() {
                             realm.create(TWTRList.self, value: self.list!, update: true)
@@ -361,8 +392,18 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             spinnerCell.separatorInset = UIEdgeInsetsMake(0, 0, 0, tableView.bounds.width);
             return spinnerCell
         } else if self.showSorryCell {
-            let sorryCell = tableView.dequeueReusableCell(withIdentifier: "sorryCell", for: indexPath) as UITableViewCell
-            return sorryCell
+            if (self.user == nil && indexPath.row == 0) || (self.user != nil && indexPath.row == 1) {
+                let sorryCell = tableView.dequeueReusableCell(withIdentifier: "sorryCell", for: indexPath) as UITableViewCell
+                return sorryCell
+            }
+            guard let userCell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as? UserTableViewCell else {
+                fatalError("The dequeued cell is not an instance of UserTableViewCell.")
+            }
+            let userIndex = indexPath.row - (self.user == nil ? 1 : 2)
+            let user = self.usersToShowWhenErrorOccurs[userIndex]
+            userCell.configureWith(user)
+            return userCell
+            
         } else {
             guard let tweetCell = tableView.dequeueReusableCell(withIdentifier: "tweetCell", for: indexPath) as? TWTRTweetTableViewCell else {
                 fatalError("The dequeued cell is not an instance of TWTRTweetTableViewCell.")
@@ -385,7 +426,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (self.user != nil ? 1 : 0) + tweets.count + (self.showSorryCell ? 1 : 0) + (self.showSpinnerCell ? 1 : 0)
+        return (self.user != nil ? 1 : 0) + self.tweets.count + (self.showSorryCell ? 1 : 0) + (self.showSpinnerCell ? 1 : 0) + self.usersToShowWhenErrorOccurs.count
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -401,6 +442,23 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == 0 && self.user != nil {
             self.profileCellInView = false
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        guard let userCell = tableView.cellForRow(at: indexPath) else {
+            return
+        }
+        if userCell.isKind(of: UserTableViewCell.self) {
+            
+            let userIndex = indexPath.row - (self.user == nil ? 1 : 2)
+            firebase.logEvent("profile_click_user_when_error_index_\(userIndex)")
+            
+            let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "profileViewController") as! ProfileViewController
+            profileViewController.user = self.usersToShowWhenErrorOccurs[userIndex]
+            
+            self.navigationController?.pushViewController(profileViewController, animated: true)
         }
     }
     

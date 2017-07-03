@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -401,19 +401,20 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f7s-cU-6WT">
-                                                    <rect key="frame" x="8" y="20" width="359" height="38.5"/>
-                                                    <string key="text">Sorry, something went wrong :(
-Try again in 15 minutes.</string>
+                                                    <rect key="frame" x="8" y="10" width="359" height="53.5"/>
+                                                    <string key="text">Sorry, we can't load this right now.
+For now, check out these other users
+and try again later!</string>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="f7s-cU-6WT" secondAttribute="bottom" constant="20" id="31y-rL-6hB" userLabel="bottom = Sorry, something went wrong :( (you probably hit Twitter API rate limits) Try again in about 15 minutes..bottom"/>
+                                                <constraint firstItem="f7s-cU-6WT" firstAttribute="top" secondItem="MmU-PA-fFa" secondAttribute="topMargin" constant="2" id="3e7-OK-5o6"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="f7s-cU-6WT" secondAttribute="bottom" constant="7.5" id="E6D-9S-p0k"/>
                                                 <constraint firstAttribute="trailing" secondItem="f7s-cU-6WT" secondAttribute="trailing" constant="8" id="PT7-AG-Q2O"/>
                                                 <constraint firstItem="f7s-cU-6WT" firstAttribute="leading" secondItem="MmU-PA-fFa" secondAttribute="leading" constant="8" id="dpa-o0-llD"/>
-                                                <constraint firstItem="f7s-cU-6WT" firstAttribute="top" secondItem="MmU-PA-fFa" secondAttribute="top" constant="20" id="qKI-xg-bnO"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -435,6 +436,109 @@ Try again in 15 minutes.</string>
                                                 <constraint firstItem="xKS-jY-Sj6" firstAttribute="top" secondItem="5lX-1l-6zV" secondAttribute="topMargin" constant="10" id="wGm-7I-vc3"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="userCell" rowHeight="89" id="vMQ-xC-LMT" customClass="UserTableViewCell" customModule="shinigami" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="378" width="375" height="89"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vMQ-xC-LMT" id="2Xg-cN-xDU">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="89"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UPh-bC-yNd">
+                                                    <rect key="frame" x="12" y="30" width="48" height="48"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="48" id="4wu-Kr-A26"/>
+                                                        <constraint firstAttribute="width" constant="48" id="Dlz-gC-5Ft"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Barack Obama" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qrD-Jm-1LB">
+                                                    <rect key="frame" x="68" y="28" width="121" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="lsX-HE-qOe"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="twitter-verified-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="oM5-Y3-jaF">
+                                                    <rect key="frame" x="194" y="30.5" width="15" height="15"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="15" id="af9-Kh-YhD"/>
+                                                        <constraint firstAttribute="width" constant="15" id="w9y-fb-Hj0"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="57" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JMg-dh-2bF">
+                                                    <rect key="frame" x="349" y="10" width="16" height="17"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="17" id="pqW-aI-Tvl"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FOLLOWING" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X4E-pe-HZm">
+                                                    <rect key="frame" x="281" y="13.5" width="65" height="13"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="13" id="KVu-3v-SLg"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="twitter-following-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="ahi-ML-v77">
+                                                    <rect key="frame" x="43" y="8" width="17" height="18"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="17" id="iAZ-Tp-QXE"/>
+                                                        <constraint firstAttribute="height" constant="18" id="idx-TU-OCh"/>
+                                                    </constraints>
+                                                    <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Following" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0f6-ub-mi9">
+                                                    <rect key="frame" x="68" y="8.5" width="60" height="16.5"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@BarackObama" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k9e-Hf-yJh">
+                                                    <rect key="frame" x="68" y="51" width="123" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="PWa-rc-FXS"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="k9e-Hf-yJh" firstAttribute="top" secondItem="qrD-Jm-1LB" secondAttribute="bottom" constant="3" id="2PQ-ZX-Z3L"/>
+                                                <constraint firstItem="k9e-Hf-yJh" firstAttribute="leading" secondItem="UPh-bC-yNd" secondAttribute="trailing" constant="8" id="3Pw-Tr-Dra"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="UPh-bC-yNd" secondAttribute="bottom" constant="3" id="BCs-n2-o24"/>
+                                                <constraint firstItem="oM5-Y3-jaF" firstAttribute="leading" secondItem="qrD-Jm-1LB" secondAttribute="trailing" constant="5" id="DBe-2m-6vt"/>
+                                                <constraint firstItem="UPh-bC-yNd" firstAttribute="leading" secondItem="2Xg-cN-xDU" secondAttribute="leadingMargin" constant="4" id="Dx5-Ge-0ye"/>
+                                                <constraint firstItem="0f6-ub-mi9" firstAttribute="bottom" secondItem="ahi-ML-v77" secondAttribute="bottom" constant="-1" id="JeJ-ex-IQz"/>
+                                                <constraint firstItem="JMg-dh-2bF" firstAttribute="top" secondItem="2Xg-cN-xDU" secondAttribute="topMargin" constant="2" id="P05-X9-4N4"/>
+                                                <constraint firstItem="oM5-Y3-jaF" firstAttribute="centerY" secondItem="qrD-Jm-1LB" secondAttribute="centerY" id="RaG-en-xmo"/>
+                                                <constraint firstItem="qrD-Jm-1LB" firstAttribute="top" secondItem="UPh-bC-yNd" secondAttribute="top" constant="-2" id="Vdu-Fx-xG4"/>
+                                                <constraint firstItem="JMg-dh-2bF" firstAttribute="leading" secondItem="X4E-pe-HZm" secondAttribute="trailing" constant="3" id="XQN-v3-K1l"/>
+                                                <constraint firstItem="0f6-ub-mi9" firstAttribute="leading" secondItem="ahi-ML-v77" secondAttribute="trailing" constant="8" id="ZtU-7Q-ZeN"/>
+                                                <constraint firstItem="qrD-Jm-1LB" firstAttribute="leading" secondItem="UPh-bC-yNd" secondAttribute="trailing" constant="8" id="eVq-ei-cLJ"/>
+                                                <constraint firstItem="UPh-bC-yNd" firstAttribute="top" secondItem="ahi-ML-v77" secondAttribute="bottom" constant="4" id="gwi-yv-Flp"/>
+                                                <constraint firstItem="JMg-dh-2bF" firstAttribute="bottom" secondItem="X4E-pe-HZm" secondAttribute="bottom" id="ivt-f3-nzg"/>
+                                                <constraint firstItem="ahi-ML-v77" firstAttribute="leading" secondItem="2Xg-cN-xDU" secondAttribute="leadingMargin" constant="35" id="miQ-TU-X0g"/>
+                                                <constraint firstAttribute="trailing" secondItem="JMg-dh-2bF" secondAttribute="trailing" constant="10" id="vHi-0Q-yfx"/>
+                                                <constraint firstAttribute="topMargin" secondItem="ahi-ML-v77" secondAttribute="top" id="wQr-1B-GpL"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="followingCountLabel" destination="JMg-dh-2bF" id="dEs-xF-ibe"/>
+                                            <outlet property="followingIcon" destination="ahi-ML-v77" id="vsQ-1p-drG"/>
+                                            <outlet property="followingIconHeightConstraint" destination="idx-TU-OCh" id="f6g-UI-boZ"/>
+                                            <outlet property="isFollowingLabel" destination="0f6-ub-mi9" id="js6-9S-S6H"/>
+                                            <outlet property="userIsVerifiedImageView" destination="oM5-Y3-jaF" id="E9q-xr-Sjv"/>
+                                            <outlet property="userNameLabel" destination="qrD-Jm-1LB" id="FPq-uT-aH3"/>
+                                            <outlet property="userProfileImageView" destination="UPh-bC-yNd" id="zVN-xe-rlq"/>
+                                            <outlet property="userScreenNameLabel" destination="k9e-Hf-yJh" id="aQ3-5j-V1y"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -649,6 +753,6 @@ Try again in 15 minutes.</string>
         <image name="twitter-verified-icon.png" width="15" height="15"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="h17-fK-x0p"/>
+        <segue reference="jBL-E0-8xR"/>
     </inferredMetricsTieBreakers>
 </document>

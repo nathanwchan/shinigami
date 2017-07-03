@@ -249,8 +249,6 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         }
         let user = self.usersToShow[indexPath.row]
         userCell.configureWith(user)
-        // Kinda hacky, but what StackOverflow told me to do.  Set height constraint of following icon to zero.
-        userCell.followingIconHeightConstraint.constant = user.following ? 18 : 0
         return userCell
     }
     
