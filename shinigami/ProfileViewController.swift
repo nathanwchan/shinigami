@@ -106,6 +106,15 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if !self.isMovingToParentViewController {
+            // appearing after a back navigation
+            self.setNavigationBarItemsAlpha(hide: self.showSorryCell)
+        }
+    }
+    
     func addOrDeleteFavoriteFromDB() {
         let realm = try! Realm()
         try! realm.write() {
@@ -417,12 +426,19 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if self.profileCellInView && !self.showSorryCell {
+    func setNavigationBarItemsAlpha(hide: Bool = false) {
+        if hide {
+            self.navigationTitleUILabel.alpha = 0.0
+            self.navigationItem.rightBarButtonItems?[1].customView?.alpha = 0.0
+        } else if self.profileCellInView && !self.showSorryCell {
             let alpha = max(0, min(1, (self.profileTableView.contentOffset.y - 30) / 110))
             self.navigationTitleUILabel.alpha = alpha
             self.navigationItem.rightBarButtonItems?[1].customView?.alpha = alpha
         }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.setNavigationBarItemsAlpha()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
