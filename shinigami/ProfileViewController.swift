@@ -30,11 +30,17 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         
         let realm = try! Realm()
         let ownerId = Twitter.sharedInstance().sessionStore.session()!.userID
+        let existingListsUsers = Array(realm.objects(TWTRList.self)
+            .filter("ownerId = '\(ownerId)' OR ownerId = '0'")
+            .map { $0.user! })
+        
+        var existingListsUsersHiPri = existingListsUsers.filter {$0.followingCount < 500}
+        existingListsUsersHiPri.shuffle()
+        var existingListsUsersLowPri = existingListsUsers.filter {$0.followingCount >= 500}
+        existingListsUsersLowPri.shuffle()
+        
         var duplicateUserIds = Set<String>()
-        self.usersToShowWhenErrorOccurs = realm.objects(TWTRList.self)
-            .filter("ownerId = '\(ownerId)'")
-            .sorted(byKeyPath: "createdAt", ascending: false)
-            .map { $0.user! }
+        self.usersToShowWhenErrorOccurs = (existingListsUsersHiPri + existingListsUsersLowPri)
             .flatMap { (user) -> TWTRUserCustom? in
                 guard !duplicateUserIds.contains(user.idStr) else { return nil }
                 duplicateUserIds.insert(user.idStr)
@@ -214,17 +220,26 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
         let existingListName = Constants.listPrefix + user.screenName
+        
         self.list = realm.objects(TWTRList.self)
-            .filter("ownerId = '\(ownerId)' AND name = '\(existingListName)'")
+            .filter("(ownerId = '\(ownerId)' OR ownerId = '0') AND name = '\(existingListName)'")
             .sorted(byKeyPath: "createdAt", ascending: false).first
         
-        if self.list == nil {
-            self.createAndPopulateList(user: user)
-        } else {
+        if let list = self.list {
+            if list.ownerId == "0" {
+                try! realm.write() {
+                    list.ownerId = ownerId
+                    list.createdAt = Date()
+                    realm.create(TWTRList.self, value: list, update: true)
+                }
+                self.list = list
+            }
             self.retrieveAndRenderListTweets()
+        } else {
+            self.createAndPopulateList(user: user)
         }
     }
-    
+
     func createAndPopulateList(user: TWTRUserCustom) {
         let createListEndpoint = "https://api.twitter.com/1.1/lists/create.json"
         var listName = "\(Constants.listPrefix)\(user.screenName)"

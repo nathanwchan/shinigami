@@ -29,6 +29,7 @@
 		D810027F1EE09C1000B4E34F /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D810027E1EE09C1000B4E34F /* ProfileTableViewCell.swift */; };
 		D81037F21EED053B00C34B82 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D81037F11EED053B00C34B82 /* GoogleService-Info.plist */; };
 		D813857D1EF3366C00EFE58F /* FavoritesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D813857C1EF3366C00EFE58F /* FavoritesTableViewController.swift */; };
+		D825D3301F0C11680073DC5B /* Array+shuffle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D825D32F1F0C11680073DC5B /* Array+shuffle.swift */; };
 		D82F38731EF096BB0044DA58 /* TWTRList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82F38721EF096BB0044DA58 /* TWTRList.swift */; };
 		D82F38751EF1C9340044DA58 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82F38741EF1C9340044DA58 /* Globals.swift */; };
 		D85AA03E1F01C8C900B8D6D1 /* AppIcon-20x20@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = D85AA0311F01C8C900B8D6D1 /* AppIcon-20x20@1x.png */; };
@@ -91,6 +92,7 @@
 		D810027E1EE09C1000B4E34F /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		D81037F11EED053B00C34B82 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D813857C1EF3366C00EFE58F /* FavoritesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewController.swift; sourceTree = "<group>"; };
+		D825D32F1F0C11680073DC5B /* Array+shuffle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+shuffle.swift"; sourceTree = "<group>"; };
 		D82F38721EF096BB0044DA58 /* TWTRList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWTRList.swift; sourceTree = "<group>"; };
 		D82F38741EF1C9340044DA58 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		D85AA0311F01C8C900B8D6D1 /* AppIcon-20x20@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AppIcon-20x20@1x.png"; path = "icons/AppIcon-20x20@1x.png"; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 			children = (
 				D81002711EDFC4DE00B4E34F /* UIImageView+downloadedFrom.swift */,
 				D80C45921EF87D8C0080B044 /* UIButton+setImageFromUrl.swift */,
+				D825D32F1F0C11680073DC5B /* Array+shuffle.swift */,
 			);
 			name = extensions;
 			sourceTree = "<group>";
@@ -465,6 +468,7 @@
 				D80C45911EF872AB0080B044 /* ProfileViewControllerDelegate.swift in Sources */,
 				D82F38731EF096BB0044DA58 /* TWTRList.swift in Sources */,
 				D8A037E71EF309F4007D2C75 /* Favorite.swift in Sources */,
+				D825D3301F0C11680073DC5B /* Array+shuffle.swift in Sources */,
 				D80C45931EF87D8C0080B044 /* UIButton+setImageFromUrl.swift in Sources */,
 				D80C45A71EF8A2060080B044 /* Firebase.swift in Sources */,
 				D810027F1EE09C1000B4E34F /* ProfileTableViewCell.swift in Sources */,

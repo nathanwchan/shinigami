@@ -9,9 +9,10 @@
 import Foundation
 
 struct Constants {
-    static let listPrefix: String = "Tweetsee_"
+    static let listPrefix = "Tweetsee_"
     static let launchCountUserDefaultsKey = "launchCount"
     static let lastStoreReviewLaunchCountUserDefaultsKey = "lastStoreReviewLaunchCount"
+    static let publicListsTwitterAccount = "Tw1tterEyes"
 }
 
 struct Globals {
