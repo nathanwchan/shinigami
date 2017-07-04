@@ -30,10 +30,16 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         
         let realm = try! Realm()
         let ownerId = Twitter.sharedInstance().sessionStore.session()!.userID
+        var duplicateUserIds = Set<String>()
         self.usersToShowWhenErrorOccurs = realm.objects(TWTRList.self)
             .filter("ownerId = '\(ownerId)'")
             .sorted(byKeyPath: "createdAt", ascending: false)
             .map { $0.user! }
+            .flatMap { (user) -> TWTRUserCustom? in
+                guard !duplicateUserIds.contains(user.idStr) else { return nil }
+                duplicateUserIds.insert(user.idStr)
+                return user
+            }
         
         self.profileTableView.reloadData()
         
