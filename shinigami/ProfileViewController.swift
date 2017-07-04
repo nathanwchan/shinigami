@@ -115,10 +115,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if !self.isMovingToParentViewController {
-            // appearing after a back navigation
-            self.setNavigationBarItemsAlpha(hide: self.showSorryCell)
-        }
+        self.setNavigationBarItemsAlpha(hide: self.showSorryCell)
     }
     
     func addOrDeleteFavoriteFromDB() {
@@ -434,12 +431,16 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func setNavigationBarItemsAlpha(hide: Bool = false) {
         if hide {
-            self.navigationTitleUILabel.alpha = 0.0
-            self.navigationItem.rightBarButtonItems?[1].customView?.alpha = 0.0
+            DispatchQueue.main.async {
+                self.navigationTitleUILabel.alpha = 0.0
+                self.navigationItem.rightBarButtonItems?[1].customView?.alpha = 0.0
+            }
         } else if self.profileCellInView && !self.showSorryCell {
             let alpha = max(0, min(1, (self.profileTableView.contentOffset.y - 30) / 110))
-            self.navigationTitleUILabel.alpha = alpha
-            self.navigationItem.rightBarButtonItems?[1].customView?.alpha = alpha
+            DispatchQueue.main.async {
+                self.navigationTitleUILabel.alpha = alpha
+                self.navigationItem.rightBarButtonItems?[1].customView?.alpha = alpha
+            }
         }
     }
     
