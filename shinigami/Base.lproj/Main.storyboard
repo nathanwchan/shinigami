@@ -393,15 +393,15 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="sorryCell" rowHeight="79" id="zVD-QP-gZ1">
-                                        <rect key="frame" x="0.0" y="214" width="375" height="79"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="sorryCell" rowHeight="86" id="zVD-QP-gZ1">
+                                        <rect key="frame" x="0.0" y="214" width="375" height="86"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zVD-QP-gZ1" id="MmU-PA-fFa">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="85.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f7s-cU-6WT">
-                                                    <rect key="frame" x="8" y="10" width="359" height="53.5"/>
+                                                    <rect key="frame" x="8" y="13" width="359" height="57"/>
                                                     <string key="text">Sorry, we can't load this right now.
 For now, check out these other users
 and try again later!</string>
@@ -411,15 +411,15 @@ and try again later!</string>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="f7s-cU-6WT" firstAttribute="top" secondItem="MmU-PA-fFa" secondAttribute="topMargin" constant="2" id="3e7-OK-5o6"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="f7s-cU-6WT" secondAttribute="bottom" constant="7.5" id="E6D-9S-p0k"/>
+                                                <constraint firstItem="f7s-cU-6WT" firstAttribute="top" secondItem="MmU-PA-fFa" secondAttribute="topMargin" constant="5" id="3e7-OK-5o6"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="f7s-cU-6WT" secondAttribute="bottom" constant="8" id="E6D-9S-p0k"/>
                                                 <constraint firstAttribute="trailing" secondItem="f7s-cU-6WT" secondAttribute="trailing" constant="8" id="PT7-AG-Q2O"/>
                                                 <constraint firstItem="f7s-cU-6WT" firstAttribute="leading" secondItem="MmU-PA-fFa" secondAttribute="leading" constant="8" id="dpa-o0-llD"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="spinnerCell" rowHeight="85" id="msk-Bd-xyt">
-                                        <rect key="frame" x="0.0" y="293" width="375" height="85"/>
+                                        <rect key="frame" x="0.0" y="300" width="375" height="85"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="msk-Bd-xyt" id="5lX-1l-6zV">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="85"/>
@@ -438,7 +438,7 @@ and try again later!</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="userCell" rowHeight="89" id="vMQ-xC-LMT" customClass="UserTableViewCell" customModule="shinigami" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="378" width="375" height="89"/>
+                                        <rect key="frame" x="0.0" y="385" width="375" height="89"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vMQ-xC-LMT" id="2Xg-cN-xDU">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="89"/>
