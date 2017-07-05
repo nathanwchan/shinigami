@@ -402,6 +402,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func openSecretMenu(sender: Any?) {
         if let list = self.list {
+            if list.uri.contains("Tw1tterEyes") {
+                // can't touch this.
+                return
+            }
             let ownerId = Twitter.sharedInstance().sessionStore.session()!.userID
             firebase.logEvent("secret_menu_opened_\(ownerId)")
             let alertController = UIAlertController(title: "Hi there!", message: "This list currently has \(list.memberCount) members.\nWould you like to force populate the list?", preferredStyle: .alert)
