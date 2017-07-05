@@ -397,22 +397,21 @@
                                         <rect key="frame" x="0.0" y="214" width="375" height="86"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zVD-QP-gZ1" id="MmU-PA-fFa">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="85.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="86"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f7s-cU-6WT">
-                                                    <rect key="frame" x="8" y="13" width="359" height="57"/>
+                                                    <rect key="frame" x="8" y="18" width="359" height="46.5"/>
                                                     <string key="text">Sorry, we can't load this right now.
-For now, check out these other users
-and try again later!</string>
+Check out these other feeds instead.</string>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="f7s-cU-6WT" firstAttribute="top" secondItem="MmU-PA-fFa" secondAttribute="topMargin" constant="5" id="3e7-OK-5o6"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="f7s-cU-6WT" secondAttribute="bottom" constant="8" id="E6D-9S-p0k"/>
+                                                <constraint firstItem="f7s-cU-6WT" firstAttribute="top" secondItem="MmU-PA-fFa" secondAttribute="topMargin" constant="10" id="3e7-OK-5o6"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="f7s-cU-6WT" secondAttribute="bottom" constant="13" id="E6D-9S-p0k"/>
                                                 <constraint firstAttribute="trailing" secondItem="f7s-cU-6WT" secondAttribute="trailing" constant="8" id="PT7-AG-Q2O"/>
                                                 <constraint firstItem="f7s-cU-6WT" firstAttribute="leading" secondItem="MmU-PA-fFa" secondAttribute="leading" constant="8" id="dpa-o0-llD"/>
                                             </constraints>
