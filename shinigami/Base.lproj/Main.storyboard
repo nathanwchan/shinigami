@@ -311,7 +311,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What Nathan Chan sees..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5bo-dF-gg3">
-                                                    <rect key="frame" x="12" y="114.5" width="353" height="19"/>
+                                                    <rect key="frame" x="12" y="114.5" width="182" height="19"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="19" id="vzp-QL-Knh"/>
                                                     </constraints>
@@ -349,12 +349,18 @@
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LXm-S3-sSY" userLabel="Secret Button">
+                                                    <rect key="frame" x="154" y="114.5" width="40" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="0Rn-8B-w7n"/>
+                                                        <constraint firstAttribute="width" constant="40" id="Vls-r8-raa"/>
+                                                    </constraints>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="5CM-Od-lYq" firstAttribute="leading" secondItem="Hsc-Uc-dWO" secondAttribute="trailing" constant="10" id="0sw-gS-V7R"/>
                                                 <constraint firstItem="Bxj-0D-NSQ" firstAttribute="top" secondItem="Iti-1h-tpG" secondAttribute="topMargin" constant="-1" id="AXl-K5-DcY"/>
                                                 <constraint firstItem="alY-8f-wjV" firstAttribute="leading" secondItem="Hsc-Uc-dWO" secondAttribute="trailing" constant="10" id="Azb-7E-rt2"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="5bo-dF-gg3" secondAttribute="trailing" constant="2" id="Bbc-zt-e79"/>
                                                 <constraint firstItem="5bo-dF-gg3" firstAttribute="top" secondItem="Hsc-Uc-dWO" secondAttribute="bottom" constant="6.5" id="EJZ-xy-ghn"/>
                                                 <constraint firstAttribute="trailing" secondItem="EBu-5i-tWQ" secondAttribute="trailing" constant="4" id="Eej-OY-UmC"/>
                                                 <constraint firstItem="5bo-dF-gg3" firstAttribute="leading" secondItem="Hsc-Uc-dWO" secondAttribute="leading" id="FAX-s1-IDa"/>
@@ -365,11 +371,13 @@
                                                 <constraint firstItem="EBu-5i-tWQ" firstAttribute="top" secondItem="Iti-1h-tpG" secondAttribute="top" constant="4" id="RRI-VT-4Gn"/>
                                                 <constraint firstItem="st4-Qy-oOS" firstAttribute="leading" secondItem="Hsc-Uc-dWO" secondAttribute="trailing" constant="10" id="Xbv-O9-Mjb"/>
                                                 <constraint firstItem="xgV-CY-C11" firstAttribute="leading" secondItem="Bxj-0D-NSQ" secondAttribute="trailing" constant="5" id="cUn-Pv-Ukg"/>
+                                                <constraint firstItem="LXm-S3-sSY" firstAttribute="centerY" secondItem="5bo-dF-gg3" secondAttribute="centerY" id="dnP-Mr-atC"/>
                                                 <constraint firstItem="xgV-CY-C11" firstAttribute="centerY" secondItem="Bxj-0D-NSQ" secondAttribute="centerY" id="gOM-xh-DZk"/>
                                                 <constraint firstItem="alY-8f-wjV" firstAttribute="top" secondItem="Bxj-0D-NSQ" secondAttribute="bottom" id="mNj-0w-H81"/>
                                                 <constraint firstItem="Hsc-Uc-dWO" firstAttribute="leading" secondItem="Iti-1h-tpG" secondAttribute="leadingMargin" constant="4" id="qqW-oO-HtN"/>
                                                 <constraint firstItem="V2i-Qp-jGD" firstAttribute="leading" secondItem="5CM-Od-lYq" secondAttribute="trailing" constant="3" id="saD-yr-k0I"/>
                                                 <constraint firstAttribute="topMargin" secondItem="Hsc-Uc-dWO" secondAttribute="top" id="xAS-Gj-zlf"/>
+                                                <constraint firstItem="LXm-S3-sSY" firstAttribute="leading" secondItem="5bo-dF-gg3" secondAttribute="trailing" constant="-40" id="xF4-5b-9ZV"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="st4-Qy-oOS" secondAttribute="trailing" constant="2" id="xQB-WY-lR6"/>
                                                 <constraint firstItem="st4-Qy-oOS" firstAttribute="top" secondItem="alY-8f-wjV" secondAttribute="bottom" constant="3" id="zda-5x-DZu"/>
                                             </constraints>
@@ -382,6 +390,7 @@
                                             <outlet property="nameButton" destination="Bxj-0D-NSQ" id="xGY-yn-6LE"/>
                                             <outlet property="profileImageButton" destination="Hsc-Uc-dWO" id="Pn3-xG-s1h"/>
                                             <outlet property="screenNameLabel" destination="alY-8f-wjV" id="cyj-qU-ngY"/>
+                                            <outlet property="secretButton" destination="LXm-S3-sSY" id="wC9-8V-Beb"/>
                                             <outlet property="whatNameSeesLabel" destination="5bo-dF-gg3" id="29x-i0-lQJ"/>
                                         </connections>
                                     </tableViewCell>

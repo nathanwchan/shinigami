@@ -20,4 +20,5 @@ class ProfileTableViewCell: UITableViewCell {
     @IBOutlet weak var isVerifiedImageView: UIImageView!
     @IBOutlet weak var followingLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var secretButton: UIButton!
 }

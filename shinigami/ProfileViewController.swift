@@ -236,11 +236,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             }
             self.retrieveAndRenderListTweets()
         } else {
-            self.createAndPopulateList(user: user)
+            self.createAndPopulateList(for: user)
         }
     }
 
-    func createAndPopulateList(user: TWTRUserCustom) {
+    func createAndPopulateList(for user: TWTRUserCustom) {
         let createListEndpoint = "https://api.twitter.com/1.1/lists/create.json"
         var listName = "\(Constants.listPrefix)\(user.screenName)"
         let listNameCharacterLimit = 25
@@ -263,72 +263,75 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             }
             
             let jsonData = JSON(data: data)
-            guard let listID = jsonData["id_str"].string else {
-                firebase.logEvent("twitter_error_list_id_not_found")
+            self.list = TWTRList(json: jsonData, user: user)
+
+            self.populateList(for: user, with: self.retrieveAndRenderListTweets)
+        }
+    }
+    
+    func populateList(for user: TWTRUserCustom, forceAll: Bool = false, with callback: @escaping () -> ()) {
+        guard let list = self.list else {
+            return
+        }
+        
+        let getFollowingIdsEndpoint = "https://api.twitter.com/1.1/friends/ids.json?screen_name=\(user.screenName)"
+        let request = self.client.urlRequest(withMethod: "GET", url: getFollowingIdsEndpoint, parameters: nil, error: &self.clientError)
+        
+        self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
+            guard let data = data else {
+                print("Error: \(connectionError.debugDescription)")
+                firebase.logEvent("twitter_error_friends_ids")
                 self.errorOccurred()
                 return
             }
-            self.list = TWTRList(json: jsonData, user: user)
             
-            let getFollowingIdsEndpoint = "https://api.twitter.com/1.1/friends/ids.json?screen_name=\(user.screenName)"
-            let request = self.client.urlRequest(withMethod: "GET", url: getFollowingIdsEndpoint, parameters: nil, error: &self.clientError)
+            let jsonData = JSON(data: data)
+            let followingIdsList = (jsonData["ids"].arrayValue).map { String(describing: $0.intValue) }
             
-            self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
-                guard let data = data else {
-                    print("Error: \(connectionError.debugDescription)")
-                    firebase.logEvent("twitter_error_friends_ids")
-                    self.errorOccurred()
-                    return
-                }
+            let addMembersToListEndpoint = "https://api.twitter.com/1.1/lists/members/create_all.json"
+            // NOTE: this has a user_id list limit of 100 https://dev.twitter.com/rest/reference/post/lists/members/create_all
+            let addMembersDispatchGroup = DispatchGroup()
+            let maxMembersCount = 100
+            let requestsCount = min(15, (followingIdsList.count / maxMembersCount) + 1)
+            for i in 0..<requestsCount {
+                addMembersDispatchGroup.enter()
+                let startIndex = maxMembersCount*i
+                let endIndex = min(maxMembersCount*(i+1), followingIdsList.count)
+                let params = [
+                    "list_id": list.idStr,
+                    "user_id": followingIdsList[startIndex..<endIndex].joined(separator: ",")
+                ]
+                let request = self.client.urlRequest(withMethod: "POST", url: addMembersToListEndpoint, parameters: params, error: &self.clientError)
                 
-                let jsonData = JSON(data: data)
-                let followingIdsList = (jsonData["ids"].arrayValue).map { String(describing: $0.intValue) }
-                
-                let addMembersToListEndpoint = "https://api.twitter.com/1.1/lists/members/create_all.json"
-                // NOTE: this has a user_id list limit of 100 https://dev.twitter.com/rest/reference/post/lists/members/create_all
-                let addMembersDispatchGroup = DispatchGroup()
-                let maxMembersCount = 100
-                let requestsCount = 1 // TEMPORARY: (followingIdsList.count / maxMembersCount) + 1
-                for i in 0..<requestsCount {
-                    addMembersDispatchGroup.enter()
-                    let startIndex = maxMembersCount*i
-                    let endIndex = min(maxMembersCount*(i+1), followingIdsList.count)
-                    let params = [
-                        "list_id": listID,
-                        "user_id": followingIdsList[startIndex..<endIndex].joined(separator: ",")
-                    ]
-                    let request = self.client.urlRequest(withMethod: "POST", url: addMembersToListEndpoint, parameters: params, error: &self.clientError)
+                self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
+                    addMembersDispatchGroup.leave()
                     
-                    self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
-                        addMembersDispatchGroup.leave()
-                        
-                        guard let data = data else {
-                            print("Error: \(connectionError.debugDescription)")
-                            firebase.logEvent("twitter_error_lists_members_create_all")
-                            self.errorOccurred()
-                            return
-                        }
-                        
-                        let jsonData = JSON(data: data)
-                        self.list = TWTRList(json: jsonData, user: user)
-                        if jsonData["member_count"].int == 0 {
-                            let errorMessage = "Error: response to lists/members/create_all.json returned successfully, but no members were added"
-                            print(errorMessage)
-                            firebase.logEvent("twitter_error_lists_no_members")
-                            self.errorOccurred(deleteList: true)
-                            return
-                        }
-                        
-                        let realm = try! Realm()
-                        try! realm.write() {
-                            realm.create(TWTRList.self, value: self.list!, update: true)
-                        }
+                    guard let data = data else {
+                        print("Error: \(connectionError.debugDescription)")
+                        firebase.logEvent("twitter_error_lists_members_create_all")
+                        self.errorOccurred()
+                        return
+                    }
+                    
+                    let jsonData = JSON(data: data)
+                    self.list = TWTRList(json: jsonData, user: user)
+                    if jsonData["member_count"].int == 0 {
+                        let errorMessage = "Error: response to lists/members/create_all.json returned successfully, but no members were added"
+                        print(errorMessage)
+                        firebase.logEvent("twitter_error_lists_no_members")
+                        self.errorOccurred(deleteList: true)
+                        return
+                    }
+                    
+                    let realm = try! Realm()
+                    try! realm.write() {
+                        realm.create(TWTRList.self, value: self.list!, update: true)
                     }
                 }
-                
-                addMembersDispatchGroup.notify(queue: .main) {
-                    self.retrieveAndRenderListTweets()
-                }
+            }
+            
+            addMembersDispatchGroup.notify(queue: .main) {
+                callback()
             }
         }
     }
@@ -388,6 +391,32 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         self.openUrlInModal(profileUrl)
     }
     
+    func forcePopulateListSecretCallback() {
+        if let list = self.list {
+            let alertController = UIAlertController(title: "Done!", message: "This list now has \(list.memberCount) members.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Cool", style: .default) { (result : UIAlertAction) -> Void in }
+            alertController.addAction(okAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    func openSecretMenu(sender: Any?) {
+        if let list = self.list {
+            let ownerId = Twitter.sharedInstance().sessionStore.session()!.userID
+            firebase.logEvent("secret_menu_opened_\(ownerId)")
+            let alertController = UIAlertController(title: "Hi there!", message: "This list currently has \(list.memberCount) members.\nWould you like to force populate the list?", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Do it", style: .default) { (result : UIAlertAction) -> Void in
+                if let user = list.user {
+                    self.populateList(for: user, forceAll: true, with: self.forcePopulateListSecretCallback)
+                }
+            }
+            let cancelAction = UIAlertAction(title: "What is this?", style: .destructive) { (result : UIAlertAction) -> Void in }
+            alertController.addAction(okAction)
+            alertController.addAction(cancelAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 && self.user != nil {
             guard let profileCell = tableView.dequeueReusableCell(withIdentifier: "profileCell", for: indexPath) as? ProfileTableViewCell else {
@@ -413,6 +442,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 profileCell.favoriteButton.setImage(getFavoriteButtonUIImage(), for: .normal)
                 profileCell.favoriteButton.addTarget(self, action: #selector(self.toggleFavoriteProfileCellButton(sender:)), for: .touchUpInside)
             }
+            
+            let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.openSecretMenu(sender:)))
+            profileCell.secretButton.addGestureRecognizer(longPressGestureRecognizer)
+            
             return profileCell
         } else if self.showSpinnerCell {
             let spinnerCell = tableView.dequeueReusableCell(withIdentifier: "spinnerCell", for: indexPath) as UITableViewCell
