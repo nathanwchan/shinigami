@@ -198,21 +198,30 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
                             let favorites = realm.objects(Favorite.self)
                             
                             var publicListsWithUsersToCache: [TWTRList] = []
+                            
+                            func queueUpForStorage(_ publicList: TWTRList) {
+                                let userScreenName = String(publicList.name.characters.dropFirst(Constants.listPrefix.characters.count))
+                                if let user = publicListsUsers.filter({ $0.screenName == userScreenName }).first {
+                                    publicList.user = user
+                                    publicList.ownerId = "0"
+                                    publicListsWithUsersToCache.append(publicList)
+                                }
+                            }
+                            
                             for publicList in self.publicLists {
                                 // make sure it's not an existing favorite
                                 if favorites.filter({ $0.list?.name == publicList.name }).first == nil {
                                     if let existingList = self.cachedLists.filter({ $0.name == publicList.name && $0.idStr != publicList.idStr }).first {
+                                        // user has already visited this user (stored in DB), but it is not a public list (maybe this is a newly created public list)
                                         if let existingRealmList = realm.object(ofType: TWTRList.self, forPrimaryKey: existingList.idStr) {
                                             try! realm.write() {
                                                 realm.delete(existingRealmList)
                                             }
                                         }
-                                        let userScreenName = String(publicList.name.characters.dropFirst(Constants.listPrefix.characters.count))
-                                        if let user = publicListsUsers.filter({ $0.screenName == userScreenName }).first {
-                                            publicList.user = user
-                                            publicList.ownerId = "0"
-                                            publicListsWithUsersToCache.append(publicList)
-                                        }
+                                        queueUpForStorage(publicList)
+                                    } else if self.cachedLists.filter({ $0.name == publicList.name }).isEmpty {
+                                        // user has never visited this user and it is public list
+                                        queueUpForStorage(publicList)
                                     }
                                 }
                             }
