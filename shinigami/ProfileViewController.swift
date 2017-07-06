@@ -25,6 +25,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     private var showSorryCell: Bool = false
     private var usersToShowWhenErrorOccurs: [TWTRUserCustom] = []
     private func errorOccurred(deleteList: Bool = false) {
+        if self.showSorryCell {
+            // acting as a lock to prevent multiple calls here to update UI
+            return
+        }
         self.showSpinnerCell = false
         self.showSorryCell = true
         
@@ -47,7 +51,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 return user
             }
         
-        self.profileTableView.reloadData()
+        DispatchQueue.main.async {
+            self.profileTableView.reloadData()
+        }
         
         if deleteList {
             // Delete list from Realm DB and Twitter
@@ -339,6 +345,9 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     func retrieveAndRenderListTweets() {
         guard let list = self.list else {
             print("Error: no list exists.")
+            return
+        }
+        if list.memberCount == 0 {
             return
         }
         let getListTweetsEndpoint = "https://api.twitter.com/1.1/lists/statuses.json?list_id=\(list.idStr)"
