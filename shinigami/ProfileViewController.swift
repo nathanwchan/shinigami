@@ -483,7 +483,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             }
             
             tweetCell.configure(with: self.tweets[indexPath.row - 1])
-            tweetCell.tweetView.showActionButtons = true
             tweetCell.tweetView.showBorder = false
             tweetCell.tweetView.delegate = self
             return tweetCell
