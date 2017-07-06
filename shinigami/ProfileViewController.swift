@@ -35,7 +35,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         let realm = try! Realm()
         let ownerId = Twitter.sharedInstance().sessionStore.session()!.userID
         let existingListsUsers = Array(realm.objects(TWTRList.self)
-            .filter("ownerId = '\(ownerId)' OR ownerId = '0'")
+            .filter("(ownerId = '\(ownerId)' OR ownerId = '0') AND idStr != '\(self.list?.idStr ?? "unknown")'")
             .map { $0.user! })
         
         var existingListsUsersHiPri = existingListsUsers.filter {$0.followingCount < 500}

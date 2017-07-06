@@ -60,20 +60,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         self.usersTableView.estimatedRowHeight = 70
 
         // Observe Results Notifications
-        notificationToken = self.cachedLists.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
-            //guard let tableView = self?.usersTableView else { return }
-            switch changes {
-            case .initial:
-                self?.retrieveAndShowSuggestedUsers()
-                break
-            case .update(_, _, _, _):
-                break
-            case .error(let error):
-                // An error occurred while opening the Realm file on the background worker thread
-                fatalError("\(error)")
-                break
-            }
-        }
+        notificationToken = self.cachedLists.addNotificationBlock { (changes: RealmCollectionChange) in }
 
         // Retrieve updated lists from Twitter
         let getListsEndpoint = "https://api.twitter.com/1.1/lists/ownerships.json?count=1000"
