@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import TwitterKit
-import RealmSwift
 
 class ProfileTableViewCell: UITableViewCell {
 
