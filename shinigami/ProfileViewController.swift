@@ -383,7 +383,7 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
     func openUrlInModal(_ url: URL?) {
         if let url = url {
             if UIApplication.shared.canOpenURL(url) {
-                let vc = SFSafariViewController(url: url, entersReaderIfAvailable: true)
+                let vc = SFSafariViewController(url: url, entersReaderIfAvailable: false)
                 vc.modalPresentationStyle = .overFullScreen
                 present(vc, animated: true, completion: nil)
             }
