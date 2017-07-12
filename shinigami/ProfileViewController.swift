@@ -12,7 +12,7 @@ import SwiftyJSON
 import RealmSwift
 import SafariServices
 
-class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, TWTRTweetViewDelegate, SFSafariViewControllerDelegate {
+class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
     
     var userID: String? // used only when coming from clicking on tweet's profile pic
     var list: TWTRList?
@@ -20,10 +20,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     var favorite: Favorite?
     private let client = TWTRAPIClient.withCurrentUser()
     private var clientError: NSError?
-    private var tweets: [TWTRTweet] = []
-    private var showSpinnerCell: Bool = true
-    private var showSorryCell: Bool = false
-    private var usersToShowWhenErrorOccurs: [TWTRUserCustom] = []
+    internal var tweets: [TWTRTweet] = []
+    internal var showSpinnerCell: Bool = true
+    internal var showSorryCell: Bool = false
+    internal var usersToShowWhenErrorOccurs: [TWTRUserCustom] = []
     private func errorOccurred(deleteList: Bool = false) {
         if self.showSorryCell {
             // acting as a lock to prevent multiple calls here to update UI
@@ -430,13 +430,30 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     
+    func setNavigationBarItemsAlpha(hide: Bool = false) {
+        if hide {
+            DispatchQueue.main.async {
+                self.navigationTitleUILabel.alpha = 0.0
+                self.navigationItem.rightBarButtonItems?[1].customView?.alpha = 0.0
+            }
+        } else if self.profileCellInView && !self.showSorryCell {
+            let alpha = max(0, min(1, (self.profileTableView.contentOffset.y - 30) / 110))
+            DispatchQueue.main.async {
+                self.navigationTitleUILabel.alpha = alpha
+                self.navigationItem.rightBarButtonItems?[1].customView?.alpha = alpha
+            }
+        }
+    }
+}
+
+extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 && self.user != nil {
             guard let profileCell = tableView.dequeueReusableCell(withIdentifier: "profileCell", for: indexPath) as? ProfileTableViewCell else {
                 fatalError("The dequeued cell is not an instance of ProfileTableViewCell.")
             }
             let user = self.user!
-
+            
             profileCell.profileImageButton.setImage(fromUrl: user.profileImageOriginalSizeUrl, for: .normal)
             profileCell.profileImageButton.layer.cornerRadius = 5
             profileCell.profileImageButton.clipsToBounds = true
@@ -488,26 +505,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             return tweetCell
         }
     }
-    
-    func setNavigationBarItemsAlpha(hide: Bool = false) {
-        if hide {
-            DispatchQueue.main.async {
-                self.navigationTitleUILabel.alpha = 0.0
-                self.navigationItem.rightBarButtonItems?[1].customView?.alpha = 0.0
-            }
-        } else if self.profileCellInView && !self.showSorryCell {
-            let alpha = max(0, min(1, (self.profileTableView.contentOffset.y - 30) / 110))
-            DispatchQueue.main.async {
-                self.navigationTitleUILabel.alpha = alpha
-                self.navigationItem.rightBarButtonItems?[1].customView?.alpha = alpha
-            }
-        }
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.setNavigationBarItemsAlpha()
-    }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (self.user != nil ? 1 : 0) + self.tweets.count + (self.showSorryCell ? 1 : 0) + (self.showSpinnerCell ? 1 : 0) + self.usersToShowWhenErrorOccurs.count
     }
@@ -545,6 +543,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.setNavigationBarItemsAlpha()
+    }
+}
+
+extension ProfileViewController: TWTRTweetViewDelegate {
     func tweetView(_ tweetView: TWTRTweetView, didTap tweet: TWTRTweet) {
         firebase.logEvent("profile_tweet_click")
         self.openUrlInModal(tweet.permalink)
