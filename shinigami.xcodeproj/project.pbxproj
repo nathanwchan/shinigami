@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		020ACD712F1F5773DA28C2D3 /* Pods_shinigami.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A8BC89F844F4219F316174 /* Pods_shinigami.framework */; };
-		D80C45911EF872AB0080B044 /* ProfileViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80C45901EF872AB0080B044 /* ProfileViewControllerDelegate.swift */; };
 		D80C45931EF87D8C0080B044 /* UIButton+setImageFromUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80C45921EF87D8C0080B044 /* UIButton+setImageFromUrl.swift */; };
 		D80C459C1EF88C510080B044 /* heart-filled.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C45961EF88C510080B044 /* heart-filled.png */; };
 		D80C459D1EF88C510080B044 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C45971EF88C510080B044 /* heart.png */; };
@@ -49,6 +48,8 @@
 		D88ADF4B1EFC712D002AF349 /* heart-tab-bar-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88ADF481EFC712D002AF349 /* heart-tab-bar-icon@2x.png */; };
 		D88ADF4C1EFC712D002AF349 /* heart-tab-bar-icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88ADF491EFC712D002AF349 /* heart-tab-bar-icon@3x.png */; };
 		D8A037E71EF309F4007D2C75 /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A037E61EF309F4007D2C75 /* Favorite.swift */; };
+		D8C36B731F168F7E0058BF8B /* Logoutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C36B721F168F7E0058BF8B /* Logoutable.swift */; };
+		D8C36B751F1691800058BF8B /* exit.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C36B741F1691800058BF8B /* exit.png */; };
 		D8C381BF1EE89BB600D030B0 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C381BE1EE89BB600D030B0 /* Helpers.swift */; };
 		D8DA4B8C1F02FE05003AA4E5 /* Default-375w-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8DA4B801F02FE05003AA4E5 /* Default-375w-667h@2x.png */; };
 		D8DA4B8D1F02FE05003AA4E5 /* Default-414w-736h-Landscape@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8DA4B811F02FE05003AA4E5 /* Default-414w-736h-Landscape@3x.png */; };
@@ -69,7 +70,6 @@
 		9484142F295752EAB6DAF202 /* Pods-shinigami.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shinigami.release.xcconfig"; path = "Pods/Target Support Files/Pods-shinigami/Pods-shinigami.release.xcconfig"; sourceTree = "<group>"; };
 		B5A8BC89F844F4219F316174 /* Pods_shinigami.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_shinigami.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDB3DC8364A643D0084D242F /* Pods-shinigami.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shinigami.debug.xcconfig"; path = "Pods/Target Support Files/Pods-shinigami/Pods-shinigami.debug.xcconfig"; sourceTree = "<group>"; };
-		D80C45901EF872AB0080B044 /* ProfileViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerDelegate.swift; sourceTree = "<group>"; };
 		D80C45921EF87D8C0080B044 /* UIButton+setImageFromUrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+setImageFromUrl.swift"; sourceTree = "<group>"; };
 		D80C45961EF88C510080B044 /* heart-filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "heart-filled.png"; path = "images/heart-filled.png"; sourceTree = "<group>"; };
 		D80C45971EF88C510080B044 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = heart.png; path = images/heart.png; sourceTree = "<group>"; };
@@ -113,6 +113,8 @@
 		D88ADF481EFC712D002AF349 /* heart-tab-bar-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "heart-tab-bar-icon@2x.png"; path = "images/heart-tab-bar-icon@2x.png"; sourceTree = "<group>"; };
 		D88ADF491EFC712D002AF349 /* heart-tab-bar-icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "heart-tab-bar-icon@3x.png"; path = "images/heart-tab-bar-icon@3x.png"; sourceTree = "<group>"; };
 		D8A037E61EF309F4007D2C75 /* Favorite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
+		D8C36B721F168F7E0058BF8B /* Logoutable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logoutable.swift; sourceTree = "<group>"; };
+		D8C36B741F1691800058BF8B /* exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exit.png; sourceTree = "<group>"; };
 		D8C381BE1EE89BB600D030B0 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		D8DA4B801F02FE05003AA4E5 /* Default-375w-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-375w-667h@2x.png"; path = "launchScreenImages/Default-375w-667h@2x.png"; sourceTree = "<group>"; };
 		D8DA4B811F02FE05003AA4E5 /* Default-414w-736h-Landscape@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-414w-736h-Landscape@3x.png"; path = "launchScreenImages/Default-414w-736h-Landscape@3x.png"; sourceTree = "<group>"; };
@@ -152,7 +154,7 @@
 		D80C458F1EF8727E0080B044 /* protocols */ = {
 			isa = PBXGroup;
 			children = (
-				D80C45901EF872AB0080B044 /* ProfileViewControllerDelegate.swift */,
+				D8C36B721F168F7E0058BF8B /* Logoutable.swift */,
 			);
 			name = protocols;
 			sourceTree = "<group>";
@@ -200,6 +202,7 @@
 		D810024A1ED746BE00B4E34F /* images */ = {
 			isa = PBXGroup;
 			children = (
+				D8C36B741F1691800058BF8B /* exit.png */,
 				D8DA4B981F02FE1B003AA4E5 /* login-screen.png */,
 				D88ADF471EFC712D002AF349 /* heart-tab-bar-icon.png */,
 				D88ADF481EFC712D002AF349 /* heart-tab-bar-icon@2x.png */,
@@ -400,6 +403,7 @@
 				D88ADF4A1EFC712D002AF349 /* heart-tab-bar-icon.png in Resources */,
 				D8DA4B901F02FE05003AA4E5 /* Default-Landscape-Pro@2x.png in Resources */,
 				D85AA04A1F01C8C900B8D6D1 /* AppIcon-512@2x.png in Resources */,
+				D8C36B751F1691800058BF8B /* exit.png in Resources */,
 				D85AA0431F01C8C900B8D6D1 /* AppIcon-40x40@2x.png in Resources */,
 				D80C45A01EF88C510080B044 /* twitter-following-icon.png in Resources */,
 				D85AA0411F01C8C900B8D6D1 /* AppIcon-29x29@3x.png in Resources */,
@@ -465,7 +469,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D81002391ED49EDD00B4E34F /* LoginViewController.swift in Sources */,
-				D80C45911EF872AB0080B044 /* ProfileViewControllerDelegate.swift in Sources */,
 				D82F38731EF096BB0044DA58 /* TWTRList.swift in Sources */,
 				D8A037E71EF309F4007D2C75 /* Favorite.swift in Sources */,
 				D825D3301F0C11680073DC5B /* Array+shuffle.swift in Sources */,
@@ -474,6 +477,7 @@
 				D810027F1EE09C1000B4E34F /* ProfileTableViewCell.swift in Sources */,
 				D813857D1EF3366C00EFE58F /* FavoritesTableViewController.swift in Sources */,
 				D81002371ED49EDD00B4E34F /* AppDelegate.swift in Sources */,
+				D8C36B731F168F7E0058BF8B /* Logoutable.swift in Sources */,
 				D810026E1EDF97B500B4E34F /* TWTRUserCustom.swift in Sources */,
 				D8C381BF1EE89BB600D030B0 /* Helpers.swift in Sources */,
 				D810024F1EDDF51100B4E34F /* SearchViewController.swift in Sources */,

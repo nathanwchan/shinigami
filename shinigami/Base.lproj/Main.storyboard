@@ -229,13 +229,7 @@
                             <constraint firstItem="rm7-Mk-zb3" firstAttribute="top" secondItem="D77-Cl-gRt" secondAttribute="bottom" constant="8" id="xaM-ld-bOs"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Search" id="SoT-F3-qQJ">
-                        <barButtonItem key="rightBarButtonItem" title="Logout" id="jKA-Oi-Fxw">
-                            <connections>
-                                <action selector="clickedLogout:" destination="mwC-ev-1kG" id="zoh-u2-dvX"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Search" id="SoT-F3-qQJ"/>
                     <connections>
                         <outlet property="searchActivityIndicator" destination="MGE-UU-Gdo" id="N51-PU-aMF"/>
                         <outlet property="searchTextField" destination="fhO-aZ-Xmp" id="qeJ-H0-DfG"/>

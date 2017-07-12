@@ -11,7 +11,7 @@ import TwitterKit
 import SwiftyJSON
 import RealmSwift
 
-class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDataSource, UIScrollViewDelegate {
+class SearchViewController: UIViewController, Logoutable, UITextFieldDelegate, UITableViewDataSource, UIScrollViewDelegate {
 
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var suggestionsForYouLabelHeightConstraint: NSLayoutConstraint!
@@ -59,6 +59,13 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         self.usersTableView.rowHeight = UITableViewAutomaticDimension
         self.usersTableView.estimatedRowHeight = 70
 
+        let logoutButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        logoutButton.setImage(UIImage(named: "exit.png"), for: .normal)
+        logoutButton.addTarget(self, action: #selector(self.clickedLogoutButton(sender:)), for: .touchUpInside)
+        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        negativeSpacer.width = -8;
+        self.navigationItem.rightBarButtonItems = [negativeSpacer, UIBarButtonItem(customView: logoutButton)]
+        
         // Observe Results Notifications
         notificationToken = self.cachedLists.addNotificationBlock { (changes: RealmCollectionChange) in }
 
@@ -316,24 +323,15 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDa
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func logout() {
-        let store = Twitter.sharedInstance().sessionStore
-        
-        if let userID = store.session()?.userID {
-            store.logOutUserID(userID)
-            globals.launchCount = UserDefaults.standard.integer(forKey: Constants.launchCountUserDefaultsKey) - 1
-            UserDefaults.standard.set(globals.launchCount, forKey: Constants.launchCountUserDefaultsKey)
-            firebase.logEvent("logout_\(userID)")
+    func clickedLogoutButton(sender: Any?) {
+        let alertController = UIAlertController(title: "Logout?", message: "Are you sure you want to logout of your Twitter account?", preferredStyle: .alert)
+        let logoutAction = UIAlertAction(title: "Yes", style: .default) { (result : UIAlertAction) -> Void in
+            self.logout()
         }
-        
-        DispatchQueue.main.async {
-            self.navigationController?.viewControllers = []
-            self.performSegue(withIdentifier: "LogoutSegue", sender: nil)
-        }
-    }
-    
-    @IBAction func clickedLogout(_ sender: Any) {
-        self.logout()
+        let cancelAction = UIAlertAction(title: "No", style: .cancel) { (result : UIAlertAction) -> Void in }
+        alertController.addAction(cancelAction)
+        alertController.addAction(logoutAction)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
