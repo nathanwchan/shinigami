@@ -20,10 +20,23 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
     var favorite: Favorite?
     private let client = TWTRAPIClient.withCurrentUser()
     private var clientError: NSError?
-    internal var tweets: [TWTRTweet] = []
     internal var showSpinnerCell: Bool = true
     internal var showSorryCell: Bool = false
-    internal var usersToShowWhenErrorOccurs: [TWTRUserCustom] = []
+    internal var tweets: [TWTRTweet] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.showSpinnerCell = false
+                self.profileTableView.reloadData()
+            }
+        }
+    }
+    internal var usersToShowWhenErrorOccurs: [TWTRUserCustom] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.profileTableView.reloadData()
+            }
+        }
+    }
     private func errorOccurred(deleteList: Bool = false) {
         if self.showSorryCell {
             // acting as a lock to prevent multiple calls here to update UI
@@ -50,10 +63,6 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
                 duplicateUserIds.insert(user.idStr)
                 return user
             }
-        
-        DispatchQueue.main.async {
-            self.profileTableView.reloadData()
-        }
         
         if deleteList {
             // Delete list from Realm DB and Twitter
@@ -375,8 +384,6 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
             
             let jsonData = JSON(data: data)
             self.tweets.append(contentsOf: TWTRTweet.tweets(withJSONArray: jsonData.arrayObject) as! [TWTRTweet])
-            self.showSpinnerCell = false
-            self.profileTableView.reloadData()
         }
     }
     

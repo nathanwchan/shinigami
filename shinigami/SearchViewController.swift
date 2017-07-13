@@ -26,7 +26,14 @@ class SearchViewController: UIViewController, Logoutable, UITextFieldDelegate, U
     private var followingUsers: [TWTRUserCustom] = []
     private var suggestedUsers: [TWTRUserCustom] = []
     private let maxSuggestedUsersCount: Int = 100
-    private var usersToShow: [TWTRUserCustom] = []
+    private var usersToShow: [TWTRUserCustom] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.searchActivityIndicator.stopAnimating()
+                self.usersTableView.reloadData()
+            }
+        }
+    }
     private var urlEncodedCurrentText: String = ""
     private var showingSuggestedUsers: Bool = false
     private var publicLists: [TWTRList] = []
@@ -142,8 +149,6 @@ class SearchViewController: UIViewController, Logoutable, UITextFieldDelegate, U
         self.suggestedUsers = Array(dedupedSuggestedUsers[0..<min(dedupedSuggestedUsers.count, self.maxSuggestedUsersCount)])
         
         self.usersToShow = self.suggestedUsers
-        self.searchActivityIndicator.stopAnimating()
-        self.usersTableView.reloadData()
         self.showingSuggestedUsers = true
         self.suggestionsForYouLabelHeightConstraint.constant = 15
     }
@@ -288,8 +293,6 @@ class SearchViewController: UIViewController, Logoutable, UITextFieldDelegate, U
                     let searchResultsUsers = jsonData.arrayValue.map { TWTRUserCustom.init(json: $0)! }
                     if searchResultsUsers.count > 0 {
                         self.usersToShow = searchResultsUsers
-                        self.searchActivityIndicator.stopAnimating()
-                        self.usersTableView.reloadData()
                         self.showingSuggestedUsers = false
                         self.suggestionsForYouLabelHeightConstraint.constant = 0
                     }
