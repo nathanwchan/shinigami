@@ -18,17 +18,6 @@ class UserTableViewCell: UITableViewCell {
     @IBOutlet weak var followingIcon: UIImageView!
     @IBOutlet weak var isFollowingLabel: UILabel!
     @IBOutlet weak var followingIconHeightConstraint: NSLayoutConstraint!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
 
     func configureWith(_ user: TWTRUserCustom) {
         self.userProfileImageView.image(fromUrl: user.profileImageNormalSizeUrl)
