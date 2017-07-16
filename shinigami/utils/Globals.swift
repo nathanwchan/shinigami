@@ -16,8 +16,8 @@ struct Constants {
 }
 
 struct Globals {
-    var launchCount: Int = 0
-    var lastStoreReviewLaunchCount: Int = UserDefaults.standard.integer(forKey: Constants.lastStoreReviewLaunchCountUserDefaultsKey)
+    var launchCount = 0
+    var lastStoreReviewLaunchCount = UserDefaults.standard.integer(forKey: Constants.lastStoreReviewLaunchCountUserDefaultsKey)
 }
 
 var globals = Globals()

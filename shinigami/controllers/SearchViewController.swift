@@ -25,7 +25,7 @@ class SearchViewController: UIViewController, Logoutable, UITextFieldDelegate, U
     private var clientError: NSError?
     private var followingUsers: [TWTRUserCustom] = []
     private var suggestedUsers: [TWTRUserCustom] = []
-    private let maxSuggestedUsersCount: Int = 100
+    private let maxSuggestedUsersCount = 100
     private var usersToShow: [TWTRUserCustom] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -34,8 +34,8 @@ class SearchViewController: UIViewController, Logoutable, UITextFieldDelegate, U
             }
         }
     }
-    private var urlEncodedCurrentText: String = ""
-    private var showingSuggestedUsers: Bool = false
+    private var urlEncodedCurrentText = ""
+    private var showingSuggestedUsers = false
     private var publicLists: [TWTRList] = []
     
     let cachedLists: Results<TWTRList> = {

@@ -20,8 +20,8 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
     var favorite: Favorite?
     private let client = TWTRAPIClient.withCurrentUser()
     private var clientError: NSError?
-    internal var showSpinnerCell: Bool = true
-    internal var showSorryCell: Bool = false
+    internal var showSpinnerCell = true
+    internal var showSorryCell = false
     internal var tweets: [TWTRTweet] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -88,7 +88,7 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
         }
     }
     var navigationTitleUILabel = UILabel()
-    var profileCellInView: Bool = true
+    var profileCellInView = true
     
     @IBOutlet weak var profileTableView: UITableView!
     
