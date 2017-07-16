@@ -10,7 +10,7 @@ import Foundation
 import Firebase
 import TwitterKit
 
-class Firebase {
+struct Firebase {
     func logEvent(_ name: String) {
         let eventNameCharacterLimit = 40
         var eventName = name
