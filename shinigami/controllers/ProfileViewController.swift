@@ -412,12 +412,12 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
             let alertController = UIAlertController(title: "Done!", message: "This list now has \(list.memberCount) members.", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "Cool", style: .default) { (result : UIAlertAction) -> Void in }
             alertController.addAction(okAction)
-            self.present(alertController, animated: true, completion: nil)
+            present(alertController, animated: true, completion: nil)
         }
     }
     
     func openSecretMenu(sender: Any?) {
-        if let list = self.list {
+        if let list = list {
             if list.uri.contains("Tw1tterEyes") {
                 // can't touch this.
                 return
@@ -433,7 +433,7 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
             let cancelAction = UIAlertAction(title: "What is this?", style: .destructive) { (result : UIAlertAction) -> Void in }
             alertController.addAction(okAction)
             alertController.addAction(cancelAction)
-            self.present(alertController, animated: true, completion: nil)
+            present(alertController, animated: true, completion: nil)
         }
     }
     
@@ -443,8 +443,8 @@ class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
                 self.navigationTitleUILabel.alpha = 0.0
                 self.navigationItem.rightBarButtonItems?[1].customView?.alpha = 0.0
             }
-        } else if self.profileCellInView && !self.showSorryCell {
-            let alpha = max(0, min(1, (self.profileTableView.contentOffset.y - 30) / 110))
+        } else if profileCellInView && !showSorryCell {
+            let alpha = max(0, min(1, (profileTableView.contentOffset.y - 30) / 110))
             DispatchQueue.main.async {
                 self.navigationTitleUILabel.alpha = alpha
                 self.navigationItem.rightBarButtonItems?[1].customView?.alpha = alpha
@@ -465,30 +465,30 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             profileCell.profileImageButton.layer.cornerRadius = 5
             profileCell.profileImageButton.clipsToBounds = true
             profileCell.profileImageButton.imageView?.contentMode = .scaleAspectFill
-            profileCell.profileImageButton.addTarget(self, action: #selector(self.openTwitterProfile(sender:)), for: .touchUpInside)
+            profileCell.profileImageButton.addTarget(self, action: #selector(openTwitterProfile(sender:)), for: .touchUpInside)
             profileCell.nameButton.setTitle(user.name, for: .normal)
-            profileCell.nameButton.addTarget(self, action: #selector(self.openTwitterProfile(sender:)), for: .touchUpInside)
+            profileCell.nameButton.addTarget(self, action: #selector(openTwitterProfile(sender:)), for: .touchUpInside)
             profileCell.screenNameLabel.text = "@\(user.screenName)"
             profileCell.isVerifiedImageView.isHidden = !user.isVerified
             profileCell.descriptionLabel.text = user.userDescription
             profileCell.whatNameSeesLabel.text = "What \(user.name) sees..."
             profileCell.followingLabel.text = abbreviateNumber(num: user.followingCount)
-            if self.showSorryCell {
+            if showSorryCell {
                 profileCell.favoriteButton.isHidden = true
             } else {
                 profileCell.favoriteButton.setImage(getFavoriteButtonUIImage(), for: .normal)
-                profileCell.favoriteButton.addTarget(self, action: #selector(self.toggleFavoriteProfileCellButton(sender:)), for: .touchUpInside)
+                profileCell.favoriteButton.addTarget(self, action: #selector(toggleFavoriteProfileCellButton(sender:)), for: .touchUpInside)
             }
             
-            let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.openSecretMenu(sender:)))
+            let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(openSecretMenu(sender:)))
             profileCell.secretButton.addGestureRecognizer(longPressGestureRecognizer)
             
             return profileCell
-        } else if self.showSpinnerCell {
+        } else if showSpinnerCell {
             let spinnerCell = tableView.dequeueReusableCell(withIdentifier: "spinnerCell", for: indexPath) as UITableViewCell
             spinnerCell.separatorInset = UIEdgeInsetsMake(0, 0, 0, tableView.bounds.width);
             return spinnerCell
-        } else if self.showSorryCell {
+        } else if showSorryCell {
             if (self.user == nil && indexPath.row == 0) || (self.user != nil && indexPath.row == 1) {
                 let sorryCell = tableView.dequeueReusableCell(withIdentifier: "sorryCell", for: indexPath) as UITableViewCell
                 return sorryCell
@@ -497,7 +497,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 fatalError("The dequeued cell is not an instance of UserTableViewCell.")
             }
             let userIndex = indexPath.row - (self.user == nil ? 1 : 2)
-            let user = self.usersToShowWhenErrorOccurs[userIndex]
+            let user = usersToShowWhenErrorOccurs[userIndex]
             userCell.configureWith(user)
             return userCell
             
@@ -506,7 +506,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 fatalError("The dequeued cell is not an instance of TWTRTweetTableViewCell.")
             }
             
-            tweetCell.configure(with: self.tweets[indexPath.row - 1])
+            tweetCell.configure(with: tweets[indexPath.row - 1])
             tweetCell.tweetView.showBorder = false
             tweetCell.tweetView.delegate = self
             return tweetCell
@@ -514,22 +514,22 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (self.user != nil ? 1 : 0) + self.tweets.count + (self.showSorryCell ? 1 : 0) + (self.showSpinnerCell ? 1 : 0) + self.usersToShowWhenErrorOccurs.count
+        return (user != nil ? 1 : 0) + tweets.count + (showSorryCell ? 1 : 0) + (showSpinnerCell ? 1 : 0) + usersToShowWhenErrorOccurs.count
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 && self.user != nil {
-            self.profileCellInView = true
+        if indexPath.row == 0 && user != nil {
+            profileCellInView = true
         }
-        if indexPath.row == self.tweets.count - 1 {
+        if indexPath.row == tweets.count - 1 {
             firebase.logEvent("profile_load_more_tweets")
-            self.retrieveAndRenderListTweets()
+            retrieveAndRenderListTweets()
         }
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 && self.user != nil {
-            self.profileCellInView = false
+        if indexPath.row == 0 && user != nil {
+            profileCellInView = false
         }
     }
     
@@ -540,36 +540,36 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         }
         if userCell.isKind(of: UserTableViewCell.self) {
             
-            let userIndex = indexPath.row - (self.user == nil ? 1 : 2)
+            let userIndex = indexPath.row - (user == nil ? 1 : 2)
             firebase.logEvent("profile_click_user_when_error_index_\(userIndex)")
             
-            let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "profileViewController") as! ProfileViewController
-            profileViewController.user = self.usersToShowWhenErrorOccurs[userIndex]
+            let profileViewController = storyboard?.instantiateViewController(withIdentifier: "profileViewController") as! ProfileViewController
+            profileViewController.user = usersToShowWhenErrorOccurs[userIndex]
             
-            self.navigationController?.pushViewController(profileViewController, animated: true)
+            navigationController?.pushViewController(profileViewController, animated: true)
         }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.setNavigationBarItemsAlpha()
+        setNavigationBarItemsAlpha()
     }
 }
 
 extension ProfileViewController: TWTRTweetViewDelegate {
     func tweetView(_ tweetView: TWTRTweetView, didTap tweet: TWTRTweet) {
         firebase.logEvent("profile_tweet_click")
-        self.openUrlInModal(tweet.permalink)
+        openUrlInModal(tweet.permalink)
     }
     
     func tweetView(_ tweetView: TWTRTweetView, didTapProfileImageFor user: TWTRUser) {
         firebase.logEvent("profile_tweet_profile_image_click")
-        let profileViewController = self.storyboard?.instantiateViewController(withIdentifier: "profileViewController") as! ProfileViewController
+        let profileViewController = storyboard?.instantiateViewController(withIdentifier: "profileViewController") as! ProfileViewController
         profileViewController.userID = user.userID
-        self.navigationController?.pushViewController(profileViewController, animated: true)
+        navigationController?.pushViewController(profileViewController, animated: true)
     }
     
     func tweetView(_ tweetView: TWTRTweetView, didTap url: URL) {
         firebase.logEvent("profile_tweet_url_click")
-        self.openUrlInModal(url)
+        openUrlInModal(url)
     }
 }

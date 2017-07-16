@@ -51,35 +51,35 @@ class SearchViewController: UIViewController, Logoutable, UITextFieldDelegate, U
         super.viewDidLoad()
         
         if globals.launchCount == 1 {
-            self.searchTextField.becomeFirstResponder()
+            searchTextField.becomeFirstResponder()
         }
-        self.searchTextField.placeholder = self.searchTextPlaceholders[Int(arc4random()) % self.searchTextPlaceholders.count]
-        self.suggestionsForYouLabelHeightConstraint.constant = 0
+        searchTextField.placeholder = searchTextPlaceholders[Int(arc4random()) % searchTextPlaceholders.count]
+        suggestionsForYouLabelHeightConstraint.constant = 0
         
-        self.searchTextField.delegate = self
-        self.usersTableView.dataSource = self
-        self.usersTableScrollView.delegate = self
-        self.usersTableScrollView.keyboardDismissMode = .onDrag
+        searchTextField.delegate = self
+        usersTableView.dataSource = self
+        usersTableScrollView.delegate = self
+        usersTableScrollView.keyboardDismissMode = .onDrag
         
-        self.usersTableView.tableFooterView = UIView(frame: CGRect.zero)
+        usersTableView.tableFooterView = UIView(frame: CGRect.zero)
         // dynamic cell height based on inner content
-        self.usersTableView.rowHeight = UITableViewAutomaticDimension
-        self.usersTableView.estimatedRowHeight = 70
+        usersTableView.rowHeight = UITableViewAutomaticDimension
+        usersTableView.estimatedRowHeight = 70
 
         let logoutButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         logoutButton.setImage(UIImage(named: "exit.png"), for: .normal)
-        logoutButton.addTarget(self, action: #selector(self.clickedLogoutButton(sender:)), for: .touchUpInside)
+        logoutButton.addTarget(self, action: #selector(clickedLogoutButton(sender:)), for: .touchUpInside)
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
         negativeSpacer.width = -8;
-        self.navigationItem.rightBarButtonItems = [negativeSpacer, UIBarButtonItem(customView: logoutButton)]
+        navigationItem.rightBarButtonItems = [negativeSpacer, UIBarButtonItem(customView: logoutButton)]
         
         // Observe Results Notifications
-        notificationToken = self.cachedLists.addNotificationBlock { (changes: RealmCollectionChange) in }
+        notificationToken = cachedLists.addNotificationBlock { (changes: RealmCollectionChange) in }
 
         // Retrieve updated lists from Twitter
         let getListsEndpoint = "https://api.twitter.com/1.1/lists/ownerships.json?count=1000"
-        let request = self.client.urlRequest(withMethod: "GET", url: getListsEndpoint, parameters: nil, error: &self.clientError)
-        self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
+        let request = client.urlRequest(withMethod: "GET", url: getListsEndpoint, parameters: nil, error: &clientError)
+        client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
             guard let data = data else {
                 print("Error: \(connectionError.debugDescription)")
                 if connectionError!._code == 89 {
@@ -141,24 +141,24 @@ class SearchViewController: UIViewController, Logoutable, UITextFieldDelegate, U
     func showSuggestedUsers() {
         // dedup suggested users
         var duplicateUserIds = Set<String>()
-        let dedupedSuggestedUsers = self.suggestedUsers.flatMap { (user) -> TWTRUserCustom? in
+        let dedupedSuggestedUsers = suggestedUsers.flatMap { (user) -> TWTRUserCustom? in
             guard !duplicateUserIds.contains(user.idStr) else { return nil }
             duplicateUserIds.insert(user.idStr)
             return user
         }
-        self.suggestedUsers = Array(dedupedSuggestedUsers[0..<min(dedupedSuggestedUsers.count, self.maxSuggestedUsersCount)])
+        suggestedUsers = Array(dedupedSuggestedUsers[0..<min(dedupedSuggestedUsers.count, maxSuggestedUsersCount)])
         
-        self.usersToShow = self.suggestedUsers
-        self.showingSuggestedUsers = true
-        self.suggestionsForYouLabelHeightConstraint.constant = 15
+        usersToShow = suggestedUsers
+        showingSuggestedUsers = true
+        suggestionsForYouLabelHeightConstraint.constant = 15
     }
     
     func retrieveAndShowSuggestedUsers() {
-        if self.followingUsers.isEmpty {
+        if followingUsers.isEmpty {
             let usersFollowingEndpoint = "https://api.twitter.com/1.1/friends/list.json?count=200"
-            let request = self.client.urlRequest(withMethod: "GET", url: usersFollowingEndpoint, parameters: nil, error: &self.clientError)
+            let request = client.urlRequest(withMethod: "GET", url: usersFollowingEndpoint, parameters: nil, error: &clientError)
             
-            self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
+            client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
                 guard let data = data else {
                     print("Error: \(connectionError.debugDescription)")
                     firebase.logEvent("twitter_error_friends_list")
@@ -250,31 +250,31 @@ class SearchViewController: UIViewController, Logoutable, UITextFieldDelegate, U
                 }
             }
         } else {
-            self.suggestedUsers = self.cachedLists
+            suggestedUsers = cachedLists
                 .filter { $0.user != nil && $0.memberCount > 0}
                 .map { $0.user! }
-                + self.followingUsers
-            self.showSuggestedUsers()
+                + followingUsers
+            showSuggestedUsers()
         }
     }
 
     func scrollToFirstRow() {
-        if self.usersToShow.count > 0 {
+        if usersToShow.count > 0 {
             let indexPath = IndexPath(row: 0, section: 0)
-            self.usersTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            usersTableView.scrollToRow(at: indexPath, at: .top, animated: true)
         }
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
-        self.urlEncodedCurrentText = (currentText?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))!
-        if self.urlEncodedCurrentText.isEmpty {
-            self.retrieveAndShowSuggestedUsers()
+        urlEncodedCurrentText = (currentText?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))!
+        if urlEncodedCurrentText.isEmpty {
+            retrieveAndShowSuggestedUsers()
         } else {
-            let usersSearchEndpoint = "https://api.twitter.com/1.1/users/search.json?q=\(self.urlEncodedCurrentText)"
-            let request = self.client.urlRequest(withMethod: "GET", url: usersSearchEndpoint, parameters: nil, error: &self.clientError)
+            let usersSearchEndpoint = "https://api.twitter.com/1.1/users/search.json?q=\(urlEncodedCurrentText)"
+            let request = client.urlRequest(withMethod: "GET", url: usersSearchEndpoint, parameters: nil, error: &clientError)
             
-            self.client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
+            client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
                 guard let data = data else {
                     print("Error: \(connectionError.debugDescription)")
                     firebase.logEvent("twitter_error_users_search")
@@ -299,13 +299,13 @@ class SearchViewController: UIViewController, Logoutable, UITextFieldDelegate, U
                 }
             }
         }
-        self.scrollToFirstRow()
+        scrollToFirstRow()
         return true
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        self.retrieveAndShowSuggestedUsers()
-        self.scrollToFirstRow()
+        retrieveAndShowSuggestedUsers()
+        scrollToFirstRow()
         return true
     }
     
@@ -313,13 +313,13 @@ class SearchViewController: UIViewController, Logoutable, UITextFieldDelegate, U
         guard let userCell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as? UserTableViewCell else {
             fatalError("The dequeued cell is not an instance of UserTableViewCell.")
         }
-        let user = self.usersToShow[indexPath.row]
+        let user = usersToShow[indexPath.row]
         userCell.configureWith(user)
         return userCell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.usersToShow.count
+        return usersToShow.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
@@ -334,7 +334,7 @@ class SearchViewController: UIViewController, Logoutable, UITextFieldDelegate, U
         let cancelAction = UIAlertAction(title: "No", style: .cancel) { (result : UIAlertAction) -> Void in }
         alertController.addAction(cancelAction)
         alertController.addAction(logoutAction)
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -355,12 +355,12 @@ class SearchViewController: UIViewController, Logoutable, UITextFieldDelegate, U
                     fatalError("The selected cell is not being displayed by the table")
                 }
                     
-                profileViewController.user = self.usersToShow[indexPath.row]
+                profileViewController.user = usersToShow[indexPath.row]
                 let listName = "\(Constants.listPrefix)\(profileViewController.user!.screenName)"
                 
-                var listInDB = self.cachedLists.filter { $0.name == listName }.first
+                var listInDB = cachedLists.filter { $0.name == listName }.first
                 if listInDB == nil {
-                    if let publicList = self.publicLists.filter({ $0.name == listName }).first {
+                    if let publicList = publicLists.filter({ $0.name == listName }).first {
                         publicList.user = profileViewController.user
                         if let ownerId = Twitter.sharedInstance().sessionStore.session()?.userID {
                             publicList.ownerId = ownerId
@@ -375,7 +375,7 @@ class SearchViewController: UIViewController, Logoutable, UITextFieldDelegate, U
                 
                 profileViewController.list = listInDB
                 
-                if self.showingSuggestedUsers {
+                if showingSuggestedUsers {
                     firebase.logEvent("search_click_suggested_index_\(indexPath.row)")
                 }
             case "LogoutSegue":

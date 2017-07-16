@@ -23,13 +23,13 @@ class FavoritesTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.tableFooterView = UIView(frame: CGRect.zero)
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
         // dynamic cell height based on inner content
-        self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 70
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 70
 
         // Observe Results Notifications
-        notificationToken = self.favorites.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
+        notificationToken = favorites.addNotificationBlock { [weak self] (changes: RealmCollectionChange) in
             guard let tableView = self?.tableView else { return }
             switch changes {
             case .initial:
@@ -54,8 +54,8 @@ class FavoritesTableViewController: UITableViewController {
             }
         }
         
-        if self.favorites.count == 0 {
-            self.tabBarController?.selectedIndex = 1 // navigate to search tab
+        if favorites.count == 0 {
+            tabBarController?.selectedIndex = 1 // navigate to search tab
         }
     }
     
@@ -63,7 +63,7 @@ class FavoritesTableViewController: UITableViewController {
         guard let userCell = tableView.dequeueReusableCell(withIdentifier: "favoriteUserCell", for: indexPath) as? UserTableViewCell else {
             fatalError("The dequeued cell is not an instance of UserTableViewCell.")
         }
-        guard let user = self.favorites[indexPath.row].list?.user else {
+        guard let user = favorites[indexPath.row].list?.user else {
             fatalError("No user found in Favorite instance")
         }
         userCell.configureWith(user)
@@ -71,7 +71,7 @@ class FavoritesTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.favorites.count
+        return favorites.count
     }
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -82,7 +82,7 @@ class FavoritesTableViewController: UITableViewController {
         if editingStyle == .delete {
             let realm = try! Realm()
             try! realm.write() {
-                let favorite = self.favorites[indexPath.row]
+                let favorite = favorites[indexPath.row]
                 let user = favorite.list?.user
                 realm.delete(favorite)
 
@@ -105,11 +105,11 @@ class FavoritesTableViewController: UITableViewController {
                 fatalError("Unexpected sender: \(sender.debugDescription)")
             }
             
-            guard let indexPath = self.tableView.indexPath(for: selectedUserCell) else {
+            guard let indexPath = tableView.indexPath(for: selectedUserCell) else {
                 fatalError("The selected cell is not being displayed by the table")
             }
             
-            let favorite = self.favorites[indexPath.row]
+            let favorite = favorites[indexPath.row]
             profileViewController.list = favorite.list
             
             firebase.logEvent("favorites_click_favorite")
