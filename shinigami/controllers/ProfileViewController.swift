@@ -20,9 +20,9 @@ class ProfileViewController: UIViewController {
     var favorite: Favorite?
     private let client = TWTRAPIClient.withCurrentUser()
     private var clientError: NSError?
-    internal var showSpinnerCell = true
-    internal var showSorryCell = false
-    internal var tweets: [TWTRTweet] = [] {
+    fileprivate var showSpinnerCell = true
+    fileprivate var showSorryCell = false
+    fileprivate var tweets: [TWTRTweet] = [] {
         didSet {
             DispatchQueue.main.async {
                 self.showSpinnerCell = false
@@ -30,7 +30,7 @@ class ProfileViewController: UIViewController {
             }
         }
     }
-    internal var usersToShowWhenErrorOccurs: [TWTRUserCustom] = [] {
+    fileprivate var usersToShowWhenErrorOccurs: [TWTRUserCustom] = [] {
         didSet {
             DispatchQueue.main.async {
                 self.profileTableView.reloadData()

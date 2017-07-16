@@ -21,12 +21,12 @@ class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
     
     private let searchTextPlaceholders = ["elon musk", "donald trump", "michelle obama", "katy perry", "lebron james"]
     
-    internal let client = TWTRAPIClient.withCurrentUser()
-    internal var clientError: NSError?
+    fileprivate let client = TWTRAPIClient.withCurrentUser()
+    fileprivate var clientError: NSError?
     private var followingUsers: [TWTRUserCustom] = []
     private var suggestedUsers: [TWTRUserCustom] = []
     private let maxSuggestedUsersCount = 100
-    internal var usersToShow: [TWTRUserCustom] = [] {
+    fileprivate var usersToShow: [TWTRUserCustom] = [] {
         didSet {
             DispatchQueue.main.async {
                 self.searchActivityIndicator.stopAnimating()
@@ -34,8 +34,8 @@ class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
             }
         }
     }
-    internal var urlEncodedCurrentText = ""
-    internal var showingSuggestedUsers = false
+    fileprivate var urlEncodedCurrentText = ""
+    fileprivate var showingSuggestedUsers = false
     private var publicLists: [TWTRList] = []
     
     let cachedLists: Results<TWTRList> = {
