@@ -12,7 +12,7 @@ import SwiftyJSON
 import RealmSwift
 import SafariServices
 
-class ProfileViewController: UIViewController, SFSafariViewControllerDelegate {
+class ProfileViewController: UIViewController {
     
     var userID: String? // used only when coming from clicking on tweet's profile pic
     var list: TWTRList?

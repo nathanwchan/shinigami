@@ -11,7 +11,7 @@ import TwitterKit
 import SwiftyJSON
 import RealmSwift
 
-class SearchViewController: UIViewController, Logoutable, UITextFieldDelegate, UITableViewDataSource, UIScrollViewDelegate {
+class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
 
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var suggestionsForYouLabelHeightConstraint: NSLayoutConstraint!
@@ -21,12 +21,12 @@ class SearchViewController: UIViewController, Logoutable, UITextFieldDelegate, U
     
     private let searchTextPlaceholders = ["elon musk", "donald trump", "michelle obama", "katy perry", "lebron james"]
     
-    private let client = TWTRAPIClient.withCurrentUser()
-    private var clientError: NSError?
+    internal let client = TWTRAPIClient.withCurrentUser()
+    internal var clientError: NSError?
     private var followingUsers: [TWTRUserCustom] = []
     private var suggestedUsers: [TWTRUserCustom] = []
     private let maxSuggestedUsersCount = 100
-    private var usersToShow: [TWTRUserCustom] = [] {
+    internal var usersToShow: [TWTRUserCustom] = [] {
         didSet {
             DispatchQueue.main.async {
                 self.searchActivityIndicator.stopAnimating()
@@ -34,8 +34,8 @@ class SearchViewController: UIViewController, Logoutable, UITextFieldDelegate, U
             }
         }
     }
-    private var urlEncodedCurrentText = ""
-    private var showingSuggestedUsers = false
+    internal var urlEncodedCurrentText = ""
+    internal var showingSuggestedUsers = false
     private var publicLists: [TWTRList] = []
     
     let cachedLists: Results<TWTRList> = {
@@ -257,74 +257,6 @@ class SearchViewController: UIViewController, Logoutable, UITextFieldDelegate, U
             showSuggestedUsers()
         }
     }
-
-    func scrollToFirstRow() {
-        if usersToShow.count > 0 {
-            let indexPath = IndexPath(row: 0, section: 0)
-            usersTableView.scrollToRow(at: indexPath, at: .top, animated: true)
-        }
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let currentText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
-        urlEncodedCurrentText = (currentText?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))!
-        if urlEncodedCurrentText.isEmpty {
-            retrieveAndShowSuggestedUsers()
-        } else {
-            let usersSearchEndpoint = "https://api.twitter.com/1.1/users/search.json?q=\(urlEncodedCurrentText)"
-            let request = client.urlRequest(withMethod: "GET", url: usersSearchEndpoint, parameters: nil, error: &clientError)
-            
-            client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
-                guard let data = data else {
-                    print("Error: \(connectionError.debugDescription)")
-                    firebase.logEvent("twitter_error_users_search")
-                    return
-                }
-                guard let url = response?.url,
-                      let queryItem = URLComponents(string: url.absoluteString)?.queryItems?.filter({$0.name == "q"}).first
-                else {
-                    print("Error in response")
-                    return
-                }
-                
-                // to prevent race condition, ensure only current text's results are displayed
-                if self.urlEncodedCurrentText == (queryItem.value?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))! {
-                    let jsonData = JSON(data: data)
-                    let searchResultsUsers = jsonData.arrayValue.map { TWTRUserCustom.init(json: $0)! }
-                    if searchResultsUsers.count > 0 {
-                        self.usersToShow = searchResultsUsers
-                        self.showingSuggestedUsers = false
-                        self.suggestionsForYouLabelHeightConstraint.constant = 0
-                    }
-                }
-            }
-        }
-        scrollToFirstRow()
-        return true
-    }
-    
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        retrieveAndShowSuggestedUsers()
-        scrollToFirstRow()
-        return true
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let userCell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as? UserTableViewCell else {
-            fatalError("The dequeued cell is not an instance of UserTableViewCell.")
-        }
-        let user = usersToShow[indexPath.row]
-        userCell.configureWith(user)
-        return userCell
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return usersToShow.count
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
     
     func clickedLogoutButton(sender: Any?) {
         let alertController = UIAlertController(title: "Logout?", message: "Are you sure you want to logout of your Twitter account?", preferredStyle: .alert)
@@ -383,5 +315,77 @@ class SearchViewController: UIViewController, Logoutable, UITextFieldDelegate, U
             default:
                 fatalError("Unexpected Segue Identifier; \(segue.identifier ?? "unknown")")
         }
+    }
+}
+
+extension SearchViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
+        urlEncodedCurrentText = (currentText?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))!
+        if urlEncodedCurrentText.isEmpty {
+            retrieveAndShowSuggestedUsers()
+        } else {
+            let usersSearchEndpoint = "https://api.twitter.com/1.1/users/search.json?q=\(urlEncodedCurrentText)"
+            let request = client.urlRequest(withMethod: "GET", url: usersSearchEndpoint, parameters: nil, error: &clientError)
+            
+            client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
+                guard let data = data else {
+                    print("Error: \(connectionError.debugDescription)")
+                    firebase.logEvent("twitter_error_users_search")
+                    return
+                }
+                guard let url = response?.url,
+                    let queryItem = URLComponents(string: url.absoluteString)?.queryItems?.filter({$0.name == "q"}).first
+                    else {
+                        print("Error in response")
+                        return
+                }
+                
+                // to prevent race condition, ensure only current text's results are displayed
+                if self.urlEncodedCurrentText == (queryItem.value?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))! {
+                    let jsonData = JSON(data: data)
+                    let searchResultsUsers = jsonData.arrayValue.map { TWTRUserCustom.init(json: $0)! }
+                    if searchResultsUsers.count > 0 {
+                        self.usersToShow = searchResultsUsers
+                        self.showingSuggestedUsers = false
+                        self.suggestionsForYouLabelHeightConstraint.constant = 0
+                    }
+                }
+            }
+        }
+        scrollToFirstRow()
+        return true
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        retrieveAndShowSuggestedUsers()
+        scrollToFirstRow()
+        return true
+    }
+    
+    func scrollToFirstRow() {
+        if usersToShow.count > 0 {
+            let indexPath = IndexPath(row: 0, section: 0)
+            usersTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        }
+    }
+}
+
+extension SearchViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let userCell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as? UserTableViewCell else {
+            fatalError("The dequeued cell is not an instance of UserTableViewCell.")
+        }
+        let user = usersToShow[indexPath.row]
+        userCell.configureWith(user)
+        return userCell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return usersToShow.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
