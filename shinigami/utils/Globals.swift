@@ -8,7 +8,8 @@
 
 import Foundation
 
-struct Constants {
+enum Constants {
+    // using enum so that it can't accidentally be instantiated and works purely as a namespace.
     static let listPrefix = "Tweetsee_"
     static let launchCountUserDefaultsKey = "launchCount"
     static let lastStoreReviewLaunchCountUserDefaultsKey = "lastStoreReviewLaunchCount"
