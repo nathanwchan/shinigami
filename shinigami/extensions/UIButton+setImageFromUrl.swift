@@ -14,8 +14,7 @@ extension UIButton {
             print("Couldn't create URL from \(urlString)")
             return
         }
-        let theTask = URLSession.shared.dataTask(with: url) {
-            data, response, error in
+        let theTask = URLSession.shared.dataTask(with: url) { data, response, _ in
             if let response = data {
                 DispatchQueue.main.async {
                     self.setImage(UIImage(data: response), for: state)

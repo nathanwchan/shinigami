@@ -23,4 +23,3 @@ struct Firebase {
 }
 
 let firebase = Firebase()
-

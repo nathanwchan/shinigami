@@ -18,7 +18,7 @@ class FavoritesTableViewController: UITableViewController {
         let predicate = NSPredicate(format: "ownerId = '\(ownerId)'")
         return realm.objects(Favorite.self).filter(predicate).sorted(byKeyPath: "createdAt", ascending: false)
     }()
-    var notificationToken: NotificationToken? = nil
+    var notificationToken: NotificationToken?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +54,7 @@ class FavoritesTableViewController: UITableViewController {
             }
         }
         
-        if favorites.count == 0 {
+        if favorites.isEmpty {
             tabBarController?.selectedIndex = 1 // navigate to search tab
         }
     }
@@ -81,7 +81,7 @@ class FavoritesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let realm = try! Realm()
-            try! realm.write() {
+            try! realm.write {
                 let favorite = favorites[indexPath.row]
                 let user = favorite.list?.user
                 realm.delete(favorite)

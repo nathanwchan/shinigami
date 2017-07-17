@@ -45,7 +45,7 @@ class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
             .filter("ownerId = '\(ownerId)'")
             .sorted(byKeyPath: "createdAt", ascending: false)
     }()
-    var notificationToken: NotificationToken? = nil
+    var notificationToken: NotificationToken?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,11 +70,11 @@ class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
         logoutButton.setImage(UIImage(named: "exit.png"), for: .normal)
         logoutButton.addTarget(self, action: #selector(clickedLogoutButton(sender:)), for: .touchUpInside)
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-        negativeSpacer.width = -8;
+        negativeSpacer.width = -8
         navigationItem.rightBarButtonItems = [negativeSpacer, UIBarButtonItem(customView: logoutButton)]
         
         // Observe Results Notifications
-        notificationToken = cachedLists.addNotificationBlock { (changes: RealmCollectionChange) in }
+        notificationToken = cachedLists.addNotificationBlock { (_: RealmCollectionChange) in }
 
         // Retrieve updated lists from Twitter
         let getListsEndpoint = "https://api.twitter.com/1.1/lists/ownerships.json?count=1000"
@@ -126,7 +126,7 @@ class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
                     }
                     
                     let realm = try! Realm()
-                    try! realm.write() {
+                    try! realm.write {
                         for userTEListToCache in userTEListsToCache {
                             realm.create(TWTRList.self, value: userTEListToCache, update: true)
                         }
@@ -187,7 +187,7 @@ class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
                         "screen_name": usersFromPublicLists.joined(separator: ",")
                     ]
                     let request = self.client.urlRequest(withMethod: "GET", url: getUsersEndpoint, parameters: params, error: &self.clientError)
-                    self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
+                    self.client.sendTwitterRequest(request) { (_, data, _) -> Void in
                         var publicListsUsers: [TWTRUserCustom] = []
                         if let data = data {
                             let jsonData = JSON(data: data)
@@ -213,7 +213,7 @@ class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
                                     if let existingList = self.cachedLists.filter({ $0.name == publicList.name && $0.idStr != publicList.idStr }).first {
                                         // user has already visited this user (stored in DB), but it is not a public list (maybe this is a newly created public list)
                                         if let existingRealmList = realm.object(ofType: TWTRList.self, forPrimaryKey: existingList.idStr) {
-                                            try! realm.write() {
+                                            try! realm.write {
                                                 realm.delete(existingRealmList)
                                             }
                                         }
@@ -226,7 +226,7 @@ class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
                             }
                             self.publicLists = publicListsWithUsersToCache
                             
-                            try! realm.write() {
+                            try! realm.write {
                                 for publicList in self.publicLists {
                                     realm.create(TWTRList.self, value: publicList, update: true)
                                 }
@@ -234,11 +234,11 @@ class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
                         }
                         
                         // sort to move groups of users with less following users to the top
-                        var idealFollowingTWTRUsers = followingTWTRUsers.filter{$0.followingCount >= 10 && $0.followingCount < 200} + publicListsUsers
+                        var idealFollowingTWTRUsers = followingTWTRUsers.filter { $0.followingCount >= 10 && $0.followingCount < 200 } + publicListsUsers
                         idealFollowingTWTRUsers.shuffle()
                         followingTWTRUsers = idealFollowingTWTRUsers +
-                            followingTWTRUsers.filter{$0.followingCount >= 200 && $0.followingCount < 500} +
-                            followingTWTRUsers.filter{$0.followingCount >= 500}
+                            followingTWTRUsers.filter { $0.followingCount >= 200 && $0.followingCount < 500 } +
+                            followingTWTRUsers.filter { $0.followingCount >= 500 }
                         self.followingUsers = followingTWTRUsers
                         
                         self.suggestedUsers = self.cachedLists
@@ -260,10 +260,10 @@ class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
     
     func clickedLogoutButton(sender: Any?) {
         let alertController = UIAlertController(title: "Logout?", message: "Are you sure you want to logout of your Twitter account?", preferredStyle: .alert)
-        let logoutAction = UIAlertAction(title: "Yes", style: .default) { (result : UIAlertAction) -> Void in
+        let logoutAction = UIAlertAction(title: "Yes", style: .default) { (_: UIAlertAction) -> Void in
             self.logout()
         }
-        let cancelAction = UIAlertAction(title: "No", style: .cancel) { (result : UIAlertAction) -> Void in }
+        let cancelAction = UIAlertAction(title: "No", style: .cancel) { (_: UIAlertAction) -> Void in }
         alertController.addAction(cancelAction)
         alertController.addAction(logoutAction)
         present(alertController, animated: true, completion: nil)
@@ -298,7 +298,7 @@ class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
                             publicList.ownerId = ownerId
                         }
                         let realm = try! Realm()
-                        try! realm.write() {
+                        try! realm.write {
                             realm.create(TWTRList.self, value: publicList, update: true)
                         }
                         listInDB = publicList
@@ -345,7 +345,7 @@ extension SearchViewController: UITextFieldDelegate {
                 if self.urlEncodedCurrentText == (queryItem.value?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))! {
                     let jsonData = JSON(data: data)
                     let searchResultsUsers = jsonData.arrayValue.map { TWTRUserCustom.init(json: $0)! }
-                    if searchResultsUsers.count > 0 {
+                    if !searchResultsUsers.isEmpty {
                         self.usersToShow = searchResultsUsers
                         self.showingSuggestedUsers = false
                         self.suggestionsForYouLabelHeightConstraint.constant = 0
@@ -364,7 +364,7 @@ extension SearchViewController: UITextFieldDelegate {
     }
     
     func scrollToFirstRow() {
-        if usersToShow.count > 0 {
+        if !usersToShow.isEmpty {
             let indexPath = IndexPath(row: 0, section: 0)
             usersTableView.scrollToRow(at: indexPath, at: .top, animated: true)
         }

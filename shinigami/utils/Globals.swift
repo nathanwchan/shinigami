@@ -14,6 +14,10 @@ enum Constants {
     static let launchCountUserDefaultsKey = "launchCount"
     static let lastStoreReviewLaunchCountUserDefaultsKey = "lastStoreReviewLaunchCount"
     static let publicListsTwitterAccount = "Tw1tterEyes"
+    enum HeartFileNames: String {
+        case on = "heart-filled.png"
+        case off = "heart.png"
+    }
 }
 
 struct Globals {

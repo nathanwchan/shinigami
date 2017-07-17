@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     }
                 }
                 if (oldSchemaVersion < 6) {
-                    migration.enumerateObjects(ofType: TWTRList.className()) { oldObject, newObject in
+                    migration.enumerateObjects(ofType: TWTRList.className()) { _, newObject in
                         newObject!["ownerId"] = "0"
                     }
                 }
@@ -48,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Now that we've told Realm how to handle the schema change, opening the file
         // will automatically perform the migration
-        let _ = try! Realm()
+        _ = try! Realm()
         
         /* END REALM CONFIG */
         
@@ -86,4 +86,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 }
-

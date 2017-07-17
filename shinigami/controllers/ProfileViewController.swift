@@ -68,7 +68,7 @@ class ProfileViewController: UIViewController {
             // Delete list from Realm DB and Twitter
             if let listID = self.list?.idStr {
                 if let realmList = realm.object(ofType: TWTRList.self, forPrimaryKey: listID) {
-                    try! realm.write() {
+                    try! realm.write {
                         realm.delete(realmList)
                         self.list = nil
                     }
@@ -141,7 +141,7 @@ class ProfileViewController: UIViewController {
     
     func addOrDeleteFavoriteFromDB() {
         let realm = try! Realm()
-        try! realm.write() {
+        try! realm.write {
             if let favorite = self.favorite {
                 realm.delete(favorite)
                 self.favorite = nil
@@ -194,11 +194,7 @@ class ProfileViewController: UIViewController {
     }
     
     func getFavoriteButtonUIImage() -> UIImage {
-        enum HeartFileNames: String {
-            case on = "heart-filled.png"
-            case off = "heart.png"
-        }
-        let heartFileName = self.favorite != nil ? HeartFileNames.on.rawValue : HeartFileNames.off.rawValue
+        let heartFileName = self.favorite != nil ? Constants.HeartFileNames.on.rawValue : Constants.HeartFileNames.off.rawValue
         guard let image = UIImage(named: heartFileName) else {
             fatalError("heart image \(heartFileName) can't be found")
         }
@@ -221,7 +217,7 @@ class ProfileViewController: UIViewController {
         favoriteButton.setImage(getFavoriteButtonUIImage(), for: .normal)
         favoriteButton.addTarget(self, action: #selector(self.toggleFavoriteNavBarButton(sender:)), for: .touchUpInside)
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-        negativeSpacer.width = -11;
+        negativeSpacer.width = -11
         self.navigationItem.rightBarButtonItems = [negativeSpacer, UIBarButtonItem(customView: favoriteButton)]
         
         DispatchQueue.main.async {
@@ -242,7 +238,7 @@ class ProfileViewController: UIViewController {
         
         if let list = self.list {
             if list.ownerId == "0" {
-                try! realm.write() {
+                try! realm.write {
                     list.ownerId = ownerId
                     list.createdAt = Date()
                     realm.create(TWTRList.self, value: list, update: true)
@@ -284,7 +280,7 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    func populateList(for user: TWTRUserCustom, forceAll: Bool = false, with callback: @escaping () -> ()) {
+    func populateList(for user: TWTRUserCustom, forceAll: Bool = false, with callback: @escaping () -> Void) {
         guard let list = self.list else {
             return
         }
@@ -339,7 +335,7 @@ class ProfileViewController: UIViewController {
                     }
                     
                     let realm = try! Realm()
-                    try! realm.write() {
+                    try! realm.write {
                         realm.create(TWTRList.self, value: self.list!, update: true)
                     }
                 }
@@ -410,7 +406,7 @@ class ProfileViewController: UIViewController {
     func forcePopulateListSecretCallback() {
         if let list = self.list {
             let alertController = UIAlertController(title: "Done!", message: "This list now has \(list.memberCount) members.", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "Cool", style: .default) { (result : UIAlertAction) -> Void in }
+            let okAction = UIAlertAction(title: "Cool", style: .default) { (_: UIAlertAction) -> Void in }
             alertController.addAction(okAction)
             present(alertController, animated: true, completion: nil)
         }
@@ -425,12 +421,12 @@ class ProfileViewController: UIViewController {
             let ownerId = Twitter.sharedInstance().sessionStore.session()!.userID
             firebase.logEvent("secret_menu_opened_\(ownerId)")
             let alertController = UIAlertController(title: "Hi there!", message: "This list currently has \(list.memberCount) members.\nWould you like to force populate the list?", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "Do it", style: .default) { (result : UIAlertAction) -> Void in
+            let okAction = UIAlertAction(title: "Do it", style: .default) { (_: UIAlertAction) -> Void in
                 if let user = list.user {
                     self.populateList(for: user, forceAll: true, with: self.forcePopulateListSecretCallback)
                 }
             }
-            let cancelAction = UIAlertAction(title: "What is this?", style: .destructive) { (result : UIAlertAction) -> Void in }
+            let cancelAction = UIAlertAction(title: "What is this?", style: .destructive) { (_: UIAlertAction) -> Void in }
             alertController.addAction(okAction)
             alertController.addAction(cancelAction)
             present(alertController, animated: true, completion: nil)
@@ -486,7 +482,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             return profileCell
         } else if showSpinnerCell {
             let spinnerCell = tableView.dequeueReusableCell(withIdentifier: "spinnerCell", for: indexPath) as UITableViewCell
-            spinnerCell.separatorInset = UIEdgeInsetsMake(0, 0, 0, tableView.bounds.width);
+            spinnerCell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: tableView.bounds.width)
             return spinnerCell
         } else if showSorryCell {
             if (self.user == nil && indexPath.row == 0) || (self.user != nil && indexPath.row == 1) {
