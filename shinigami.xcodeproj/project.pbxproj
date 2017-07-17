@@ -320,6 +320,7 @@
 				D81002311ED49EDD00B4E34F /* Resources */,
 				8522C064B994A0CB8E7C55D0 /* [CP] Embed Pods Frameworks */,
 				F065FF51D47F4E4D29927945 /* [CP] Copy Pods Resources */,
+				D87B8AE31F1C46FD00237884 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -445,6 +446,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-shinigami/Pods-shinigami-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		D87B8AE31F1C46FD00237884 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which Pods/SwiftLint/swiftlint >/dev/null; then\n    Pods/SwiftLint/swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 		F065FF51D47F4E4D29927945 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;

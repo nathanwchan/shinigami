@@ -7,4 +7,5 @@ target 'shinigami' do
   pod 'SwiftyJSON'
   pod 'Firebase/Core'
   pod 'RealmSwift'
+  pod 'SwiftLint'
 end
