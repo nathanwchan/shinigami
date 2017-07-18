@@ -8,4 +8,5 @@ target 'shinigami' do
   pod 'Firebase/Core'
   pod 'RealmSwift'
   pod 'SwiftLint'
+  pod 'PromiseKit', '~> 4.0'
 end

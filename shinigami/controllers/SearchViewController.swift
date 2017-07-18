@@ -10,6 +10,7 @@ import UIKit
 import TwitterKit
 import SwiftyJSON
 import RealmSwift
+import PromiseKit
 
 class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
 
@@ -20,9 +21,7 @@ class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
     @IBOutlet weak var searchActivityIndicator: UIActivityIndicatorView!
     
     private let searchTextPlaceholders = ["elon musk", "donald trump", "michelle obama", "katy perry", "lebron james"]
-    
-    fileprivate let client = TWTRAPIClient.withCurrentUser()
-    fileprivate var clientError: NSError?
+
     private var followingUsers: [TWTRUserCustom] = []
     private var suggestedUsers: [TWTRUserCustom] = []
     private let maxSuggestedUsersCount = 100
@@ -77,45 +76,12 @@ class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
         notificationToken = cachedLists.addNotificationBlock { (_: RealmCollectionChange) in }
 
         // Retrieve updated lists from Twitter
-        let getListsEndpoint = "https://api.twitter.com/1.1/lists/ownerships.json?count=1000"
-        let request = client.urlRequest(withMethod: "GET", url: getListsEndpoint, parameters: nil, error: &clientError)
-        client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
-            guard let data = data else {
-                print("Error: \(connectionError.debugDescription)")
-                if connectionError!._code == 89 {
-                    // invalid or expired token
-                    firebase.logEvent("twitter_error_invalid_or_expired_token")
-                    self.logout()
-                } else {
-                    firebase.logEvent("twitter_error_lists_ownerships")
-                }
-                return
-            }
-            let jsonData = JSON(data: data)
-            var usersTELists = jsonData["lists"].arrayValue
-                .map { TWTRList(json: $0, user: nil)! }
-                .filter { $0.name.hasPrefix(Constants.listPrefix) && $0.memberCount > 0 }
-            usersTELists = Array(usersTELists[0..<min(20, usersTELists.count)])
-                
+        getLists().then { usersTELists -> Void in
             if usersTELists.isEmpty {
                 // User doesn't have existing TE lists
-                self.retrieveAndShowSuggestedUsers()
+                return
             } else {
-                let getUsersEndpoint = "https://api.twitter.com/1.1/users/lookup.json"
-                let usersFromTELists = usersTELists.map { String($0.name.characters.dropFirst(Constants.listPrefix.characters.count)) } // drop prefix from list name to get username
-                let params = [
-                    "screen_name": usersFromTELists.joined(separator: ",")
-                ]
-                let request = self.client.urlRequest(withMethod: "GET", url: getUsersEndpoint, parameters: params, error: &self.clientError)
-                self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
-                    guard let data = data else {
-                        print("Error: \(connectionError.debugDescription)")
-                        firebase.logEvent("twitter_error_users_lookup")
-                        return
-                    }
-                    let jsonData = JSON(data: data)
-                    let usersTEListsUsers = jsonData.arrayValue.map { TWTRUserCustom(json: $0)! }
-                    
+                getListsUsers(lists: usersTELists).then { usersTEListsUsers -> Void in
                     var userTEListsToCache: [TWTRList] = []
                     for userTEList in usersTELists {
                         let userScreenName = String(userTEList.name.characters.dropFirst(Constants.listPrefix.characters.count))
@@ -131,14 +97,24 @@ class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
                             realm.create(TWTRList.self, value: userTEListToCache, update: true)
                         }
                     }
-                    
-                    self.retrieveAndShowSuggestedUsers()
+                }.catch { error in
+                    print("Error: \(error)")
                 }
             }
+        }.always {
+            self.retrieveAndShowSuggestedUsers()
+        }.catch { error in
+            print("Error, logging out: \(error)")
+            self.logout()
         }
     }
     
     func showSuggestedUsers() {
+        suggestedUsers = cachedLists
+            .filter { $0.user != nil && $0.memberCount > 0}
+            .map { $0.user! }
+            + followingUsers
+        
         // dedup suggested users
         var duplicateUserIds = Set<String>()
         let dedupedSuggestedUsers = suggestedUsers.flatMap { (user) -> TWTRUserCustom? in
@@ -154,107 +130,69 @@ class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
     }
     
     func retrieveAndShowSuggestedUsers() {
-        if followingUsers.isEmpty {
-            let usersFollowingEndpoint = "https://api.twitter.com/1.1/friends/list.json?count=200"
-            let request = client.urlRequest(withMethod: "GET", url: usersFollowingEndpoint, parameters: nil, error: &clientError)
+        if !suggestedUsers.isEmpty {
+            showSuggestedUsers()
+            return
+        }
+        
+        getFriends().then { followingTWTRUsers -> Promise<[TWTRList]> in
+            self.followingUsers = followingTWTRUsers
+            return getPublicLists()
+        }.then { publicLists -> Promise<[TWTRUserCustom]> in
+            self.publicLists = publicLists
+            return getListsUsers(lists: publicLists)
+        }.then { publicListsUsers -> Void in
+            let realm = try! Realm()
+            let favorites = realm.objects(Favorite.self)
             
-            client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
-                guard let data = data else {
-                    print("Error: \(connectionError.debugDescription)")
-                    firebase.logEvent("twitter_error_friends_list")
-                    return
+            var publicListsWithUsersToCache: [TWTRList] = []
+            
+            func queueUpForStorage(_ publicList: TWTRList) {
+                let userScreenName = String(publicList.name.characters.dropFirst(Constants.listPrefix.characters.count))
+                if let user = publicListsUsers.filter({ $0.screenName == userScreenName }).first {
+                    publicList.user = user
+                    publicList.ownerId = "0"
+                    publicListsWithUsersToCache.append(publicList)
                 }
-                let jsonData = JSON(data: data)
-                var followingTWTRUsers = jsonData["users"].arrayValue.map { TWTRUserCustom(json: $0)! }
-                
-                let publicListsEndpoint = "https://api.twitter.com/1.1/lists/list.json?screen_name=\(Constants.publicListsTwitterAccount)"
-                let request = self.client.urlRequest(withMethod: "GET", url: publicListsEndpoint, parameters: nil, error: &self.clientError)
-                
-                self.client.sendTwitterRequest(request) { (_, data, connectionError) -> Void in
-                    guard let data = data else {
-                        print("Error: \(connectionError.debugDescription)")
-                        firebase.logEvent("twitter_error_lists_list")
-                        return
-                    }
-                    let jsonData = JSON(data: data)
-                    self.publicLists = jsonData.arrayValue
-                        .map { TWTRList(json: $0, user: nil)! }
-                        .filter { $0.name.hasPrefix(Constants.listPrefix) && $0.memberCount > 0 }
-                    
-                    let getUsersEndpoint = "https://api.twitter.com/1.1/users/lookup.json"
-                    let usersFromPublicLists = self.publicLists.map { String($0.name.characters.dropFirst(Constants.listPrefix.characters.count)) } // drop prefix from list name to get username
-                    let params = [
-                        "screen_name": usersFromPublicLists.joined(separator: ",")
-                    ]
-                    let request = self.client.urlRequest(withMethod: "GET", url: getUsersEndpoint, parameters: params, error: &self.clientError)
-                    self.client.sendTwitterRequest(request) { (_, data, _) -> Void in
-                        var publicListsUsers: [TWTRUserCustom] = []
-                        if let data = data {
-                            let jsonData = JSON(data: data)
-                            publicListsUsers = jsonData.arrayValue.map { TWTRUserCustom(json: $0)! }
-                            
-                            let realm = try! Realm()
-                            let favorites = realm.objects(Favorite.self)
-                            
-                            var publicListsWithUsersToCache: [TWTRList] = []
-                            
-                            func queueUpForStorage(_ publicList: TWTRList) {
-                                let userScreenName = String(publicList.name.characters.dropFirst(Constants.listPrefix.characters.count))
-                                if let user = publicListsUsers.filter({ $0.screenName == userScreenName }).first {
-                                    publicList.user = user
-                                    publicList.ownerId = "0"
-                                    publicListsWithUsersToCache.append(publicList)
-                                }
-                            }
-                            
-                            for publicList in self.publicLists {
-                                // make sure it's not an existing favorite
-                                if favorites.filter({ $0.list?.name == publicList.name }).first == nil {
-                                    if let existingList = self.cachedLists.filter({ $0.name == publicList.name && $0.idStr != publicList.idStr }).first {
-                                        // user has already visited this user (stored in DB), but it is not a public list (maybe this is a newly created public list)
-                                        if let existingRealmList = realm.object(ofType: TWTRList.self, forPrimaryKey: existingList.idStr) {
-                                            try! realm.write {
-                                                realm.delete(existingRealmList)
-                                            }
-                                        }
-                                        queueUpForStorage(publicList)
-                                    } else if self.cachedLists.filter({ $0.name == publicList.name }).isEmpty {
-                                        // user has never visited this user and it is public list
-                                        queueUpForStorage(publicList)
-                                    }
-                                }
-                            }
-                            self.publicLists = publicListsWithUsersToCache
-                            
+            }
+            
+            for publicList in self.publicLists {
+                // make sure it's not an existing favorite
+                if favorites.filter({ $0.list?.name == publicList.name }).first == nil {
+                    if let existingList = self.cachedLists.filter({ $0.name == publicList.name && $0.idStr != publicList.idStr }).first {
+                        // user has already visited this user (stored in DB), but it is not a public list (maybe this is a newly created public list)
+                        if let existingRealmList = realm.object(ofType: TWTRList.self, forPrimaryKey: existingList.idStr) {
                             try! realm.write {
-                                for publicList in self.publicLists {
-                                    realm.create(TWTRList.self, value: publicList, update: true)
-                                }
+                                realm.delete(existingRealmList)
                             }
                         }
-                        
-                        // sort to move groups of users with less following users to the top
-                        var idealFollowingTWTRUsers = followingTWTRUsers.filter { $0.followingCount >= 10 && $0.followingCount < 200 } + publicListsUsers
-                        idealFollowingTWTRUsers.shuffle()
-                        followingTWTRUsers = idealFollowingTWTRUsers +
-                            followingTWTRUsers.filter { $0.followingCount >= 200 && $0.followingCount < 500 } +
-                            followingTWTRUsers.filter { $0.followingCount >= 500 }
-                        self.followingUsers = followingTWTRUsers
-                        
-                        self.suggestedUsers = self.cachedLists
-                            .filter { $0.user != nil && $0.memberCount > 0}
-                            .map { $0.user! }
-                            + followingTWTRUsers
-                        self.showSuggestedUsers()
+                        queueUpForStorage(publicList)
+                    } else if self.cachedLists.filter({ $0.name == publicList.name }).isEmpty {
+                        // user has never visited this user and it is public list
+                        queueUpForStorage(publicList)
                     }
                 }
             }
-        } else {
-            suggestedUsers = cachedLists
-                .filter { $0.user != nil && $0.memberCount > 0}
-                .map { $0.user! }
-                + followingUsers
-            showSuggestedUsers()
+            self.publicLists = publicListsWithUsersToCache
+            
+            try! realm.write {
+                for publicList in self.publicLists {
+                    realm.create(TWTRList.self, value: publicList, update: true)
+                }
+            }
+            
+            // sort to move groups of users with less following users to the top
+            var followingTWTRUsers = self.followingUsers
+            var idealFollowingTWTRUsers = followingTWTRUsers.filter { $0.followingCount >= 10 && $0.followingCount < 200 } + publicListsUsers
+            idealFollowingTWTRUsers.shuffle()
+            followingTWTRUsers = idealFollowingTWTRUsers +
+                followingTWTRUsers.filter { $0.followingCount >= 200 && $0.followingCount < 500 } +
+                followingTWTRUsers.filter { $0.followingCount >= 500 }
+            self.followingUsers = followingTWTRUsers
+        }.always {
+            self.showSuggestedUsers()
+        }.catch { error in
+            print("Error: \(error)")
         }
     }
     
@@ -325,32 +263,16 @@ extension SearchViewController: UITextFieldDelegate {
         if urlEncodedCurrentText.isEmpty {
             retrieveAndShowSuggestedUsers()
         } else {
-            let usersSearchEndpoint = "https://api.twitter.com/1.1/users/search.json?q=\(urlEncodedCurrentText)"
-            let request = client.urlRequest(withMethod: "GET", url: usersSearchEndpoint, parameters: nil, error: &clientError)
-            
-            client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
-                guard let data = data else {
-                    print("Error: \(connectionError.debugDescription)")
-                    firebase.logEvent("twitter_error_users_search")
-                    return
-                }
-                guard let url = response?.url,
-                    let queryItem = URLComponents(string: url.absoluteString)?.queryItems?.filter({$0.name == "q"}).first
-                    else {
-                        print("Error in response")
-                        return
-                }
-                
-                // to prevent race condition, ensure only current text's results are displayed
+            usersSearch(urlEncodedCurrentText).then { (searchResultsUsers, queryItem) -> Void in
                 if self.urlEncodedCurrentText == (queryItem.value?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))! {
-                    let jsonData = JSON(data: data)
-                    let searchResultsUsers = jsonData.arrayValue.map { TWTRUserCustom.init(json: $0)! }
                     if !searchResultsUsers.isEmpty {
                         self.usersToShow = searchResultsUsers
                         self.showingSuggestedUsers = false
                         self.suggestionsForYouLabelHeightConstraint.constant = 0
                     }
                 }
+            }.catch { error in
+                print("Error: \(error)")
             }
         }
         scrollToFirstRow()

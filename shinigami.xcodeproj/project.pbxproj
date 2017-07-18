@@ -44,6 +44,7 @@
 		D85AA0481F01C8C900B8D6D1 /* AppIcon-76x76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D85AA03B1F01C8C900B8D6D1 /* AppIcon-76x76@2x.png */; };
 		D85AA0491F01C8C900B8D6D1 /* AppIcon-83.5x83.5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D85AA03C1F01C8C900B8D6D1 /* AppIcon-83.5x83.5@2x.png */; };
 		D85AA04A1F01C8C900B8D6D1 /* AppIcon-512@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D85AA03D1F01C8C900B8D6D1 /* AppIcon-512@2x.png */; };
+		D87B8AE51F1E856F00237884 /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87B8AE41F1E856F00237884 /* NetworkHelper.swift */; };
 		D88ADF4A1EFC712D002AF349 /* heart-tab-bar-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D88ADF471EFC712D002AF349 /* heart-tab-bar-icon.png */; };
 		D88ADF4B1EFC712D002AF349 /* heart-tab-bar-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88ADF481EFC712D002AF349 /* heart-tab-bar-icon@2x.png */; };
 		D88ADF4C1EFC712D002AF349 /* heart-tab-bar-icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88ADF491EFC712D002AF349 /* heart-tab-bar-icon@3x.png */; };
@@ -108,6 +109,7 @@
 		D85AA03B1F01C8C900B8D6D1 /* AppIcon-76x76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AppIcon-76x76@2x.png"; path = "icons/AppIcon-76x76@2x.png"; sourceTree = "<group>"; };
 		D85AA03C1F01C8C900B8D6D1 /* AppIcon-83.5x83.5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AppIcon-83.5x83.5@2x.png"; path = "icons/AppIcon-83.5x83.5@2x.png"; sourceTree = "<group>"; };
 		D85AA03D1F01C8C900B8D6D1 /* AppIcon-512@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AppIcon-512@2x.png"; path = "icons/AppIcon-512@2x.png"; sourceTree = "<group>"; };
+		D87B8AE41F1E856F00237884 /* NetworkHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkHelper.swift; sourceTree = "<group>"; };
 		D88ADF341EFB18BC002AF349 /* shinigami-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "shinigami-Bridging-Header.h"; sourceTree = "<group>"; };
 		D88ADF471EFC712D002AF349 /* heart-tab-bar-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "heart-tab-bar-icon.png"; path = "images/heart-tab-bar-icon.png"; sourceTree = "<group>"; };
 		D88ADF481EFC712D002AF349 /* heart-tab-bar-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "heart-tab-bar-icon@2x.png"; path = "images/heart-tab-bar-icon@2x.png"; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				D8C381BE1EE89BB600D030B0 /* Helpers.swift */,
 				D82F38741EF1C9340044DA58 /* Globals.swift */,
 				D80C45A61EF8A2060080B044 /* Firebase.swift */,
+				D87B8AE41F1E856F00237884 /* NetworkHelper.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -492,6 +495,7 @@
 				D813857D1EF3366C00EFE58F /* FavoritesTableViewController.swift in Sources */,
 				D81002371ED49EDD00B4E34F /* AppDelegate.swift in Sources */,
 				D8C36B731F168F7E0058BF8B /* Logoutable.swift in Sources */,
+				D87B8AE51F1E856F00237884 /* NetworkHelper.swift in Sources */,
 				D810026E1EDF97B500B4E34F /* TWTRUserCustom.swift in Sources */,
 				D8C381BF1EE89BB600D030B0 /* Helpers.swift in Sources */,
 				D810024F1EDDF51100B4E34F /* SearchViewController.swift in Sources */,
