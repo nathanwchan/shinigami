@@ -45,6 +45,7 @@ class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
             .sorted(byKeyPath: "createdAt", ascending: false)
     }()
     var notificationToken: NotificationToken?
+    fileprivate let twtrNetworkManager = TwitterNetworkManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,12 +77,12 @@ class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
         notificationToken = cachedLists.addNotificationBlock { (_: RealmCollectionChange) in }
 
         // Retrieve updated lists from Twitter
-        getLists().then { usersTELists -> Void in
+        twtrNetworkManager.getLists().then { usersTELists -> Void in
             if usersTELists.isEmpty {
                 // User doesn't have existing TE lists
                 return
             } else {
-                getListsUsers(lists: usersTELists).then { usersTEListsUsers -> Void in
+                self.twtrNetworkManager.getListsUsers(lists: usersTELists).then { usersTEListsUsers -> Void in
                     var userTEListsToCache: [TWTRList] = []
                     for userTEList in usersTELists {
                         let userScreenName = String(userTEList.name.characters.dropFirst(Constants.listPrefix.characters.count))
@@ -135,12 +136,12 @@ class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
             return
         }
         
-        getFriends().then { followingTWTRUsers -> Promise<[TWTRList]> in
+        twtrNetworkManager.getFriends().then { followingTWTRUsers -> Promise<[TWTRList]> in
             self.followingUsers = followingTWTRUsers
-            return getPublicLists()
+            return self.twtrNetworkManager.getPublicLists()
         }.then { publicLists -> Promise<[TWTRUserCustom]> in
             self.publicLists = publicLists
-            return getListsUsers(lists: publicLists)
+            return self.twtrNetworkManager.getListsUsers(lists: publicLists)
         }.then { publicListsUsers -> Void in
             let realm = try! Realm()
             let favorites = realm.objects(Favorite.self)
@@ -263,7 +264,7 @@ extension SearchViewController: UITextFieldDelegate {
         if urlEncodedCurrentText.isEmpty {
             retrieveAndShowSuggestedUsers()
         } else {
-            usersSearch(urlEncodedCurrentText).then { (searchResultsUsers, queryItem) -> Void in
+            twtrNetworkManager.usersSearch(urlEncodedCurrentText).then { (searchResultsUsers, queryItem) -> Void in
                 if self.urlEncodedCurrentText == (queryItem.value?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))! {
                     if !searchResultsUsers.isEmpty {
                         self.usersToShow = searchResultsUsers
