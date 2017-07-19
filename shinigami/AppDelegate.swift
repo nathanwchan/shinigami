@@ -17,11 +17,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         
-        Twitter.sharedInstance().start(
-            withConsumerKey:"tqs0tCY0eIjmLEjRbzwtoGMx5",
-            consumerSecret:"57FoTQ655pEYbNMDgXekPGnwd4eqpLo1wz4ubrC7FHLXkNimHk")
+        if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
+            let keys = NSDictionary(contentsOfFile: path)
+            if let dict = keys {
+                Twitter.sharedInstance().start(
+                    withConsumerKey: dict["TwitterConsumerKey"] as! String,
+                    consumerSecret: dict["TwitterConsumerSecret"] as! String)
+            }
+        }
         
         FIRApp.configure()
         

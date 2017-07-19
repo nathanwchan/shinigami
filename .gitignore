@@ -72,3 +72,5 @@ fastlane/test_output
 [._]*.sw[a-p]
 [._]s[a-v][a-z]
 [._]sw[a-p]
+
+Keys.plist
