@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		020ACD712F1F5773DA28C2D3 /* Pods_shinigami.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A8BC89F844F4219F316174 /* Pods_shinigami.framework */; };
+		C1F452131F72EC7F0033DAEF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1F452111F72EC7F0033DAEF /* GoogleService-Info.plist */; };
+		C1F452141F72EC7F0033DAEF /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = C1F452121F72EC7F0033DAEF /* Keys.plist */; };
 		D80C45931EF87D8C0080B044 /* UIButton+setImageFromUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80C45921EF87D8C0080B044 /* UIButton+setImageFromUrl.swift */; };
 		D80C459C1EF88C510080B044 /* heart-filled.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C45961EF88C510080B044 /* heart-filled.png */; };
 		D80C459D1EF88C510080B044 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = D80C45971EF88C510080B044 /* heart.png */; };
@@ -26,7 +28,6 @@
 		D81002721EDFC4DE00B4E34F /* UIImageView+downloadedFrom.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81002711EDFC4DE00B4E34F /* UIImageView+downloadedFrom.swift */; };
 		D810027C1EE083E800B4E34F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D810027B1EE083E800B4E34F /* ProfileViewController.swift */; };
 		D810027F1EE09C1000B4E34F /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D810027E1EE09C1000B4E34F /* ProfileTableViewCell.swift */; };
-		D81037F21EED053B00C34B82 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D81037F11EED053B00C34B82 /* GoogleService-Info.plist */; };
 		D813857D1EF3366C00EFE58F /* FavoritesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D813857C1EF3366C00EFE58F /* FavoritesTableViewController.swift */; };
 		D825D3301F0C11680073DC5B /* Array+shuffle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D825D32F1F0C11680073DC5B /* Array+shuffle.swift */; };
 		D82F38731EF096BB0044DA58 /* TWTRList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82F38721EF096BB0044DA58 /* TWTRList.swift */; };
@@ -45,7 +46,6 @@
 		D85AA0491F01C8C900B8D6D1 /* AppIcon-83.5x83.5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D85AA03C1F01C8C900B8D6D1 /* AppIcon-83.5x83.5@2x.png */; };
 		D85AA04A1F01C8C900B8D6D1 /* AppIcon-512@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D85AA03D1F01C8C900B8D6D1 /* AppIcon-512@2x.png */; };
 		D87B8AE51F1E856F00237884 /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87B8AE41F1E856F00237884 /* NetworkHelper.swift */; };
-		D87B8AE71F1EFCF700237884 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = D87B8AE61F1EFCF700237884 /* Keys.plist */; };
 		D88ADF4A1EFC712D002AF349 /* heart-tab-bar-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D88ADF471EFC712D002AF349 /* heart-tab-bar-icon.png */; };
 		D88ADF4B1EFC712D002AF349 /* heart-tab-bar-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88ADF481EFC712D002AF349 /* heart-tab-bar-icon@2x.png */; };
 		D88ADF4C1EFC712D002AF349 /* heart-tab-bar-icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88ADF491EFC712D002AF349 /* heart-tab-bar-icon@3x.png */; };
@@ -71,6 +71,8 @@
 /* Begin PBXFileReference section */
 		9484142F295752EAB6DAF202 /* Pods-shinigami.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shinigami.release.xcconfig"; path = "Pods/Target Support Files/Pods-shinigami/Pods-shinigami.release.xcconfig"; sourceTree = "<group>"; };
 		B5A8BC89F844F4219F316174 /* Pods_shinigami.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_shinigami.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1F452111F72EC7F0033DAEF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C1F452121F72EC7F0033DAEF /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		CDB3DC8364A643D0084D242F /* Pods-shinigami.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shinigami.debug.xcconfig"; path = "Pods/Target Support Files/Pods-shinigami/Pods-shinigami.debug.xcconfig"; sourceTree = "<group>"; };
 		D80C45921EF87D8C0080B044 /* UIButton+setImageFromUrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+setImageFromUrl.swift"; sourceTree = "<group>"; };
 		D80C45961EF88C510080B044 /* heart-filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "heart-filled.png"; path = "images/heart-filled.png"; sourceTree = "<group>"; };
@@ -92,7 +94,6 @@
 		D81002711EDFC4DE00B4E34F /* UIImageView+downloadedFrom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+downloadedFrom.swift"; sourceTree = "<group>"; };
 		D810027B1EE083E800B4E34F /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D810027E1EE09C1000B4E34F /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
-		D81037F11EED053B00C34B82 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D813857C1EF3366C00EFE58F /* FavoritesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewController.swift; sourceTree = "<group>"; };
 		D825D32F1F0C11680073DC5B /* Array+shuffle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+shuffle.swift"; sourceTree = "<group>"; };
 		D82F38721EF096BB0044DA58 /* TWTRList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWTRList.swift; sourceTree = "<group>"; };
@@ -111,7 +112,6 @@
 		D85AA03C1F01C8C900B8D6D1 /* AppIcon-83.5x83.5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AppIcon-83.5x83.5@2x.png"; path = "icons/AppIcon-83.5x83.5@2x.png"; sourceTree = "<group>"; };
 		D85AA03D1F01C8C900B8D6D1 /* AppIcon-512@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AppIcon-512@2x.png"; path = "icons/AppIcon-512@2x.png"; sourceTree = "<group>"; };
 		D87B8AE41F1E856F00237884 /* NetworkHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkHelper.swift; sourceTree = "<group>"; };
-		D87B8AE61F1EFCF700237884 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		D88ADF341EFB18BC002AF349 /* shinigami-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "shinigami-Bridging-Header.h"; sourceTree = "<group>"; };
 		D88ADF471EFC712D002AF349 /* heart-tab-bar-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "heart-tab-bar-icon.png"; path = "images/heart-tab-bar-icon.png"; sourceTree = "<group>"; };
 		D88ADF481EFC712D002AF349 /* heart-tab-bar-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "heart-tab-bar-icon@2x.png"; path = "images/heart-tab-bar-icon@2x.png"; sourceTree = "<group>"; };
@@ -196,10 +196,10 @@
 				D81002361ED49EDD00B4E34F /* AppDelegate.swift */,
 				D810023D1ED49EDD00B4E34F /* Assets.xcassets */,
 				D810023F1ED49EDD00B4E34F /* LaunchScreen.storyboard */,
-				D81037F11EED053B00C34B82 /* GoogleService-Info.plist */,
 				D81002421ED49EDD00B4E34F /* Info.plist */,
-				D87B8AE61F1EFCF700237884 /* Keys.plist */,
 				D88ADF341EFB18BC002AF349 /* shinigami-Bridging-Header.h */,
+				C1F452111F72EC7F0033DAEF /* GoogleService-Info.plist */,
+				C1F452121F72EC7F0033DAEF /* Keys.plist */,
 			);
 			path = shinigami;
 			sourceTree = "<group>";
@@ -395,17 +395,17 @@
 				D85AA0421F01C8C900B8D6D1 /* AppIcon-40x40@1x.png in Resources */,
 				D8DA4B941F02FE05003AA4E5 /* Default-Portrait.png in Resources */,
 				D8DA4B971F02FE05003AA4E5 /* Default@2x.png in Resources */,
-				D81037F21EED053B00C34B82 /* GoogleService-Info.plist in Resources */,
 				D85AA0461F01C8C900B8D6D1 /* AppIcon-60x60@3x.png in Resources */,
 				D88ADF4B1EFC712D002AF349 /* heart-tab-bar-icon@2x.png in Resources */,
 				D810023C1ED49EDD00B4E34F /* Main.storyboard in Resources */,
 				D85AA0401F01C8C900B8D6D1 /* AppIcon-29x29@2x.png in Resources */,
 				D8DA4B8D1F02FE05003AA4E5 /* Default-414w-736h-Landscape@3x.png in Resources */,
 				D80C459F1EF88C510080B044 /* twitter_eyes_logo.png in Resources */,
-				D87B8AE71F1EFCF700237884 /* Keys.plist in Resources */,
 				D85AA0491F01C8C900B8D6D1 /* AppIcon-83.5x83.5@2x.png in Resources */,
+				C1F452141F72EC7F0033DAEF /* Keys.plist in Resources */,
 				D88ADF4C1EFC712D002AF349 /* heart-tab-bar-icon@3x.png in Resources */,
 				D80C459C1EF88C510080B044 /* heart-filled.png in Resources */,
+				C1F452131F72EC7F0033DAEF /* GoogleService-Info.plist in Resources */,
 				D8DA4B931F02FE05003AA4E5 /* Default-Portrait-Pro@2x.png in Resources */,
 				D8DA4B8E1F02FE05003AA4E5 /* Default-414w-736h@3x.png in Resources */,
 				D8C36B791F17DDC90058BF8B /* login-screen.png in Resources */,
@@ -430,13 +430,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-shinigami-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8522C064B994A0CB8E7C55D0 /* [CP] Embed Pods Frameworks */ = {
@@ -445,9 +448,20 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-shinigami/Pods-shinigami-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -473,9 +487,13 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-shinigami/Pods-shinigami-resources.sh",
+				"${PODS_ROOT}/TwitterKit/iOS/TwitterKit.framework/TwitterKitResources.bundle",
+				"${PODS_ROOT}/TwitterKit/iOS/TwitterKit.framework/TwitterShareExtensionUIResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
