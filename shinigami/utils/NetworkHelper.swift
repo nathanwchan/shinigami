@@ -150,7 +150,7 @@ class TwitterNetworkManager {
                 }
                 let jsonData = JSON(data: data)
                 let searchResultsUsers = jsonData.arrayValue.map { TWTRUserCustom.init(json: $0)! }
-                fulfill(searchResultsUsers, queryItem)
+                fulfill((searchResultsUsers, queryItem))
             }
         }
     }
@@ -299,7 +299,7 @@ class TwitterNetworkManager {
                     reject(error)
                     return
                 }
-                fulfill()
+                fulfill(())
             }
         }
     }

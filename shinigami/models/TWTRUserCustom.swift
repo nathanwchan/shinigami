@@ -11,17 +11,17 @@ import SwiftyJSON
 import RealmSwift
 
 class TWTRUserCustom: Object {
-    dynamic var idStr: String = ""
-    dynamic var name: String = ""
-    dynamic var screenName: String = ""
-    dynamic var location: String = ""
-    dynamic var userDescription: String = ""
-    dynamic var followersCount: Int = 0 // unused
-    dynamic var followingCount: Int = 0 // friends_count
-    dynamic var isVerified: Bool = false
-    dynamic var profileImageNormalSizeUrl: String = ""
-    dynamic var profileImageOriginalSizeUrl: String = ""
-    dynamic var following: Bool = false // is the logged-in user following this user?
+    @objc dynamic var idStr: String = ""
+    @objc dynamic var name: String = ""
+    @objc dynamic var screenName: String = ""
+    @objc dynamic var location: String = ""
+    @objc dynamic var userDescription: String = ""
+    @objc dynamic var followersCount: Int = 0 // unused
+    @objc dynamic var followingCount: Int = 0 // friends_count
+    @objc dynamic var isVerified: Bool = false
+    @objc dynamic var profileImageNormalSizeUrl: String = ""
+    @objc dynamic var profileImageOriginalSizeUrl: String = ""
+    @objc dynamic var following: Bool = false // is the logged-in user following this user?
     
     convenience init?(json: JSON) {
         self.init()

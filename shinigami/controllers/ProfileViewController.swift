@@ -149,7 +149,7 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    func toggleFavoriteNavBarButton(sender: UIButton) {
+    @objc func toggleFavoriteNavBarButton(sender: UIButton) {
         addOrDeleteFavoriteFromDB()
         let favoriteButtonImage = self.getFavoriteButtonUIImage()
         DispatchQueue.main.async {
@@ -163,7 +163,7 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    func toggleFavoriteProfileCellButton(sender: UIButton) {
+    @objc func toggleFavoriteProfileCellButton(sender: UIButton) {
         addOrDeleteFavoriteFromDB()
         let favoriteButtonImage = self.getFavoriteButtonUIImage()
         DispatchQueue.main.async {
@@ -299,7 +299,7 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    func openTwitterProfile(sender: Any?) {
+    @objc func openTwitterProfile(sender: Any?) {
         guard let user = self.user else {
             fatalError("User is not set.")
         }
@@ -318,7 +318,7 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    func openSecretMenu(sender: Any?) {
+    @objc func openSecretMenu(sender: Any?) {
         if let list = list {
             if list.uri.contains("Tw1tterEyes") {
                 // can't touch this.

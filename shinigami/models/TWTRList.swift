@@ -12,13 +12,13 @@ import RealmSwift
 import TwitterKit
 
 class TWTRList: Object {
-    dynamic var ownerId: String = ""
-    dynamic var idStr: String = ""
-    dynamic var name: String = ""
-    dynamic var uri: String = ""
-    dynamic var memberCount: Int = 0
-    dynamic var createdAt: Date?
-    dynamic var user: TWTRUserCustom?
+    @objc dynamic var ownerId: String = ""
+    @objc dynamic var idStr: String = ""
+    @objc dynamic var name: String = ""
+    @objc dynamic var uri: String = ""
+    @objc dynamic var memberCount: Int = 0
+    @objc dynamic var createdAt: Date?
+    @objc dynamic var user: TWTRUserCustom?
     
     convenience init?(json: JSON, user: TWTRUserCustom?) {
         self.init()

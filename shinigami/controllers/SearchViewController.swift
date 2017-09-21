@@ -197,7 +197,7 @@ class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
         }
     }
     
-    func clickedLogoutButton(sender: Any?) {
+    @objc func clickedLogoutButton(sender: Any?) {
         let alertController = UIAlertController(title: "Logout?", message: "Are you sure you want to logout of your Twitter account?", preferredStyle: .alert)
         let logoutAction = UIAlertAction(title: "Yes", style: .default) { (_: UIAlertAction) -> Void in
             self.logout()

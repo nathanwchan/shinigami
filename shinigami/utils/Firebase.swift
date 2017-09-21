@@ -18,7 +18,7 @@ struct Firebase {
             eventName = eventName.substring(to: eventName.index(eventName.startIndex, offsetBy: eventNameCharacterLimit))
         }
         // FYI: Firebase Analytics doesn't expose parameters unless you hook it up to BigQuery
-        FIRAnalytics.logEvent(withName: eventName, parameters: nil)
+        Analytics.logEvent(eventName, parameters: nil)
     }
 }
 

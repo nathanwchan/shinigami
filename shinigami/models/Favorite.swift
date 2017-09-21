@@ -11,9 +11,9 @@ import RealmSwift
 import TwitterKit
 
 class Favorite: Object {
-    dynamic var ownerId: String = ""
-    dynamic var list: TWTRList?
-    dynamic var createdAt = Date()
+    @objc dynamic var ownerId: String = ""
+    @objc dynamic var list: TWTRList?
+    @objc dynamic var createdAt = Date()
     
     override static func indexedProperties() -> [String] {
         return ["ownerId", "createdAt"]

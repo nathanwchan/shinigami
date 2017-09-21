@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        FIRApp.configure()
+        FirebaseApp.configure()
         
         /* START REALM CONFIG */
         let config = Realm.Configuration(

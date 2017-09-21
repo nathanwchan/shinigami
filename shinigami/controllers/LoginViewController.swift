@@ -23,8 +23,8 @@ class LoginViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         if let userID = Twitter.sharedInstance().sessionStore.session()?.userID {
             firebase.logEvent("login_already_\(userID)")
