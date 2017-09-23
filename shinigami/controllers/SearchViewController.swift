@@ -57,6 +57,7 @@ class SearchViewController: UIViewController, Logoutable, UIScrollViewDelegate {
         suggestionsForYouLabelHeightConstraint.constant = 0
         
         searchTextField.delegate = self
+        usersTableView.delegate = self
         usersTableView.dataSource = self
         usersTableScrollView.delegate = self
         usersTableScrollView.keyboardDismissMode = .onDrag
@@ -294,7 +295,7 @@ extension SearchViewController: UITextFieldDelegate {
     }
 }
 
-extension SearchViewController: UITableViewDataSource {
+extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let userCell = tableView.dequeueReusableCell(withIdentifier: "userCell", for: indexPath) as? UserTableViewCell else {
             fatalError("The dequeued cell is not an instance of UserTableViewCell.")
@@ -308,7 +309,7 @@ extension SearchViewController: UITableViewDataSource {
         return usersToShow.count
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
