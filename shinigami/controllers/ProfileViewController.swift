@@ -199,6 +199,8 @@ class ProfileViewController: UIViewController {
         
         let favoriteButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         favoriteButton.setImage(getFavoriteButtonUIImage(), for: .normal)
+        favoriteButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        favoriteButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         favoriteButton.addTarget(self, action: #selector(self.toggleFavoriteNavBarButton(sender:)), for: .touchUpInside)
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
         negativeSpacer.width = -11
