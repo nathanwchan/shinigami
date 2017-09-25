@@ -1,7 +1,7 @@
 # Tweetsee app for iOS ![Tweetsee icon](https://github.com/nathanwchan/shinigami/blob/master/shinigami/icons/AppIcon-40x40%401x.png)
 
 ### Overview
-See Twitter through someone else's eyes.
+See Twitter through someone else's eyes.  Now available in the App Store, here: https://itunes.apple.com/app/id1247577186
 
 ### Main technologies
 * Swift 3
